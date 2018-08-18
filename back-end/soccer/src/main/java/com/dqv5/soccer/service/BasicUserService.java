@@ -13,9 +13,8 @@ public interface BasicUserService {
 
     BasicUser findOne(Integer id);
 
-    BasicUser insert(BasicUser basicUser);
+    BasicUser save(BasicUser basicUser);
 
-    BasicUser update(BasicUser basicUser);
 
     void delete(Integer id);
 

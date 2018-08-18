@@ -2,6 +2,6 @@
 target/
 node_modules/
 /logs/
-/back-end/logs/
+/back-end/soccer/logs/
 *.iml
 relbel.xml

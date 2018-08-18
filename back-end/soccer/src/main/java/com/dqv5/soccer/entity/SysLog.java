@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 系统日志
+ *
  * @author admin
  * @date 2018/5/28
  */

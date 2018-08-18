@@ -28,6 +28,9 @@ public class BasicUser implements UserDetails, Serializable {
     private String status;
     private Date lastLoginTime;
     private Date lastPasswordResetTime;
+    private Date lastModifiedTime;
+    @ManyToOne
+    private BasicUser modUser;
 
 
     //-----------implements from UserDetails----------//
@@ -153,5 +156,21 @@ public class BasicUser implements UserDetails, Serializable {
 
     public void setLastPasswordResetTime(Date lastPasswordResetTime) {
         this.lastPasswordResetTime = lastPasswordResetTime;
+    }
+
+    public Date getLastModifiedTime() {
+        return lastModifiedTime;
+    }
+
+    public void setLastModifiedTime(Date lastModifiedTime) {
+        this.lastModifiedTime = lastModifiedTime;
+    }
+
+    public BasicUser getModUser() {
+        return modUser;
+    }
+
+    public void setModUser(BasicUser modUser) {
+        this.modUser = modUser;
     }
 }

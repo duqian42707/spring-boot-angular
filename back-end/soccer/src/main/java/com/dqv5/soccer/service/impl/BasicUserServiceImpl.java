@@ -39,14 +39,10 @@ public class BasicUserServiceImpl implements BasicUserService {
     }
 
     @Override
-    public BasicUser insert(BasicUser basicUser) {
+    public BasicUser save(BasicUser basicUser) {
         return basicUserRepository.save(basicUser);
     }
 
-    @Override
-    public BasicUser update(BasicUser basicUser) {
-        return basicUserRepository.save(basicUser);
-    }
 
     @Override
     public void delete(Integer id) {
