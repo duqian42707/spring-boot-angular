@@ -1,7 +1,7 @@
 package com.dqv5.soccer.config;
 
 import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.security.controller.AuthenticationException;
+import com.dqv5.soccer.security.AuthenticationException;
 import com.dqv5.soccer.web.result.RestReturn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

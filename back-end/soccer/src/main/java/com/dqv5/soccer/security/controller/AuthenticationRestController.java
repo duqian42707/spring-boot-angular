@@ -1,9 +1,9 @@
 package com.dqv5.soccer.security.controller;
 
 import com.dqv5.soccer.entity.BasicUser;
+import com.dqv5.soccer.security.AuthenticationException;
 import com.dqv5.soccer.security.JwtAuthenticationRequest;
 import com.dqv5.soccer.security.JwtTokenUtil;
-import com.dqv5.soccer.security.service.JwtAuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +14,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,7 +66,10 @@ public class AuthenticationRestController {
 
         if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetTime())) {
             String refreshedToken = jwtTokenUtil.refreshToken(token);
-            return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
+            // Return the token
+            Map map = new HashMap();
+            map.put("token",refreshedToken);
+            return ResponseEntity.ok(map);
         } else {
             return ResponseEntity.badRequest().body(null);
         }

@@ -1,4 +1,4 @@
-package com.dqv5.soccer.security.controller;
+package com.dqv5.soccer.security;
 
 public class AuthenticationException extends RuntimeException {
     public AuthenticationException(String message, Throwable cause) {
