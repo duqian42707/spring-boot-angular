@@ -1,13 +1,15 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { throwIfAlreadyLoaded } from './module-import-guard';
+import {NgModule, Optional, SkipSelf} from '@angular/core';
+import {throwIfAlreadyLoaded} from './module-import-guard';
+import {ServiceModule} from "@core/service/service.module";
 
 
 @NgModule({
-  providers: [
+  imports: [
+    ServiceModule
   ]
 })
 export class CoreModule {
-  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 }

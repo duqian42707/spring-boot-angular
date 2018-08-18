@@ -8,32 +8,31 @@ import {
   SkipSelf,
   ModuleWithProviders,
 } from '@angular/core';
-import { RouteReuseStrategy } from '@angular/router';
-import { throwIfAlreadyLoaded } from '@core/module-import-guard';
+import {RouteReuseStrategy} from '@angular/router';
+import {throwIfAlreadyLoaded} from '@core/module-import-guard';
 
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { AlainThemeModule } from '@delon/theme';
-import { DelonABCModule, ReuseTabService, ReuseTabStrategy } from '@delon/abc';
-import { DelonAuthModule } from '@delon/auth';
-import { DelonACLModule } from '@delon/acl';
-import { DelonCacheModule } from '@delon/cache';
-import { DelonUtilModule } from '@delon/util';
-// mock
-import { DelonMockModule } from '@delon/mock';
-import * as MOCKDATA from '../../_mock';
-import { environment } from '@env/environment';
-const MOCKMODULE = !environment.production ? [DelonMockModule.forRoot({ data: MOCKDATA })] : [];
+import {NgZorroAntdModule} from 'ng-zorro-antd';
+import {AlainThemeModule} from '@delon/theme';
+import {DelonABCModule, ReuseTabService, ReuseTabStrategy} from '@delon/abc';
+import {DelonAuthModule} from '@delon/auth';
+import {DelonACLModule} from '@delon/acl';
+import {DelonCacheModule} from '@delon/cache';
+import {DelonUtilModule} from '@delon/util';
+import {environment} from '@env/environment';
 
 // region: global config functions
 
-import { AdPageHeaderConfig } from '@delon/abc';
+import {AdPageHeaderConfig} from '@delon/abc';
+
 export function pageHeaderConfig(): AdPageHeaderConfig {
-  return Object.assign(new AdPageHeaderConfig(), { home_i18n: 'home' });
+  return Object.assign(new AdPageHeaderConfig(), {home_i18n: 'home'});
 }
 
-import { DelonAuthConfig } from '@delon/auth';
+import {DelonAuthConfig} from '@delon/auth';
+
 export function delonAuthConfig(): DelonAuthConfig {
   return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
+    ignores: [/auth/],
     login_url: '/passport/login',
   });
 }
@@ -49,15 +48,13 @@ export function delonAuthConfig(): DelonAuthConfig {
     DelonACLModule.forRoot(),
     DelonCacheModule.forRoot(),
     DelonUtilModule.forRoot(),
-    // mock
-    ...MOCKMODULE,
   ],
 })
 export class DelonModule {
   constructor(
     @Optional()
     @SkipSelf()
-    parentModule: DelonModule,
+      parentModule: DelonModule,
   ) {
     throwIfAlreadyLoaded(parentModule, 'DelonModule');
   }
@@ -74,8 +71,8 @@ export class DelonModule {
         },
         // TIPS：@delon/abc 有大量的全局配置信息，例如设置所有 `simple-table` 的页码默认为 `20` 行
         // { provide: SimpleTableConfig, useFactory: simpleTableConfig }
-        { provide: AdPageHeaderConfig, useFactory: pageHeaderConfig },
-        { provide: DelonAuthConfig, useFactory: delonAuthConfig },
+        {provide: AdPageHeaderConfig, useFactory: pageHeaderConfig},
+        {provide: DelonAuthConfig, useFactory: delonAuthConfig},
       ],
     };
   }

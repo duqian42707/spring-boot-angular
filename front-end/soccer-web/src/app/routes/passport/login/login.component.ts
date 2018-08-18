@@ -1,17 +1,18 @@
-import { SettingsService } from '@delon/theme';
-import { Component, OnDestroy, Inject, Optional } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import {SettingsService} from '@delon/theme';
+import {Component, OnDestroy, Inject, Optional} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 import {
   SocialService,
   SocialOpenType,
   TokenService,
   DA_SERVICE_TOKEN,
 } from '@delon/auth';
-import { ReuseTabService } from '@delon/abc';
-import { environment } from '@env/environment';
-import { StartupService } from '@core/startup/startup.service';
+import {ReuseTabService} from '@delon/abc';
+import {environment} from '@env/environment';
+import {StartupService} from '@core/startup/startup.service';
+import {LoginService} from "@core/service/sys/login.service";
 
 @Component({
   selector: 'passport-login',
@@ -37,6 +38,7 @@ export class UserLoginComponent implements OnDestroy {
     private reuseTabService: ReuseTabService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService,
     private startupSrv: StartupService,
+    private loginService: LoginService
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required, Validators.minLength(5)]],
@@ -53,12 +55,15 @@ export class UserLoginComponent implements OnDestroy {
   get userName() {
     return this.form.controls.userName;
   }
+
   get password() {
     return this.form.controls.password;
   }
+
   get mobile() {
     return this.form.controls.mobile;
   }
+
   get captcha() {
     return this.form.controls.captcha;
   }
@@ -104,33 +109,20 @@ export class UserLoginComponent implements OnDestroy {
     // 默认配置中对所有HTTP请求都会强制[校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
     this.loading = true;
-    setTimeout(() => {
+    const username = this.userName.value
+    const password = this.password.value
+    this.loginService.login(username, password).subscribe(res => {
+      console.log(res)
       this.loading = false;
-      if (this.type === 0) {
-        if (
-          this.userName.value !== 'admin' ||
-          this.password.value !== '888888'
-        ) {
-          this.error = `账户或密码错误`;
-          return;
-        }
-      }
-
       // 清空路由复用信息
       this.reuseTabService.clear();
       // 设置Token信息
       this.tokenService.set({
-        token: '123456789',
-        name: this.userName.value,
-        email: `cipchk@qq.com`,
-        id: 10000,
-        time: +new Date(),
+        token: res.token,
       });
-      // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
-      // this.startupSrv.load().then(() => this.router.navigate(['/']));
-      // 否则直接跳转
       this.router.navigate(['/']);
-    }, 1000);
+    })
+
   }
 
   // region: social
