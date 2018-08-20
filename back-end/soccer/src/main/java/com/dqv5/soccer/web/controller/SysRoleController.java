@@ -1,7 +1,7 @@
 package com.dqv5.soccer.web.controller;
 
-import com.dqv5.soccer.entity.SysModule;
-import com.dqv5.soccer.service.SysModuleService;
+import com.dqv5.soccer.entity.SysRole;
+import com.dqv5.soccer.service.SysRoleService;
 import com.dqv5.soccer.web.result.RestReturn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
- * 模块管理
+ * 角色管理
  *
- * @author duq
- * @date 2018/8/18
+ * @author admin
+ * @date 2018/8/20
  */
 @RestController
-@RequestMapping("/sys/module")
-public class SysModuleController {
+@RequestMapping("/sys/role")
+public class SysRoleController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
-    private SysModuleService sysModuleService;
+    private SysRoleService sysRoleService;
 
     /**
      * 获取列表
@@ -41,20 +41,20 @@ public class SysModuleController {
      */
     @GetMapping("/get/{id}")
     public ResponseEntity getInfo(@PathVariable("id") Integer id) {
-        SysModule sysModule = sysModuleService.findOne(id);
-        return RestReturn.ok(sysModule);
+        SysRole sysRole = sysRoleService.findOne(id);
+        return RestReturn.ok(sysRole);
     }
 
     /**
      * 新增、更新信息
      *
-     * @param sysModule
+     * @param sysRole
      * @return
      */
     @PostMapping("/save")
-    public ResponseEntity save(@RequestBody SysModule sysModule) {
-        sysModule = sysModuleService.save(sysModule);
-        return RestReturn.ok(sysModule);
+    public ResponseEntity save(@RequestBody SysRole sysRole) {
+        sysRole = sysRoleService.save(sysRole);
+        return RestReturn.ok(sysRole);
     }
 
     /**
@@ -65,7 +65,7 @@ public class SysModuleController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delte(@PathVariable("id") Integer id) {
-        sysModuleService.delete(id);
+        sysRoleService.delete(id);
         return RestReturn.ok();
     }
 }
