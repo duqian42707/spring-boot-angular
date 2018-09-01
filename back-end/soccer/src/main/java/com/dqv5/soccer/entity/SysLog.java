@@ -1,6 +1,5 @@
 package com.dqv5.soccer.entity;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,13 +9,8 @@ import java.util.Date;
  * @author admin
  * @date 2018/5/28
  */
-@Entity
-@Table(name = "sys_log")
 public class SysLog implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
     private BasicUser user;
     private String detail;
     private String ip;

@@ -1,0 +1,25 @@
+package com.dqv5.soccer.dao;
+
+import com.dqv5.soccer.entity.BasicUser;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * @author duq
+ * @date 2018/9/1
+ */
+public interface BasicUserMapper {
+    List<BasicUser> findAllByOrderById();
+
+    BasicUser findByAccount(String account);
+
+    BasicUser findOne(Integer id);
+
+    BasicUser save(BasicUser basicUser);
+
+    void delete(Integer id);
+}

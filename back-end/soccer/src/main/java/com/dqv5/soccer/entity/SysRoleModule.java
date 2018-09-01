@@ -1,6 +1,5 @@
 package com.dqv5.soccer.entity;
 
-import javax.persistence.*;
 
 /**
  * 角色权限
@@ -8,15 +7,9 @@ import javax.persistence.*;
  * @author duq
  * @date 2018/8/18
  */
-@Entity
-@Table(name = "sys_role_module")
 public class SysRoleModule {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
     private SysRole role;
-    @ManyToOne
     private SysModule module;
     private Integer permValue;
 

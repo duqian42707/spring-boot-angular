@@ -1,6 +1,5 @@
 package com.dqv5.soccer.entity;
 
-import javax.persistence.*;
 
 /**
  * 功能权限
@@ -8,16 +7,11 @@ import javax.persistence.*;
  * @author duq
  * @date 2018/8/18
  */
-@Entity
-@Table(name = "sys_func_right")
 public class SysFuncRight {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String funcName;
     private String code;
     private Integer permValue;
-    @ManyToOne
     private SysModule module;
 
     public Integer getId() {

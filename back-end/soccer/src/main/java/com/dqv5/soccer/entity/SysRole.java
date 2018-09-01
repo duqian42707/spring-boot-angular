@@ -1,6 +1,5 @@
 package com.dqv5.soccer.entity;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -9,18 +8,12 @@ import java.util.Date;
  * @author duq
  * @date 2018/8/18
  */
-@Entity
-@Table(name = "sys_role")
 public class SysRole {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String roleName;
     private Date createTime;
     private Date lastModifiedTime;
-    @ManyToOne
     private BasicUser createUser;
-    @ManyToOne
     private BasicUser modUser;
 
     public Integer getId() {

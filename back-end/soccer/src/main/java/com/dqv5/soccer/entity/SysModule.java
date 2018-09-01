@@ -1,6 +1,5 @@
 package com.dqv5.soccer.entity;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -9,11 +8,7 @@ import java.util.Date;
  * @author duq
  * @date 2018/8/18
  */
-@Entity
-@Table(name = "sys_module")
 public class SysModule {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     /**
      * 类型 ：0子模块  1根模块
@@ -23,8 +18,6 @@ public class SysModule {
     private String name;
     private Date createTime;
     private Date lastModifiedTime;
-    @ManyToOne
     private BasicUser createUser;
-    @ManyToOne
     private BasicUser modUser;
 }

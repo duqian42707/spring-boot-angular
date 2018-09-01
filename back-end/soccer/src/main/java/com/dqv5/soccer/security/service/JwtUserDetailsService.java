@@ -1,7 +1,7 @@
 package com.dqv5.soccer.security.service;
 
+import com.dqv5.soccer.dao.BasicUserMapper;
 import com.dqv5.soccer.entity.BasicUser;
-import com.dqv5.soccer.repository.BasicUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,14 +13,14 @@ import javax.annotation.Resource;
 public class JwtUserDetailsService implements UserDetailsService {
 
     @Resource
-    private BasicUserRepository basicUserRepository;
+    private BasicUserMapper basicUserMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (username == null || "".equals(username)) {
             throw new RuntimeException("Username should not be null!");
         }
-        BasicUser basicUser = basicUserRepository.findByAccount(username);
+        BasicUser basicUser = basicUserMapper.findByAccount(username);
         if (basicUser != null) {
             return basicUser;
         } else {

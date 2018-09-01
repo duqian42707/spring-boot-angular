@@ -2,7 +2,7 @@
 基于Spring boot + angular 的前后端分离框架。
 
 ## 项目简介
-* 这是一套基于Spring boot + spring data jpa + angular的前后端分离框架。
+* 这是一套基于Spring boot + mybatis + angular的前后端分离框架。
 * 后端使用Maven对项目进行管理，提高项目的易开发性、扩展性。
 * 前端使用angular构建单页面应用，分为电脑端和手机端。电脑端UI采用[Ant Design][antdesign]，手机端UI采用[weui][weui]。
 

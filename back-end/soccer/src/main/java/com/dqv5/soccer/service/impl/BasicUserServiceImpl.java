@@ -1,19 +1,15 @@
 package com.dqv5.soccer.service.impl;
 
+import com.dqv5.soccer.dao.BasicUserMapper;
 import com.dqv5.soccer.entity.BasicUser;
-import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.repository.BasicUserRepository;
 import com.dqv5.soccer.service.BasicUserService;
-import com.dqv5.soccer.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author admin
@@ -26,28 +22,28 @@ public class BasicUserServiceImpl implements BasicUserService {
     private RestTemplate restTemplate;
 
     @Resource
-    private BasicUserRepository basicUserRepository;
+    private BasicUserMapper basicUserMapper;
 
     @Override
     public List<BasicUser> findAll() {
-        return basicUserRepository.findAllByOrderById();
+        return basicUserMapper.findAllByOrderById();
     }
 
     @Override
     public BasicUser findOne(Integer id) {
-        return basicUserRepository.findOne(id);
+        return basicUserMapper.findOne(id);
     }
 
     @Override
     public BasicUser save(BasicUser basicUser) {
-        return basicUserRepository.save(basicUser);
+        return basicUserMapper.save(basicUser);
     }
 
 
     @Override
     public void delete(Integer id) {
         BasicUser one = new BasicUser();
-        basicUserRepository.delete(id);
+        basicUserMapper.delete(id);
     }
 
 

@@ -1,17 +1,12 @@
 package com.dqv5.soccer.entity;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @author duq
  * @date 2018/8/4
  */
-@Entity
-@Table(name = "basic_file")
 public class BasicFile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String fileName;
     private String fileHash;

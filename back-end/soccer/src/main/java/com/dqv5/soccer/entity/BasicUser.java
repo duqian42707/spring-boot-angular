@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -13,11 +12,7 @@ import java.util.Date;
  * @author admin
  * @date 2018/5/28
  */
-@Entity
-@Table(name = "basic_user")
 public class BasicUser implements UserDetails, Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String account;
     private String password;
@@ -29,7 +24,6 @@ public class BasicUser implements UserDetails, Serializable {
     private Date lastLoginTime;
     private Date lastPasswordResetTime;
     private Date lastModifiedTime;
-    @ManyToOne
     private BasicUser modUser;
 
 
