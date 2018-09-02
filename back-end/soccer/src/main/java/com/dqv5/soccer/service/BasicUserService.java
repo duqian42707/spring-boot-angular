@@ -15,7 +15,6 @@ public interface BasicUserService {
 
     BasicUser save(BasicUser basicUser);
 
-
     void delete(Integer id);
 
 }

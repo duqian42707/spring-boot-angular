@@ -1,0 +1,45 @@
+<div class="modal-header">
+  <div class="modal-title">编辑用户信息</div>
+</div>
+<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+<form nz-form [formGroup]="form" *ngIf="i" [nzLayout]="'vertical'">
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6" nzRequired>账号</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <input nz-input formControlName="account" id="account">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6" nzRequired>用户名</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <input nz-input formControlName="userName" id="userName">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6">电话</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <nz-input-group>
+        <ng-template #addOnBeforeTemplate>
+          <nz-select formControlName="phoneNumberPrefix" style="width: 70px;">
+            <nz-option nzLabel="+86" nzValue="+86"></nz-option>
+          </nz-select>
+        </ng-template>
+        <input nz-input formControlName="phone" id="phone">
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6">性别</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <nz-select formControlName="gender" nzAllowClear="true">
+        <ng-container *ngFor="let item of genderList">
+          <nz-option [nzValue]="item.value" [nzLabel]="item.name"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div class="modal-footer">
+  <button nz-button class="ml-sm" (click)="close()">关闭</button>
+  <button nz-button nzType="primary" type="submit" [nzLoading]="submitting" (click)="save()">提交</button>
+</div>

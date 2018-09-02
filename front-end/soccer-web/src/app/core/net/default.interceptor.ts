@@ -66,7 +66,18 @@ export class DefaultInterceptor implements HttpInterceptor {
       case 403:
       case 404:
       case 500:
-        this.goTo(`/${event.status}`);
+        if (event instanceof HttpErrorResponse) {
+
+          if (event.error.msg) {
+            this.msg.error(event.error.msg);
+          }
+          // if (event.error.errMsg) {
+          //   this.msg.error(event.error.errMsg);
+          // }
+          if (!event.error.msg) {
+            this.goTo(`/${event.status}`);
+          }
+        }
         break;
       default:
         if (event instanceof HttpErrorResponse) {

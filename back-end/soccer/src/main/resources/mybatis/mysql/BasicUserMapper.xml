@@ -3,9 +3,9 @@
 <mapper namespace="com.dqv5.soccer.dao.BasicUserMapper">
     <resultMap id="BaseResultMap" type="com.dqv5.soccer.entity.BasicUser">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="account" property="account" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR"/>
         <result column="gender" property="gender" jdbcType="VARCHAR"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
@@ -24,9 +24,24 @@
     <select id="findOne" parameterType="int" resultMap="BaseResultMap">
         SELECT * FROM basic_user where id = #{id}
     </select>
-    <insert id="save" parameterType="com.dqv5.soccer.entity.BasicUser">
-        insert into basic_user(id) values (null)
+    <insert id="insert" parameterType="com.dqv5.soccer.entity.BasicUser">
+        insert into basic_user(id,account,password,avatar_url,gender,phone,status,user_name,mod_user_id,
+          last_modified_time
+        ) values (null,#{account},#{password},#{avatarUrl},#{gender},#{phone},#{status},#{userName},#{modUser.userId},now())
     </insert>
+    <update id="updateUserInfo" parameterType="com.dqv5.soccer.entity.BasicUser">
+        update basic_user
+        <set>
+            <if test="account!=null">account = #{account} ,</if>
+            <if test="status!=null">status = #{status} ,</if>
+            <if test="userName!=null">user_name = #{userName} ,</if>
+            <if test="modUser!=null &amp;&amp; modUser.userId!=null">modUserId = #{modUser.userId} ,</if>
+            gender = #{gender} ,
+            phone = #{phone} ,
+            last_modified_time = now()
+        </set>
+        where id = #{id}
+    </update>
     <delete id="delete" parameterType="int">
          delete  FROM basic_user where id = #{id}
     </delete>

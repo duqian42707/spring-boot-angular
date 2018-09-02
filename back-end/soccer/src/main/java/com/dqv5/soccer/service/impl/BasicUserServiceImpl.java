@@ -36,7 +36,12 @@ public class BasicUserServiceImpl implements BasicUserService {
 
     @Override
     public BasicUser save(BasicUser basicUser) {
-        return basicUserMapper.save(basicUser);
+        if (basicUser.getId() == null) {
+            basicUserMapper.insert(basicUser);
+        } else {
+            basicUserMapper.updateUserInfo(basicUser);
+        }
+        return basicUser;
     }
 
 

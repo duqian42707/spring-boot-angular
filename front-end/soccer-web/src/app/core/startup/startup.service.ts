@@ -92,7 +92,15 @@ export class StartupService {
             text: '快捷菜单',
             icon: 'anticon anticon-rocket',
             shortcut_root: true
-          }
+          },
+          {
+            text: '系统管理',
+            icon: 'anticon anticon-rocket',
+            children:[{
+              text: '用户管理',
+              link: '/sys/user',
+            }]
+          },
         ]
       }
     ]);

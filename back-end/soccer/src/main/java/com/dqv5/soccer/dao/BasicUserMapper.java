@@ -19,7 +19,9 @@ public interface BasicUserMapper {
 
     BasicUser findOne(Integer id);
 
-    BasicUser save(BasicUser basicUser);
+    void insert(BasicUser basicUser);
+
+    void updateUserInfo(BasicUser basicUser);
 
     void delete(Integer id);
 }
