@@ -7,14 +7,14 @@
 * 前端使用angular构建单页面应用，分为电脑端和手机端。电脑端UI采用[Ant Design][antdesign]，手机端UI采用[weui][weui]。
 
 ## 主要功能
-* 登录、退出登录
-* 修改密码、记住密码
-* 菜单管理
-* 字典管理
-* 部门管理
-* 角色管理
-* 权限管理
-* 用户管理
+* [x] 登录、退出登录
+* [x] 用户管理
+* [ ] 修改密码、记住密码
+* [ ] 菜单管理
+* [ ] 字典管理
+* [ ] 部门管理
+* [ ] 角色管理
+* [ ] 权限管理
 
 ## 依赖
 ### java后端依赖环境
@@ -47,7 +47,7 @@
 
 
 ## License
-基于MIT
+[MIT License](./LICENSE)
 
 [spring-boot]: https://spring.io/projects/spring-boot
 [angular]: https://angular.cn/
