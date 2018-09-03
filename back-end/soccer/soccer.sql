@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 02/09/2018 19:56:19
+ Date: 03/09/2018 21:32:16
 */
 
 SET NAMES utf8mb4;
@@ -54,7 +54,7 @@ CREATE TABLE `basic_user` (
   PRIMARY KEY (`id`),
   KEY `FKc4e23ymy8js3t97mv71idjjhh` (`mod_user_id`),
   CONSTRAINT `FKc4e23ymy8js3t97mv71idjjhh` FOREIGN KEY (`mod_user_id`) REFERENCES `basic_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Table structure for sys_func_right
@@ -99,12 +99,15 @@ CREATE TABLE `sys_module` (
   `type` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `create_user_id` int(11) DEFAULT NULL,
   `mod_user_id` int(11) DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
+  `order_no` int(11) DEFAULT NULL,
+  `level_no` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKdqnac8hs89i4rxhotct6er9lr` (`create_user_id`),
   KEY `FKad2337ra42mi99p00ctyefac8` (`mod_user_id`),
   CONSTRAINT `FKad2337ra42mi99p00ctyefac8` FOREIGN KEY (`mod_user_id`) REFERENCES `basic_user` (`id`),
   CONSTRAINT `FKdqnac8hs89i4rxhotct6er9lr` FOREIGN KEY (`create_user_id`) REFERENCES `basic_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Table structure for sys_role
