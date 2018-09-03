@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 模块管理
@@ -30,7 +31,8 @@ public class SysModuleController {
      */
     @GetMapping("/list")
     public ResponseEntity list() {
-        return RestReturn.ok();
+        List<SysModule> list = sysModuleService.findList();
+        return RestReturn.ok(list);
     }
 
     /**

@@ -1,0 +1,44 @@
+<div class="modal-header">
+  <div class="modal-title">编辑模块信息</div>
+</div>
+<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+<form nz-form [formGroup]="form" *ngIf="i" [nzLayout]="'vertical'">
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6" nzRequired>名称</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <input nz-input formControlName="name" id="name">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6" nzRequired>URL</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <input nz-input formControlName="url" id="url">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6">层级</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <nz-select formControlName="levelNo" nzAllowClear="false">
+        <ng-container *ngFor="let item of levelList">
+          <nz-option [nzValue]="item.value" [nzLabel]="item.name"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6">上级模块</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <input nz-input formControlName="parentId" id="parentId">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6">顺序号</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <input nz-input formControlName="orderNo" id="orderNo">
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div class="modal-footer">
+  <button nz-button class="ml-sm" (click)="close()">关闭</button>
+  <button nz-button nzType="primary" type="submit" [nzLoading]="submitting" (click)="save()">提交</button>
+</div>

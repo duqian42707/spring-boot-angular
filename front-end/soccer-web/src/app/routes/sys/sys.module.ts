@@ -4,12 +4,18 @@ import {SharedModule} from "../../shared/shared.module";
 import {BasicUserComponent} from './user/user.component';
 import {BasicUserEditComponent} from './user/edit/edit.component';
 import {BasicUserViewComponent} from './user/view/view.component';
+import { SysModuleComponent } from './module/module.component';
+import { SysModuleEditComponent } from './module/edit/edit.component';
+import { SysModuleViewComponent } from './module/view/view.component';
 
 const COMPONENTS = [
-  BasicUserComponent];
+  BasicUserComponent,
+  SysModuleComponent];
 const COMPONENTS_NOROUNT = [
   BasicUserEditComponent,
-  BasicUserViewComponent];
+  BasicUserViewComponent,
+  SysModuleEditComponent,
+  SysModuleViewComponent];
 
 @NgModule({
   imports: [
