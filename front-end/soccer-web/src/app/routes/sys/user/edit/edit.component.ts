@@ -1,7 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NzModalRef, NzMessageService} from 'ng-zorro-antd';
+import {Component, OnInit} from '@angular/core';
+import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 import {_HttpClient} from '@delon/theme';
-import {SFSchema, SFUISchema} from '@delon/form';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -31,7 +30,6 @@ export class BasicUserEditComponent implements OnInit {
       phone: [null, []],
       gender: [null, []],
     });
-
     if (this.record.id > 0)
       this.http.get<any>(`basic/user/get/${this.record.id}`).subscribe(res => {
         this.i = res.data;

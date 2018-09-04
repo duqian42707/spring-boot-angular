@@ -22,6 +22,7 @@ public class SysModule extends TreeNode{
     private Integer levelNo;
     private String name;
     private String url;
+    private String icon;
     private Integer orderNo;
     private Date createTime;
     private Date lastModifiedTime;
@@ -42,6 +43,14 @@ public class SysModule extends TreeNode{
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Integer getOrderNo() {

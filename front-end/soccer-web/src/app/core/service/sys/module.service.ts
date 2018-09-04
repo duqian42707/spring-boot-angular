@@ -22,4 +22,5 @@ export class ModuleService {
   save(obj: any): Observable<any> {
     return this.http.post(`sys/module/save`, obj);
   }
+
 }

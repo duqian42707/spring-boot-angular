@@ -7,8 +7,9 @@
         <result column="parent_id" property="parentId" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
         <result column="url" property="url" jdbcType="VARCHAR"/>
-        <result column="order_no" property="orderNo" jdbcType="TIMESTAMP"/>
-        <result column="level_no" property="levelNo" jdbcType="TIMESTAMP"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR"/>
+        <result column="level_no" property="levelNo" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="findList" resultMap="BaseResultMap">
@@ -18,8 +19,21 @@
         SELECT * FROM sys_module where id = #{id}
     </select>
     <insert id="insert" parameterType="com.dqv5.soccer.entity.BasicUser">
-        insert into sys_module(id,name,parent_id,type,url,order_no,level_no)
-        values (null,#{name},#{parentId},#{type},#{url},#{orderNo},#{levelNo})
+        insert into sys_module(id,name,parent_id,type,url,order_no,level_no,icon)
+        values (null,#{name},#{parentId},#{type},#{url},#{orderNo},#{levelNo},#{icon})
+    </insert>
+    <insert id="update" parameterType="com.dqv5.soccer.entity.BasicUser">
+        update sys_module
+        <set>
+            <if test="name!=null">name = #{name} ,</if>
+            <if test="parentId!=null">parent_Id = #{parentId} ,</if>
+            <if test="type!=null">type = #{type} ,</if>
+            <if test="orderNo!=null">order_No = #{orderNo} ,</if>
+            <if test="levelNo!=null">level_No = #{levelNo} ,</if>
+            <if test="icon!=null">icon = #{icon} ,</if>
+            <if test="url!=null">url = #{url} ,</if>
+        </set>
+        where id=#{id}
     </insert>
     <delete id="delete" parameterType="int">
          delete  FROM sys_module where id = #{id}

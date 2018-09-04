@@ -26,7 +26,7 @@ export class StartupService {
 
   private viaHttp(resolve: any, reject: any) {
     zip(
-      this.httpClient.get('http://localhost:4200/assets/tmp/app-data.json')
+      this.httpClient.get('sys/module/list')
     ).pipe(
       // 接收其他拦截器后产生的异常消息
       catchError(([appData]) => {
@@ -34,25 +34,42 @@ export class StartupService {
         return [appData];
       })
     ).subscribe(([appData]) => {
-
+        const app: any = {
+          name: `soccer`,
+          description: `Ng-zorro admin panel front-end framework`
+        };
+        const user: any = {
+          name: 'admin',
+          avatar: './assets/tmp/img/avatar.jpg',
+        };
         // application data
         const res: any = appData;
         // 应用信息：包括站点名、描述、年份
-        this.settingService.setApp(res.app);
+        this.settingService.setApp(app);
         // 用户信息：包括姓名、头像、邮箱地址
-        this.settingService.setUser(res.user);
+        this.settingService.setUser(user);
         // ACL：设置权限为全量
         this.aclService.setFull(true);
         // 初始化菜单
-        this.menuService.add(res.menu);
+        let menu = this.formatMenu(res.data);
+        this.menuService.add(menu);
         // 设置页面标题的后缀
-        this.titleService.suffix = res.app.name;
+        this.titleService.suffix = app.name;
       },
       () => {
       },
       () => {
         resolve(null);
       });
+  }
+
+  private formatMenu(nodeList) {
+    return nodeList.map(node => {
+      node.text = node.name;
+      node.link = node.url;
+      node.children = this.formatMenu(node.children);
+      return node;
+    })
   }
 
   private viaMock(resolve: any, reject: any) {
@@ -120,9 +137,9 @@ export class StartupService {
     // https://github.com/angular/angular/issues/15088
     return new Promise((resolve, reject) => {
       // http
-      // this.viaHttp(resolve, reject);
+      this.viaHttp(resolve, reject);
       // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
-      this.viaMock(resolve, reject);
+      // this.viaMock(resolve, reject);
     });
   }
 }

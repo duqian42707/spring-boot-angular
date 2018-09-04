@@ -7,10 +7,12 @@
   <nz-table #nzTable [nzData]="data">
     <thead>
     <tr>
-      <th nzWidth="40%">模块名称</th>
-      <th nzWidth="30%">URL</th>
+      <th nzWidth="30%">模块名称</th>
+      <th>编号</th>
+      <th>URL</th>
       <th>类型</th>
       <th>层级</th>
+      <th>操作</th>
     </tr>
     </thead>
     <tbody>
@@ -20,9 +22,19 @@
           <td [nzIndentSize]="item.level*20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data.id],item,$event)">
             {{item.name}}
           </td>
+          <td>{{item.id}}</td>
           <td>{{item.url}}</td>
           <td>{{item.type}}</td>
           <td>{{item.levelNo}}</td>
+          <td>
+            <a href="javascript:;" (click)="view(item.id)">查看</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a href="javascript:;" (click)="add(item.id)">新增子模块</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a href="javascript:;" (click)="edit(item.id)">编辑</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a href="javascript:;" (click)="delete(item.id)">删除</a>
+          </td>
         </tr>
       </ng-template>
     </ng-template>

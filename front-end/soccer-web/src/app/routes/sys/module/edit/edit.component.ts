@@ -12,7 +12,7 @@ export class SysModuleEditComponent implements OnInit {
   record: any = {};
   i: any;
   form: FormGroup;
-  levelList=[{value: '0', name: '一级模块'}, {value: '1', name: '二级模块'}];
+  levelList = [{value: '0', name: '一级模块'}, {value: '1', name: '二级模块'}];
   submitting = false;
 
 
@@ -32,13 +32,19 @@ export class SysModuleEditComponent implements OnInit {
       levelNo: [null, []],
       parentId: [null, []],
       orderNo: [null, []],
+      icon: [null, []],
     });
-
-    if (this.record.id > 0)
+    if (this.record.id > 0) {
       this.moduleService.getOne(this.record.id).subscribe(res => {
-        this.i = res.data;
-        this.form.patchValue(res.data)
+        this.i = res;
+        this.form.patchValue(res)
       });
+    } else {
+      if (this.record.parentId > 0) {
+        this.i = {parentId: this.record.parentId}
+        this.form.patchValue(this.i)
+      }
+    }
   }
 
   save() {

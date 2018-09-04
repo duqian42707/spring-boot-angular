@@ -17,19 +17,12 @@ export interface TreeNodeInterface {
 })
 export class SysModuleComponent implements OnInit {
   url = `sys/module/list`;
-  data = [
-    {
-      key: 2,
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      children:[]
-    }
-  ];
+  data = [];
   expandDataCache = {};
 
   constructor(private moduleService: ModuleService, private modal: ModalHelper) {
   }
+
   collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
     if ($event === false) {
       if (data.children) {
@@ -48,14 +41,14 @@ export class SysModuleComponent implements OnInit {
     const stack = [];
     const array = [];
     const hashMap = {};
-    stack.push({ ...root, level: 0, expand: false });
+    stack.push({...root, level: 0, expand: false});
 
     while (stack.length !== 0) {
       const node = stack.pop();
       this.visitNode(node, hashMap, array);
       if (node.children) {
         for (let i = node.children.length - 1; i >= 0; i--) {
-          stack.push({ ...node.children[ i ], level: node.level + 1, expand: false, parent: node });
+          stack.push({...node.children[i], level: node.level + 1, expand: false, parent: node});
         }
       }
     }
@@ -64,8 +57,8 @@ export class SysModuleComponent implements OnInit {
   }
 
   visitNode(node: TreeNodeInterface, hashMap: object, array: TreeNodeInterface[]): void {
-    if (!hashMap[ node.id ]) {
-      hashMap[ node.id ] = true;
+    if (!hashMap[node.id]) {
+      hashMap[node.id] = true;
       array.push(node);
     }
   }
@@ -73,21 +66,39 @@ export class SysModuleComponent implements OnInit {
   ngOnInit() {
     this.loadData();
   }
-  loadData(){
-    this.moduleService.getList().subscribe(res=>{
+
+  loadData() {
+    this.moduleService.getList().subscribe(res => {
       this.data = res.data;
-      this.data.forEach((item:any) => {
-        this.expandDataCache[ item.id ] = this.convertTreeToList(item);
+      this.data.forEach((item: any) => {
+        this.expandDataCache[item.id] = this.convertTreeToList(item);
       });
       console.log(this.expandDataCache)
     })
 
   }
 
-  add() {
+  add(parentId?: number) {
     this.modal
-      .createStatic(SysModuleEditComponent, { i: { id: 0 } })
+      .createStatic(SysModuleEditComponent, {i: {id: 0, parentId: parentId}})
       .subscribe(() => this.loadData());
   }
+
+  view(id) {
+    console.log('view', id)
+  }
+
+  edit(id) {
+    console.log('edit', id)
+    this.modal
+      .createStatic(SysModuleEditComponent, {record: {id: id}})
+      .subscribe(() => this.loadData());
+  }
+
+  delete(id) {
+    console.log('delete', id)
+
+  }
+
 
 }
