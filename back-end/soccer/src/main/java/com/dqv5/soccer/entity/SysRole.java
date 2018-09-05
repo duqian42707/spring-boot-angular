@@ -1,6 +1,7 @@
 package com.dqv5.soccer.entity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 角色
@@ -11,10 +12,12 @@ import java.util.Date;
 public class SysRole {
     private Integer id;
     private String roleName;
+    private String protect;
     private Date createTime;
     private Date lastModifiedTime;
     private BasicUser createUser;
     private BasicUser modUser;
+    private List<SysRoleModule> moduleList;
 
     public Integer getId() {
         return id;
@@ -30,6 +33,14 @@ public class SysRole {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getProtect() {
+        return protect;
+    }
+
+    public void setProtect(String protect) {
+        this.protect = protect;
     }
 
     public Date getCreateTime() {
@@ -62,5 +73,13 @@ public class SysRole {
 
     public void setModUser(BasicUser modUser) {
         this.modUser = modUser;
+    }
+
+    public List<SysRoleModule> getModuleList() {
+        return moduleList;
+    }
+
+    public void setModuleList(List<SysRoleModule> moduleList) {
+        this.moduleList = moduleList;
     }
 }

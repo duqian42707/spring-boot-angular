@@ -9,7 +9,6 @@ import java.util.List;
 public  class TreeNode {
     private Integer id;
     private String name;
-    private boolean expand;
     private List<TreeNode> children;
 
     public Integer getId() {
@@ -26,14 +25,6 @@ public  class TreeNode {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isExpand() {
-        return expand;
-    }
-
-    public void setExpand(boolean expand) {
-        this.expand = expand;
     }
 
     public List<TreeNode> getChildren() {

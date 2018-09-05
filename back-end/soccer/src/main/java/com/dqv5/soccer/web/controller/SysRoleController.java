@@ -30,7 +30,7 @@ public class SysRoleController {
      */
     @GetMapping("/list")
     public ResponseEntity list() {
-        return RestReturn.ok();
+        return RestReturn.ok(sysRoleService.findList());
     }
 
     /**

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqv5.soccer.dao.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="com.dqv5.soccer.entity.SysRole">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="protect" property="protect" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="last_modified_time" property="lastModifiedTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT * FROM sys_role
+    </select>
+    <select id="findOne" parameterType="int" resultMap="BaseResultMap">
+        SELECT * FROM sys_role where id = #{id}
+    </select>
+    <insert id="insert" parameterType="com.dqv5.soccer.entity.SysRole">
+        insert into sys_role(id,role_name,create_time)
+        values (null,#{roleName},now())
+    </insert>
+    <insert id="update" parameterType="com.dqv5.soccer.entity.SysRole">
+        update sys_role
+        <set>
+            <if test="roleName!=null">role_name = #{roleName} ,</if>
+            last_modified_time=now()
+        </set>
+        where id=#{id}
+    </insert>
+    <delete id="delete" parameterType="int">
+         delete  FROM sys_role where id = #{id}
+    </delete>
+
+
+
+    <insert id="insertRoleModule" parameterType="com.dqv5.soccer.entity.SysRoleModule">
+        insert into sys_role_module(id,role_id,module_id,perm_value)
+        values (null,#{role.id},#{module.id},#{permValue})
+    </insert>
+    <delete id="deleteModules" parameterType="int">
+         delete  FROM sys_role_module where role_id = #{roleId}
+    </delete>
+
+
+
+</mapper>

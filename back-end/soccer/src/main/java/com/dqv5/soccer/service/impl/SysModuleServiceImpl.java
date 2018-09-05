@@ -27,7 +27,7 @@ public class SysModuleServiceImpl implements SysModuleService {
         for (SysModule sysModule : list) {
             if (sysModule.getParentId() == null) {
                 pushChildren(sysModule, list);
-                sysModule.setExpand(true);
+                sysModule.setExpand("1");
                 result.add(sysModule);
             }
         }
