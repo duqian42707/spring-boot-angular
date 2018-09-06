@@ -30,6 +30,8 @@ public class SysModule extends TreeNode{
     private BasicUser createUser;
     private BasicUser modUser;
 
+    private List<SysFuncRight> funcRightList;
+
     public Integer getId() {
         return id;
     }
@@ -134,4 +136,11 @@ public class SysModule extends TreeNode{
         this.modUser = modUser;
     }
 
+    public List<SysFuncRight> getFuncRightList() {
+        return funcRightList;
+    }
+
+    public void setFuncRightList(List<SysFuncRight> funcRightList) {
+        this.funcRightList = funcRightList;
+    }
 }

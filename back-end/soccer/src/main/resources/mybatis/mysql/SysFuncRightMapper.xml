@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqv5.soccer.dao.SysFuncRightMapper">
+    <resultMap id="BaseResultMap" type="com.dqv5.soccer.entity.SysFuncRight">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="code" property="code"/>
+        <result column="func_name" property="funcName" />
+        <result column="perm_value" property="permValue" />
+    </resultMap>
+
+    <select id="findByModule" resultMap="BaseResultMap">
+        SELECT * FROM sys_func_right where module_id = #{moduleId}
+    </select>
+    <insert id="insert" parameterType="com.dqv5.soccer.entity.SysFuncRight">
+        insert into sys_func_right(id,func_name,code,perm_value,module_id)
+        values (null,#{funcName},#{code},#{permValue},#{module.id})
+    </insert>
+    <delete id="deleteByModule" parameterType="int">
+         delete  FROM sys_func_right where module_id = #{moduleId}
+    </delete>
+</mapper>

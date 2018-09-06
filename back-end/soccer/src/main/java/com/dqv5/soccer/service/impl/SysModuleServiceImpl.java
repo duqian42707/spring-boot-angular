@@ -1,6 +1,8 @@
 package com.dqv5.soccer.service.impl;
 
+import com.dqv5.soccer.dao.SysFuncRightMapper;
 import com.dqv5.soccer.dao.SysModuleMapper;
+import com.dqv5.soccer.entity.SysFuncRight;
 import com.dqv5.soccer.entity.SysModule;
 import com.dqv5.soccer.entity.TreeNode;
 import com.dqv5.soccer.service.SysModuleService;
@@ -19,6 +21,8 @@ public class SysModuleServiceImpl implements SysModuleService {
 
     @Resource
     private SysModuleMapper sysModuleMapper;
+    @Resource
+    private SysFuncRightMapper sysFuncRightMapper;
 
     @Override
     public List<SysModule> findList() {
@@ -45,6 +49,12 @@ public class SysModuleServiceImpl implements SysModuleService {
             sysModuleMapper.insert(sysModule);
         } else {
             sysModuleMapper.update(sysModule);
+        }
+        if (sysModule.getFuncRightList() != null) {
+            sysFuncRightMapper.deleteByModule(sysModule.getId());
+            for (SysFuncRight sysFuncRight : sysModule.getFuncRightList()) {
+                sysFuncRightMapper.insert(sysFuncRight);
+            }
         }
         return sysModule;
     }
