@@ -112,7 +112,6 @@ export class UserLoginComponent implements OnDestroy {
     const username = this.userName.value
     const password = this.password.value
     this.loginService.login(username, password).subscribe(res => {
-      console.log(res)
       this.loading = false;
       // 清空路由复用信息
       this.reuseTabService.clear();
@@ -125,50 +124,6 @@ export class UserLoginComponent implements OnDestroy {
 
   }
 
-  // region: social
-
-  open(type: string, openType: SocialOpenType = 'href') {
-    let url = ``;
-    let callback = ``;
-    if (environment.production)
-      callback = 'https://cipchk.github.io/ng-alain/callback/' + type;
-    else callback = 'http://localhost:4200/callback/' + type;
-    switch (type) {
-      case 'auth0':
-        url = `//cipchk.auth0.com/login?client=8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5&redirect_uri=${decodeURIComponent(
-          callback,
-        )}`;
-        break;
-      case 'github':
-        url = `//github.com/login/oauth/authorize?client_id=9d6baae4b04a23fcafa2&response_type=code&redirect_uri=${decodeURIComponent(
-          callback,
-        )}`;
-        break;
-      case 'weibo':
-        url = `https://api.weibo.com/oauth2/authorize?client_id=1239507802&response_type=code&redirect_uri=${decodeURIComponent(
-          callback,
-        )}`;
-        break;
-    }
-    if (openType === 'window') {
-      this.socialService
-        .login(url, '/', {
-          type: 'window',
-        })
-        .subscribe(res => {
-          if (res) {
-            this.settingsService.setUser(res);
-            this.router.navigateByUrl('/');
-          }
-        });
-    } else {
-      this.socialService.login(url, '/', {
-        type: 'href',
-      });
-    }
-  }
-
-  // endregion
 
   ngOnDestroy(): void {
     if (this.interval$) clearInterval(this.interval$);
