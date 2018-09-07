@@ -6,41 +6,38 @@
   <nz-form-item>
     <nz-form-label nzXs="24" nzSm="6" nzRequired>名称</nz-form-label>
     <nz-form-control nzXs="24" nzSm="14">
-      <input nz-input formControlName="name" id="name">
+      <input autocomplete="off" nz-input formControlName="name" id="name">
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label nzXs="24" nzSm="6" nzRequired>URL</nz-form-label>
+    <nz-form-label nzXs="24" nzSm="6">URL</nz-form-label>
     <nz-form-control nzXs="24" nzSm="14">
-      <input nz-input formControlName="url" id="url">
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label nzXs="24" nzSm="6">层级</nz-form-label>
-    <nz-form-control nzXs="24" nzSm="14">
-      <nz-select formControlName="levelNo" nzAllowClear="false">
-        <ng-container *ngFor="let item of levelList">
-          <nz-option [nzValue]="item.value" [nzLabel]="item.name"></nz-option>
-        </ng-container>
-      </nz-select>
+      <input autocomplete="off" nz-input formControlName="url" id="url">
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label nzXs="24" nzSm="6">上级模块</nz-form-label>
     <nz-form-control nzXs="24" nzSm="14">
-      <input nz-input formControlName="parentId" id="parentId">
+      <nz-tree-select
+        style="width: 250px"
+        [nzDefaultExpandedKeys]="[]"
+        [nzNodes]="parentList"
+        nzShowSearch
+        nzPlaceHolder="请选择"
+        formControlName="parentId">
+      </nz-tree-select>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label nzXs="24" nzSm="6">顺序号</nz-form-label>
     <nz-form-control nzXs="24" nzSm="14">
-      <input nz-input formControlName="orderNo" id="orderNo">
+      <input autocomplete="off" nz-input formControlName="orderNo" id="orderNo">
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label nzXs="24" nzSm="6">样式</nz-form-label>
     <nz-form-control nzXs="24" nzSm="14">
-      <input nz-input formControlName="icon" id="icon">
+      <input autocomplete="off" nz-input formControlName="icon" id="icon">
     </nz-form-control>
   </nz-form-item>
 </form>

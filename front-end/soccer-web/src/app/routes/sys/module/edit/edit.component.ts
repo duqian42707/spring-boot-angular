@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
+import {NzMessageService, NzModalRef, NzTreeNode} from 'ng-zorro-antd';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ModuleService} from "@core/service/sys/module.service";
 
@@ -12,7 +12,7 @@ export class SysModuleEditComponent implements OnInit {
   record: any = {};
   i: any;
   form: FormGroup;
-  levelList = [{value: '0', name: '一级模块'}, {value: '1', name: '二级模块'}];
+  parentList: NzTreeNode[];
   submitting = false;
 
 
@@ -27,19 +27,23 @@ export class SysModuleEditComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       name: [null, [Validators.required]],
-      url: [null, [Validators.required]],
+      url: [null, []],
       type: [null, []],
       levelNo: [null, []],
       parentId: [null, []],
       orderNo: [null, []],
       icon: [null, []],
     });
+    this.moduleService.getMenuForTreeNode().subscribe(res => {
+      this.parentList = res;
+    })
     if (this.record.id > 0) {
       this.moduleService.getOne(this.record.id).subscribe(res => {
         this.i = res;
         this.form.patchValue(res)
       });
     } else {
+      this.i = {}
       if (this.record.parentId > 0) {
         this.i = {parentId: this.record.parentId}
         this.form.patchValue(this.i)

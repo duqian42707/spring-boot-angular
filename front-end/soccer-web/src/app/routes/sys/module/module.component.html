@@ -10,8 +10,7 @@
       <th nzWidth="30%">模块名称</th>
       <th>编号</th>
       <th>URL</th>
-      <th>类型</th>
-      <th>层级</th>
+      <th>样式</th>
       <th>操作</th>
     </tr>
     </thead>
@@ -19,21 +18,21 @@
     <ng-template ngFor let-data [ngForOf]="nzTable.data">
       <ng-template ngFor let-item [ngForOf]="expandDataCache[data.id]">
         <tr *ngIf="(item.parent&&item.parent.expand)||!(item.parent)">
-          <td [nzIndentSize]="item.level*20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data.id],item,$event)">
+          <td [nzIndentSize]="item.level*30" [nzShowExpand]="item.children&&item.children.length>0"
+              [(nzExpand)]="item.expand" (nzExpandChange)="collapse(expandDataCache[data.id],item,$event)">
             {{item.name}}
           </td>
           <td>{{item.id}}</td>
           <td>{{item.url}}</td>
-          <td>{{item.type}}</td>
-          <td>{{item.levelNo}}</td>
+          <td>{{item.icon}}</td>
           <td>
             <a href="javascript:;" (click)="view(item.id)">查看</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javascript:;" (click)="add(item.id)">新增子模块</a>
-            <nz-divider nzType="vertical"></nz-divider>
             <a href="javascript:;" (click)="edit(item.id)">编辑</a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a href="javascript:;" (click)="delete(item.id)">删除</a>
+            <a nz-popconfirm nzTitle="确定要删除吗？" (nzOnConfirm)="delete(item.id)">删除</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a href="javascript:;" (click)="add(item.id)">新增子模块</a>
           </td>
         </tr>
       </ng-template>

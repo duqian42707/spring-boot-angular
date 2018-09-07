@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ModalHelper} from '@delon/theme';
 import {ModuleService} from "@core/service/sys/module.service";
 import {SysModuleEditComponent} from "./edit/edit.component";
+import {NzMessageService} from "ng-zorro-antd";
 
 export interface TreeNodeInterface {
   id: number;
@@ -20,7 +21,9 @@ export class SysModuleComponent implements OnInit {
   data = [];
   expandDataCache = {};
 
-  constructor(private moduleService: ModuleService, private modal: ModalHelper) {
+  constructor(private moduleService: ModuleService,
+              private msgService: NzMessageService,
+              private modal: ModalHelper) {
   }
 
   collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
@@ -41,7 +44,7 @@ export class SysModuleComponent implements OnInit {
     const stack = [];
     const array = [];
     const hashMap = {};
-    stack.push({...root, level: 0, expand: false});
+    stack.push({...root, level: 0, expand: true});
 
     while (stack.length !== 0) {
       const node = stack.pop();
@@ -65,6 +68,7 @@ export class SysModuleComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
+
   }
 
   loadData() {
@@ -72,15 +76,16 @@ export class SysModuleComponent implements OnInit {
       this.data = res.data;
       this.data.forEach((item: any) => {
         this.expandDataCache[item.id] = this.convertTreeToList(item);
+        console.log(this.data)
+        console.log(this.expandDataCache)
       });
-      console.log(this.expandDataCache)
     })
 
   }
 
   add(parentId?: number) {
     this.modal
-      .createStatic(SysModuleEditComponent, {i: {id: 0, parentId: parentId}})
+      .createStatic(SysModuleEditComponent, {record: {id: 0, parentId: parentId}})
       .subscribe(() => this.loadData());
   }
 
@@ -96,8 +101,10 @@ export class SysModuleComponent implements OnInit {
   }
 
   delete(id) {
-    console.log('delete', id)
-
+    this.moduleService.delete(id).subscribe(res => {
+      this.msgService.info(res.msg);
+      this.loadData();
+    })
   }
 
 
