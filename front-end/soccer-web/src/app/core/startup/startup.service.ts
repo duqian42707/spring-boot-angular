@@ -25,6 +25,13 @@ export class StartupService {
   }
 
   private viaHttp(resolve: any, reject: any) {
+    //刷新token
+    this.httpClient.get(`refresh`).subscribe((res: any) => {
+      this.tokenService.set({
+        token: res.token
+      })
+    });
+
     zip(
       this.httpClient.get('sys/module/list')
     ).pipe(
