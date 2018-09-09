@@ -120,6 +120,7 @@ export class UserLoginComponent implements OnDestroy {
         token: res.token,
       });
       this.router.navigate(['/']);
+      this.startupSrv.load();
     })
 
   }

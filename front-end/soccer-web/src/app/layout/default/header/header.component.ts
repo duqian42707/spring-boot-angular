@@ -1,5 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
-import { SettingsService } from '@delon/theme';
+import {Component, Inject, ViewChild} from '@angular/core';
+import {SettingsService} from '@delon/theme';
+import {Router} from "@angular/router";
+import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 
 @Component({
   selector: 'layout-header',
@@ -8,7 +10,10 @@ import { SettingsService } from '@delon/theme';
 export class HeaderComponent {
   searchToggleStatus: boolean;
 
-  constructor(public settings: SettingsService) { }
+  constructor(public settings: SettingsService,
+              private router: Router,
+              @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
+  }
 
   toggleCollapsedSideabar() {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
@@ -16,5 +21,10 @@ export class HeaderComponent {
 
   searchToggleChange() {
     this.searchToggleStatus = !this.searchToggleStatus;
+  }
+
+  logout() {
+    this.tokenService.clear();
+    this.router.navigateByUrl(this.tokenService.login_url);
   }
 }

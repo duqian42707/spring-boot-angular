@@ -30,6 +30,11 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    public Integer getUserIdFromToken(String token) {
+        final Claims claims = getAllClaimsFromToken(token);
+        return (Integer) claims.get("userId");
+    }
+
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }

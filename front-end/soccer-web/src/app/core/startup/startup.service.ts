@@ -33,7 +33,7 @@ export class StartupService {
     });
 
     zip(
-      this.httpClient.get('sys/module/list')
+      this.httpClient.get('sys/frame/info')
     ).pipe(
       // 接收其他拦截器后产生的异常消息
       catchError(([appData]) => {
@@ -41,16 +41,15 @@ export class StartupService {
         return [appData];
       })
     ).subscribe(([appData]) => {
+        const res: any = appData;
         const app: any = {
           name: `soccer`,
-          description: `Ng-zorro admin panel front-end framework`
+          description: `基于Spring boot + angular 的前后端分离的后台管理系统。`
         };
-        const user: any = {
-          name: 'admin',
-          avatar: './assets/tmp/img/avatar.jpg',
-        };
+        const user = res.user;
+        user.name = user.userName;
+        user.avatar = user.avatarUrl;
         // application data
-        const res: any = appData;
         // 应用信息：包括站点名、描述、年份
         this.settingService.setApp(app);
         // 用户信息：包括姓名、头像、邮箱地址
@@ -58,7 +57,7 @@ export class StartupService {
         // ACL：设置权限为全量
         this.aclService.setFull(true);
         // 初始化菜单
-        let menu = this.formatMenu(res.data);
+        let menu = this.formatMenu(res.menu);
         this.menuService.add(menu);
         // 设置页面标题的后缀
         this.titleService.suffix = app.name;
