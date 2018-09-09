@@ -38,13 +38,12 @@ export class StartupService {
       // 接收其他拦截器后产生的异常消息
       catchError(([appData]) => {
         resolve(null);
-        if(!appData)appData={}
-        console.log(appData)
+        if (!appData) appData = {}
         return [appData];
       })
     ).subscribe(([appData]) => {
         const res: any = appData;
-        if(!appData){
+        if (!appData) {
           return false;
         }
         const app: any = {
@@ -70,6 +69,10 @@ export class StartupService {
               text: '仪表盘',
               link: '/dashboard',
               icon: 'anticon anticon-appstore-o',
+            }, {
+              text: '个人资料',
+              link: '/sys/profile',
+              icon: 'anticon anticon-user',
             }
           ]
         },
