@@ -26,7 +26,7 @@ export class BasicUserComponent implements OnInit {
   @ViewChild('st') st: SimpleTableComponent;
   columns: SimpleTableColumn[] = [
     { title: '编号', index: 'id' },
-    { title: '头像', type: 'img', width: '80px', index: 'avatarUrl' },
+    { title: '头像', type: 'img', index: 'avatarUrl' },
     { title: '账号', index: 'account' },
     { title: '用户名', index: 'userName' },
     { title: '性别', index: 'gender' },

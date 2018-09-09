@@ -22,7 +22,7 @@ export class SysRoleComponent implements OnInit {
   };
   @ViewChild('st') st: SimpleTableComponent;
   columns: SimpleTableColumn[] = [
-    {title: '编号', type: 'number', index: 'id'},
+    {title: '编号', index: 'id'},
     {title: '角色名称', index: 'roleName'},
     {
       title: '操作',

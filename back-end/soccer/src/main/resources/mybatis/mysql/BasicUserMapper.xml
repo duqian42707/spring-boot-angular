@@ -25,10 +25,10 @@
     <select id="findOne" parameterType="int" resultMap="BaseResultMap">
         SELECT * FROM basic_user where id = #{id}
     </select>
-    <insert id="insert" parameterType="com.dqv5.soccer.entity.BasicUser">
-        insert into basic_user(id,account,password,avatar_url,gender,phone,status,user_name,mod_user_id,
+    <insert id="insert" parameterType="com.dqv5.soccer.entity.BasicUser" useGeneratedKeys="true" keyProperty="id">
+        insert into basic_user(account,password,avatar_url,gender,phone,status,user_name,mod_user_id,
           last_modified_time
-        ) values (null,#{account},#{password},#{avatarUrl},#{gender},#{phone},#{status},#{userName},#{modUser.userId},now())
+        ) values (#{account},#{password},#{avatarUrl},#{gender},#{phone},#{status},#{userName},#{modUser.userId},now())
     </insert>
     <update id="updateUserInfo" parameterType="com.dqv5.soccer.entity.BasicUser">
         update basic_user
@@ -43,13 +43,24 @@
         </set>
         where id = #{id}
     </update>
+    <update id="updatePassword" parameterType="com.dqv5.soccer.entity.BasicUser">
+        update basic_user
+        <set>
+            <if test="modUser!=null&amp;&amp;modUser.id!=null">mod_user_id = #{modUser.id}</if>
+            password = #{password},
+            last_modified_time = now(),
+            last_password_reset_time = now()
+        </set>
+        where id = #{id}
+    </update>
     <delete id="delete" parameterType="int">
          delete  FROM basic_user where id = #{id}
     </delete>
 
-    <insert id="insertUserRole" parameterType="com.dqv5.soccer.entity.BasicUserRole">
-        insert into basic_user_role(id,user_id,role_id)
-        values (null,#{userId},#{roleId})
+    <insert id="insertUserRole" parameterType="com.dqv5.soccer.entity.BasicUserRole" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into basic_user_role(user_id,role_id)
+        values (#{userId},#{roleId})
     </insert>
     <delete id="deleteUserRoles" parameterType="int">
          delete  FROM basic_user_role where user_id = #{userId}

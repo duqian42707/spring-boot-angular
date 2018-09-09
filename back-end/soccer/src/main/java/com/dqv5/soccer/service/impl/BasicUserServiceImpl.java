@@ -5,8 +5,12 @@ import com.dqv5.soccer.entity.BasicUser;
 import com.dqv5.soccer.entity.BasicUserRole;
 import com.dqv5.soccer.entity.SysRole;
 import com.dqv5.soccer.service.BasicUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,6 +30,12 @@ public class BasicUserServiceImpl implements BasicUserService {
     @Resource
     private BasicUserMapper basicUserMapper;
 
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
+    @Value("${sysconfig.default-password}")
+    private String defaultPassword;
+
     @Override
     public List<BasicUser> findAll() {
         return basicUserMapper.findAllByOrderById();
@@ -34,15 +44,15 @@ public class BasicUserServiceImpl implements BasicUserService {
     @Override
     public BasicUser findOne(Integer id) {
         BasicUser basicUser = basicUserMapper.findOne(id);
-        if (basicUser != null) {
-
-        }
         return basicUser;
     }
 
     @Override
     public BasicUser save(BasicUser basicUser) {
         if (basicUser.getId() == null) {
+            if (StringUtils.isBlank(basicUser.getPassword())) {
+                basicUser.setPassword(passwordEncoder.encode(defaultPassword));
+            }
             basicUserMapper.insert(basicUser);
         } else {
             basicUserMapper.updateUserInfo(basicUser);

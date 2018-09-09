@@ -23,6 +23,7 @@ public interface BasicUserMapper {
     void insert(BasicUser basicUser);
 
     void updateUserInfo(BasicUser basicUser);
+    void updatePassword(BasicUser basicUser);
 
     void delete(Integer id);
 

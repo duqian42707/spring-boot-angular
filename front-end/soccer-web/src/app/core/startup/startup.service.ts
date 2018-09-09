@@ -38,10 +38,15 @@ export class StartupService {
       // 接收其他拦截器后产生的异常消息
       catchError(([appData]) => {
         resolve(null);
+        if(!appData)appData={}
+        console.log(appData)
         return [appData];
       })
     ).subscribe(([appData]) => {
         const res: any = appData;
+        if(!appData){
+          return false;
+        }
         const app: any = {
           name: `soccer`,
           description: `基于Spring boot + angular 的前后端分离的后台管理系统。`

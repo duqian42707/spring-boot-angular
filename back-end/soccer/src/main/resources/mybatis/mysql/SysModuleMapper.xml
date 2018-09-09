@@ -18,9 +18,9 @@
     <select id="findOne" parameterType="int" resultMap="BaseResultMap">
         SELECT * FROM sys_module where id = #{id}
     </select>
-    <insert id="insert" parameterType="com.dqv5.soccer.entity.SysModule">
-        insert into sys_module(id,name,parent_id,type,url,order_no,expand,icon)
-        values (null,#{name},#{parentId},#{type},#{url},#{orderNo},#{expand},#{icon})
+    <insert id="insert" parameterType="com.dqv5.soccer.entity.SysModule" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_module(name,parent_id,type,url,order_no,expand,icon)
+        values (#{name},#{parentId},#{type},#{url},#{orderNo},#{expand},#{icon})
     </insert>
     <insert id="update" parameterType="com.dqv5.soccer.entity.SysModule">
         update sys_module

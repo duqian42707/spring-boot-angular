@@ -112,7 +112,6 @@ export class UserLoginComponent implements OnDestroy {
     const username = this.userName.value
     const password = this.password.value
     this.loginService.login(username, password).subscribe(res => {
-      this.loading = false;
       // 清空路由复用信息
       this.reuseTabService.clear();
       // 设置Token信息
@@ -121,6 +120,9 @@ export class UserLoginComponent implements OnDestroy {
       });
       this.router.navigate(['/']);
       this.startupSrv.load();
+    }, err => {
+    }, () => {
+      this.loading = false;
     })
 
   }

@@ -13,16 +13,16 @@
         SELECT * FROM sys_role
     </select>
     <select id="findListByUser" resultMap="BaseResultMap" parameterType="int">
-        SELECT * FROM basic_user_role t
+        SELECT r.id,r.role_name FROM basic_user_role t
         join sys_role r on t.role_id = r.id
         where t.user_id=#{userId}
     </select>
     <select id="findOne" parameterType="int" resultMap="BaseResultMap">
         SELECT * FROM sys_role where id = #{id}
     </select>
-    <insert id="insert" parameterType="com.dqv5.soccer.entity.SysRole">
-        insert into sys_role(id,role_name,create_time)
-        values (null,#{roleName},now())
+    <insert id="insert" parameterType="com.dqv5.soccer.entity.SysRole" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_role(role_name,create_time)
+        values (#{roleName},now())
     </insert>
     <insert id="update" parameterType="com.dqv5.soccer.entity.SysRole">
         update sys_role
@@ -37,10 +37,9 @@
     </delete>
 
 
-
-    <insert id="insertRoleModule" parameterType="com.dqv5.soccer.entity.SysRoleModule">
-        insert into sys_role_module(id,role_id,module_id,perm_value)
-        values (null,#{role.id},#{module.id},#{permValue})
+    <insert id="insertRoleModule" parameterType="com.dqv5.soccer.entity.SysRoleModule" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_role_module(role_id,module_id,perm_value)
+        values (#{role.id},#{module.id},#{permValue})
     </insert>
     <delete id="deleteModules" parameterType="int">
          delete  FROM sys_role_module where role_id = #{roleId}
