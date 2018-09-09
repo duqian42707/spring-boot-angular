@@ -23,6 +23,10 @@ export class HeaderComponent {
     this.searchToggleStatus = !this.searchToggleStatus;
   }
 
+  profile() {
+    this.router.navigateByUrl('/sys/profile');
+  }
+
   logout() {
     this.tokenService.clear();
     this.router.navigateByUrl(this.tokenService.login_url);

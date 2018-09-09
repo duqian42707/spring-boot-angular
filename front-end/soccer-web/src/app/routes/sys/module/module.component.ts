@@ -76,8 +76,6 @@ export class SysModuleComponent implements OnInit {
       this.data = res.data;
       this.data.forEach((item: any) => {
         this.expandDataCache[item.id] = this.convertTreeToList(item);
-        console.log(this.data)
-        console.log(this.expandDataCache)
       });
     })
 

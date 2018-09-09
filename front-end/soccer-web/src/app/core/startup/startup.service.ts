@@ -58,6 +58,17 @@ export class StartupService {
         this.aclService.setFull(true);
         // 初始化菜单
         let menu = this.formatMenu(res.menu);
+        menu = [{
+          text: '主菜单',
+          children: [
+            {
+              text: '仪表盘',
+              link: '/dashboard',
+              icon: 'anticon anticon-appstore-o',
+            }
+          ]
+        },
+          ...menu];
         this.menuService.add(menu);
         // 设置页面标题的后缀
         this.titleService.suffix = app.name;

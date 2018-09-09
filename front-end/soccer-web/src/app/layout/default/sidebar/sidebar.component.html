@@ -8,7 +8,7 @@
       </div>
     </div>
     <ul nz-menu>
-      <li nz-menu-item (click)="msgSrv.success('profile')"><i class="anticon anticon-user mr-sm"></i>个人资料</li>
+      <li nz-menu-item (click)="router.navigateByUrl('/sys/profile')"><i class="anticon anticon-user mr-sm"></i>个人资料</li>
       <li nz-menu-item [nzDisabled]="true" (click)="msgSrv.success('settings')"><i class="anticon anticon-setting mr-sm"></i>设置</li>
       <li nz-menu-divider></li>
       <li nz-menu-item (click)="msgSrv.success('logout')"><i class="anticon anticon-logout mr-sm"></i>登出</li>

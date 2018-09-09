@@ -7,6 +7,7 @@ import {BasicUserViewComponent} from './user/view/view.component';
 import { SysModuleComponent } from './module/module.component';
 import { SysModuleEditComponent } from './module/edit/edit.component';
 import { SysModuleViewComponent } from './module/view/view.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const COMPONENTS = [
   BasicUserComponent,
@@ -24,7 +25,8 @@ const COMPONENTS_NOROUNT = [
   ],
   declarations: [
     ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
+    ...COMPONENTS_NOROUNT,
+    ProfileComponent
   ],
   entryComponents: COMPONENTS_NOROUNT
 })
