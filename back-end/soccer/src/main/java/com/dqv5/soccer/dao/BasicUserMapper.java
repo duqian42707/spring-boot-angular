@@ -1,6 +1,7 @@
 package com.dqv5.soccer.dao;
 
 import com.dqv5.soccer.entity.BasicUser;
+import com.dqv5.soccer.entity.BasicUserRole;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -24,4 +25,8 @@ public interface BasicUserMapper {
     void updateUserInfo(BasicUser basicUser);
 
     void delete(Integer id);
+
+    void insertUserRole(BasicUserRole basicUserRole);
+
+    void deleteUserRoles(int userId);
 }

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
 import {_HttpClient} from '@delon/theme';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {RoleService} from "@core/service/sys/role.service";
+import {UserService} from "@core/service/sys/user.service";
 
 @Component({
   selector: 'app-basic-user-edit',
@@ -13,12 +15,14 @@ export class BasicUserEditComponent implements OnInit {
   i: any;
   form: FormGroup;
   genderList = [{value: '1', name: '男'}, {value: '2', name: '女'}];
+  roleList;
   submitting = false;
 
   constructor(
     private modal: NzModalRef,
     public msgSrv: NzMessageService,
-    public http: _HttpClient,
+    private userService: UserService,
+    private roleService: RoleService,
     private fb: FormBuilder
   ) {
   }
@@ -27,13 +31,20 @@ export class BasicUserEditComponent implements OnInit {
     this.form = this.fb.group({
       account: [null, [Validators.required]],
       userName: [null, [Validators.required]],
+      roles: [null, [Validators.required]],
       phone: [null, []],
       gender: [null, []],
     });
+
+    this.roleService.getRoleList().subscribe(res => {
+      this.roleList = res.data;
+    })
+
     if (this.record.id > 0)
-      this.http.get<any>(`basic/user/get/${this.record.id}`).subscribe(res => {
+      this.userService.get(this.record.id).subscribe(res => {
         this.i = res.data;
-        this.form.patchValue(res.data)
+        this.i.roles = this.i.roles.map(v => v.id);
+        this.form.patchValue(this.i)
       });
   }
 
@@ -56,8 +67,10 @@ export class BasicUserEditComponent implements OnInit {
       value = this.form.getRawValue()
     }
 
+    value.roles = value.roles.map(v => ({id: v}))
+
     this.submitting = true;
-    this.http.post(`basic/user/save`, value).subscribe(res => {
+    this.userService.save(value).subscribe(res => {
       this.submitting = false;
       this.msgSrv.success('保存成功');
       this.modal.close(true);

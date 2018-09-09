@@ -55,7 +55,6 @@ export class BasicUserComponent implements OnInit {
       this.msg.success(res.msg);
       this.st.reload()
     })
-
   }
 
 }

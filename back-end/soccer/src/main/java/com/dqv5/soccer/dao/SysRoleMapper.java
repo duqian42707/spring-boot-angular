@@ -12,6 +12,8 @@ import java.util.List;
 public interface SysRoleMapper {
     List<SysRole> findList();
 
+    List<SysRole> findListByUser(int userId);
+
     SysRole findOne(int id);
 
     void insert(SysRole sysRole);

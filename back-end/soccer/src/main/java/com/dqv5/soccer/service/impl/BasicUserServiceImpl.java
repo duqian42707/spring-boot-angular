@@ -2,6 +2,8 @@ package com.dqv5.soccer.service.impl;
 
 import com.dqv5.soccer.dao.BasicUserMapper;
 import com.dqv5.soccer.entity.BasicUser;
+import com.dqv5.soccer.entity.BasicUserRole;
+import com.dqv5.soccer.entity.SysRole;
 import com.dqv5.soccer.service.BasicUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,11 @@ public class BasicUserServiceImpl implements BasicUserService {
 
     @Override
     public BasicUser findOne(Integer id) {
-        return basicUserMapper.findOne(id);
+        BasicUser basicUser = basicUserMapper.findOne(id);
+        if (basicUser != null) {
+
+        }
+        return basicUser;
     }
 
     @Override
@@ -40,6 +46,15 @@ public class BasicUserServiceImpl implements BasicUserService {
             basicUserMapper.insert(basicUser);
         } else {
             basicUserMapper.updateUserInfo(basicUser);
+        }
+        if (basicUser.getRoles() != null) {
+            basicUserMapper.deleteUserRoles(basicUser.getId());
+            for (SysRole role : basicUser.getRoles()) {
+                BasicUserRole userRole = new BasicUserRole();
+                userRole.setUserId(basicUser.getId());
+                userRole.setRoleId(role.getId());
+                basicUserMapper.insertUserRole(userRole);
+            }
         }
         return basicUser;
     }

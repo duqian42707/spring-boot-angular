@@ -9,6 +9,10 @@ export class UserService {
 
   }
 
+  get(id: any): Observable<any> {
+    return this.http.get<any>(`basic/user/get/${id}`)
+  }
+
   save(user: any): Observable<any> {
     return this.http.post(`basic/user/save`, user);
   }

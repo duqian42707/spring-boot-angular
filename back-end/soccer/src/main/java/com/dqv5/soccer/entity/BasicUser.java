@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author admin
@@ -25,6 +26,7 @@ public class BasicUser implements UserDetails, Serializable {
     private Date lastPasswordResetTime;
     private Date lastModifiedTime;
     private BasicUser modUser;
+    private List<SysRole> roles;
 
 
     //-----------implements from UserDetails----------//
@@ -75,7 +77,6 @@ public class BasicUser implements UserDetails, Serializable {
     public String getUsername() {
         return account;
     }
-
 
 
     //-----------getters and setters below------------------//
@@ -166,5 +167,13 @@ public class BasicUser implements UserDetails, Serializable {
 
     public void setModUser(BasicUser modUser) {
         this.modUser = modUser;
+    }
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
     }
 }

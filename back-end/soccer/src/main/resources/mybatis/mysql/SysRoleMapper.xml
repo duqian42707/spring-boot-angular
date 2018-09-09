@@ -12,6 +12,11 @@
     <select id="findList" resultMap="BaseResultMap">
         SELECT * FROM sys_role
     </select>
+    <select id="findListByUser" resultMap="BaseResultMap" parameterType="int">
+        SELECT * FROM basic_user_role t
+        join sys_role r on t.role_id = r.id
+        where t.user_id=#{userId}
+    </select>
     <select id="findOne" parameterType="int" resultMap="BaseResultMap">
         SELECT * FROM sys_role where id = #{id}
     </select>

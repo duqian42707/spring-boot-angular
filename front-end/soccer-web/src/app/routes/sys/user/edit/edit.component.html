@@ -6,13 +6,21 @@
   <nz-form-item>
     <nz-form-label nzXs="24" nzSm="6" nzRequired>账号</nz-form-label>
     <nz-form-control nzXs="24" nzSm="14">
-      <input nz-input formControlName="account" id="account">
+      <input autocomplete="off" nz-input formControlName="account" id="account">
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label nzXs="24" nzSm="6" nzRequired>用户名</nz-form-label>
     <nz-form-control nzXs="24" nzSm="14">
-      <input nz-input formControlName="userName" id="userName">
+      <input autocomplete="off" nz-input formControlName="userName" id="userName">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6" nzRequired>角色</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <nz-select style="width: 100%" nzMode="multiple" nzPlaceHolder="请选择" formControlName="roles">
+        <nz-option *ngFor="let item of roleList" [nzLabel]="item.roleName" [nzValue]="item.id"></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
@@ -24,7 +32,7 @@
             <nz-option nzLabel="+86" nzValue="+86"></nz-option>
           </nz-select>
         </ng-template>
-        <input nz-input formControlName="phone" id="phone">
+        <input autocomplete="off" nz-input formControlName="phone" id="phone">
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>

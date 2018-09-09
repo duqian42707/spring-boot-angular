@@ -13,6 +13,7 @@
         <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
         <result column="last_password_reset_time" property="lastPasswordResetTime" jdbcType="TIMESTAMP"/>
         <result column="last_modified_time" property="lastModifiedTime" jdbcType="TIMESTAMP"/>
+        <collection property="roles" column="id" select="com.dqv5.soccer.dao.SysRoleMapper.findListByUser"></collection>
     </resultMap>
 
     <select id="findAllByOrderById" resultMap="BaseResultMap">
@@ -45,4 +46,13 @@
     <delete id="delete" parameterType="int">
          delete  FROM basic_user where id = #{id}
     </delete>
+
+    <insert id="insertUserRole" parameterType="com.dqv5.soccer.entity.BasicUserRole">
+        insert into basic_user_role(id,user_id,role_id)
+        values (null,#{userId},#{roleId})
+    </insert>
+    <delete id="deleteUserRoles" parameterType="int">
+         delete  FROM basic_user_role where user_id = #{userId}
+    </delete>
+
 </mapper>
