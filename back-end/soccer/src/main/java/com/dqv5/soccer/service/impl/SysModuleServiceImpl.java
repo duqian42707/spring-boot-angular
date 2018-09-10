@@ -27,15 +27,13 @@ public class SysModuleServiceImpl implements SysModuleService {
     @Override
     public List<SysModule> findList() {
         List<SysModule> list = sysModuleMapper.findList();
-        List<SysModule> result = new ArrayList<>();
-        for (SysModule sysModule : list) {
-            if (sysModule.getParentId() == null) {
-                pushChildren(sysModule, list);
-                sysModule.setExpand("1");
-                result.add(sysModule);
-            }
-        }
-        return result;
+        return moduleListToTree(list);
+    }
+
+    @Override
+    public List<SysModule> findListByUser(int userId) {
+        List<SysModule> list = sysModuleMapper.findListByUser(userId);
+        return moduleListToTree(list);
     }
 
     @Override
@@ -63,6 +61,20 @@ public class SysModuleServiceImpl implements SysModuleService {
     public void delete(Integer id) {
         sysModuleMapper.delete(id);
     }
+
+
+    private List<SysModule> moduleListToTree(List<SysModule> list) {
+        List<SysModule> result = new ArrayList<>();
+        for (SysModule sysModule : list) {
+            if (sysModule.getParentId() == null) {
+                pushChildren(sysModule, list);
+                sysModule.setExpand("1");
+                result.add(sysModule);
+            }
+        }
+        return result;
+    }
+
 
     private void pushChildren(SysModule module, List<SysModule> allList) {
         List<TreeNode> children = new ArrayList<>();

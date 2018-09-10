@@ -11,6 +11,8 @@ import java.util.List;
 public interface SysModuleMapper {
     List<SysModule> findList();
 
+    List<SysModule> findListByUser(int userId);
+
     SysModule findOne(Integer id);
 
     void insert(SysModule sysModule);

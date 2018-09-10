@@ -40,7 +40,7 @@ public class SysFrameController {
         final String token = authToken.substring(7);
         String username = jwtTokenUtil.getUsernameFromToken(token);
         BasicUser user = (BasicUser) userDetailsService.loadUserByUsername(username);
-        List<SysModule> menu = sysModuleService.findList();
+        List<SysModule> menu = sysModuleService.findListByUser(user.getId());
         Map map = new HashMap();
         map.put("user", user);
         map.put("menu", menu);

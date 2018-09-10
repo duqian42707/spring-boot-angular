@@ -11,6 +11,8 @@ import java.util.List;
 public interface SysModuleService {
     List<SysModule> findList();
 
+    List<SysModule> findListByUser(int userId);
+
     SysModule findOne(Integer id);
 
     SysModule save(SysModule sysModule);
