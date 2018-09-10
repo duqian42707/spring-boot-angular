@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqv5.soccer.dao.SysDictMapper">
+    <resultMap id="BaseResultMap" type="com.dqv5.soccer.entity.SysDict">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="value" property="value" jdbcType="VARCHAR"/>
+        <result column="display" property="display" jdbcType="VARCHAR"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="enable" property="enable"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.dqv5.soccer.entity.SysDict" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_dict(name,code,value,display,create_time)
+        values (#{name},#{code},#{value},#{display},now())
+    </insert>
+    <insert id="update" parameterType="com.dqv5.soccer.entity.SysDict">
+        update sys_dict
+        <set>
+            <if test="name!=null">name = #{name} ,</if>
+        </set>
+        where id=#{id}
+    </insert>
+    <delete id="delete" parameterType="int">
+         delete  FROM sys_dict where id = #{id}
+    </delete>
+    <delete id="deleteByCode" parameterType="string">
+         delete  FROM sys_dict where code = #{code}
+    </delete>
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT * FROM sys_dict
+    </select>
+
+
+</mapper>
