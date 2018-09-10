@@ -9,6 +9,16 @@
       <input autocomplete="off" nz-input formControlName="roleName" id="roleName">
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzXs="24" nzSm="6" nzRequired>关联模块</nz-form-label>
+    <nz-form-control nzXs="24" nzSm="14">
+      <nz-tree #nzTree formControlName="modules"
+               [nzCheckable]="true"
+               [nzMultiple]="true"
+               [nzDefaultExpandAll]="true">
+      </nz-tree>
+    </nz-form-control>
+  </nz-form-item>
 </form>
 <div class="modal-footer">
   <button nz-button type="button" (click)="close()">关闭</button>
