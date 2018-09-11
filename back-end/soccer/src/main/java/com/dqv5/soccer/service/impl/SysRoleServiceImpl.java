@@ -39,6 +39,9 @@ public class SysRoleServiceImpl implements SysRoleService {
         if (sysRole.getModuleList() != null) {
             sysRoleMapper.deleteModules(sysRole.getId());
             for (SysRoleModule roleModule : sysRole.getModuleList()) {
+                SysRole role = new SysRole();
+                role.setId(sysRole.getId());
+                roleModule.setRole(role);
                 sysRoleMapper.insertRoleModule(roleModule);
             }
         }

@@ -42,13 +42,15 @@ export class ModuleService {
 
   private menu2NzTreeNode(menu: any) {
     let children = null;
-    if (menu.children) {
+    if (menu.children && menu.children.length != 0) {
       children = menu.children.map(v => this.menu2NzTreeNode(v));
     }
+
     return new NzTreeNode({
       key: menu.id,
       title: menu.name,
       children: children,
+      isLeaf: children == null
     })
   }
 

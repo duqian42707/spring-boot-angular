@@ -47,13 +47,31 @@ export class SysRoleEditComponent implements OnInit {
     if (this.record.id > 0) {
       value.id = this.record.id;
     }
-    var checkedNodeList = this.nzTree.getCheckedNodeList();
-    console.log(value)
-    console.log(checkedNodeList)
-    // this.roleService.save(value).subscribe(res => {
-    //   this.msgSrv.success('保存成功');
-    //   this.modal.close(true);
-    // });
+    let modules = this.getCheckedLeafNodes(value.modules);
+    value.moduleList = modules.map(v=>(
+      {
+        module:{id:v.key}
+      }
+    ));
+    delete value.modules;
+
+    this.roleService.save(value).subscribe(res => {
+      this.msgSrv.success('保存成功');
+      this.modal.close(true);
+    });
+  }
+
+
+  private getCheckedLeafNodes(nodes) {
+    let arr = [];
+    nodes.forEach(v => {
+      if (v.isLeaf && v.isChecked) {
+        arr.push(v)
+      } else {
+        arr = [...arr, ...this.getCheckedLeafNodes(v.children)]
+      }
+    });
+    return arr;
   }
 
   close() {
