@@ -13,6 +13,7 @@
     <nz-form-label nzXs="24" nzSm="6" nzRequired>关联模块</nz-form-label>
     <nz-form-control nzXs="24" nzSm="14">
       <nz-tree #nzTree formControlName="modules"
+               [nzDefaultCheckedKeys]="checkedKeys"
                [nzCheckable]="true"
                [nzMultiple]="true"
                [nzDefaultExpandAll]="true">

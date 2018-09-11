@@ -7,10 +7,20 @@
         <result column="protect" property="protect" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="last_modified_time" property="lastModifiedTime" jdbcType="TIMESTAMP"/>
+        <collection property="modules" column="id" select="selectRoleModules"></collection>
+    </resultMap>
+    <resultMap id="RoleModuleMap" type="com.dqv5.soccer.entity.SysRoleModule">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="role_id" property="roleId"/>
+        <result column="module_id" property="moduleId"/>
+        <result column="perm_value" property="permValue"/>
     </resultMap>
 
     <select id="findList" resultMap="BaseResultMap">
         SELECT * FROM sys_role
+    </select>
+    <select id="selectRoleModules" parameterType="int" resultMap="RoleModuleMap">
+        SELECT * FROM sys_role_module  where role_id = #{roleId}
     </select>
     <select id="findListByUser" resultMap="BaseResultMap" parameterType="int">
         SELECT r.id,r.role_name FROM basic_user_role t
@@ -37,14 +47,14 @@
     </delete>
 
 
-    <insert id="insertRoleModule" parameterType="com.dqv5.soccer.entity.SysRoleModule" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertRoleModule" parameterType="com.dqv5.soccer.entity.SysRoleModule" useGeneratedKeys="true"
+            keyProperty="id">
         insert into sys_role_module(role_id,module_id,perm_value)
-        values (#{role.id},#{module.id},#{permValue})
+        values (#{roleId},#{moduleId},#{permValue})
     </insert>
     <delete id="deleteModules" parameterType="int">
          delete  FROM sys_role_module where role_id = #{roleId}
     </delete>
-
 
 
 </mapper>

@@ -9,8 +9,8 @@ package com.dqv5.soccer.entity;
  */
 public class SysRoleModule {
     private Integer id;
-    private SysRole role;
-    private SysModule module;
+    private Integer roleId;
+    private Integer moduleId;
     private Integer permValue;
 
     public Integer getId() {
@@ -21,20 +21,20 @@ public class SysRoleModule {
         this.id = id;
     }
 
-    public SysRole getRole() {
-        return role;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRole(SysRole role) {
-        this.role = role;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
-    public SysModule getModule() {
-        return module;
+    public Integer getModuleId() {
+        return moduleId;
     }
 
-    public void setModule(SysModule module) {
-        this.module = module;
+    public void setModuleId(Integer moduleId) {
+        this.moduleId = moduleId;
     }
 
     public Integer getPermValue() {

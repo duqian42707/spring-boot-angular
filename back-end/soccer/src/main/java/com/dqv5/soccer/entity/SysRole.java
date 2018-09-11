@@ -17,7 +17,7 @@ public class SysRole {
     private Date lastModifiedTime;
     private BasicUser createUser;
     private BasicUser modUser;
-    private List<SysRoleModule> moduleList;
+    private List<SysRoleModule> modules;
 
     public Integer getId() {
         return id;
@@ -75,11 +75,11 @@ public class SysRole {
         this.modUser = modUser;
     }
 
-    public List<SysRoleModule> getModuleList() {
-        return moduleList;
+    public List<SysRoleModule> getModules() {
+        return modules;
     }
 
-    public void setModuleList(List<SysRoleModule> moduleList) {
-        this.moduleList = moduleList;
+    public void setModules(List<SysRoleModule> modules) {
+        this.modules = modules;
     }
 }

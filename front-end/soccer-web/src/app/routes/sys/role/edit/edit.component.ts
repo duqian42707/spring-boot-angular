@@ -16,6 +16,7 @@ export class SysRoleEditComponent implements OnInit {
   i: any;
   form;
   submitting = false;
+  checkedKeys = [];
 
   constructor(
     private modal: NzModalRef,
@@ -32,14 +33,18 @@ export class SysRoleEditComponent implements OnInit {
       modules: [null, [Validators.required]],
     });
     this.moduleService.getMenuForTreeNode().subscribe(res => {
-      this.form.patchValue({modules: res})
+      let modules = res;
+      if (this.record.id > 0) {
+        this.roleService.get(this.record.id).subscribe(res => {
+          this.i = res.data;
+          this.checkedKeys = res.data.modules.map(v => v.moduleId);
+          delete res.data.modules;
+          this.form.patchValue(res.data)
+        });
+      }
+      this.form.patchValue({modules: modules})
     })
 
-    if (this.record.id > 0)
-      this.roleService.get(this.record.id).subscribe(res => {
-        this.i = res.data;
-        this.form.patchValue(res.data)
-      });
   }
 
   save() {
@@ -48,12 +53,7 @@ export class SysRoleEditComponent implements OnInit {
       value.id = this.record.id;
     }
     let modules = this.getCheckedLeafNodes(value.modules);
-    value.moduleList = modules.map(v=>(
-      {
-        module:{id:v.key}
-      }
-    ));
-    delete value.modules;
+    value.modules = modules.map(v => ({moduleId: v.key}));
 
     this.roleService.save(value).subscribe(res => {
       this.msgSrv.success('保存成功');
