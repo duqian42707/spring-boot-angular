@@ -11,18 +11,24 @@ import {ProfileComponent} from './profile/profile.component';
 import {SysRoleComponent} from './role/role.component';
 import {SysRoleEditComponent} from './role/edit/edit.component';
 import {SysRoleViewComponent} from './role/view/view.component';
+import { SysDictComponent } from './dict/dict.component';
+import { SysDictEditComponent } from './dict/edit/edit.component';
+import { SysDictViewComponent } from './dict/view/view.component';
 
 const COMPONENTS = [
   BasicUserComponent,
   SysModuleComponent,
-  SysRoleComponent];
+  SysRoleComponent,
+  SysDictComponent];
 const COMPONENTS_NOROUNT = [
   BasicUserEditComponent,
   BasicUserViewComponent,
   SysModuleEditComponent,
   SysModuleViewComponent,
   SysRoleEditComponent,
-  SysRoleViewComponent];
+  SysRoleViewComponent,
+  SysDictEditComponent,
+  SysDictViewComponent];
 
 @NgModule({
   imports: [
