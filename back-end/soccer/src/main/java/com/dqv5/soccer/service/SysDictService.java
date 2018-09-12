@@ -12,6 +12,8 @@ public interface SysDictService {
 
     void save(SysDict sysDict);
 
+    void delete(int id);
+
     void deleteByCode(String code);
 
     List<SysDict> findList();

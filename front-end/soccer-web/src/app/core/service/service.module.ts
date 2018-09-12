@@ -5,6 +5,7 @@ import {LoginService} from "@core/service/sys/login.service";
 import {UserService} from "@core/service/sys/user.service";
 import {ModuleService} from "@core/service/sys/module.service";
 import {RoleService} from "@core/service/sys/role.service";
+import {DictService} from "@core/service/sys/dict.service";
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {RoleService} from "@core/service/sys/role.service";
     LoginService,
     UserService,
     ModuleService,
-    RoleService
+    RoleService,
+    DictService
   ]
 })
 export class ServiceModule {

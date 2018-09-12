@@ -4,6 +4,7 @@ import {BasicUserComponent} from "./user/user.component";
 import {SysModuleComponent} from './module/module.component';
 import {ProfileComponent} from "./profile/profile.component";
 import {SysRoleComponent} from './role/role.component';
+import { SysDictComponent } from './dict/dict.component';
 
 const routes: Routes = [
 
@@ -14,6 +15,8 @@ const routes: Routes = [
   {path: 'module', component: SysModuleComponent},
   //角色管理
   {path: 'role', component: SysRoleComponent},
+  //字典管理
+  {path: 'dict', component: SysDictComponent},
 ];
 
 @NgModule({

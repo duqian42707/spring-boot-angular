@@ -14,8 +14,8 @@
 
 
     <insert id="insert" parameterType="com.dqv5.soccer.entity.SysDict" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_dict(name,code,value,display,create_time)
-        values (#{name},#{code},#{value},#{display},now())
+        insert into sys_dict(name,code,value,display,order_no,create_time)
+        values (#{name},#{code},#{value},#{display},#{orderNo},now())
     </insert>
     <insert id="update" parameterType="com.dqv5.soccer.entity.SysDict">
         update sys_dict

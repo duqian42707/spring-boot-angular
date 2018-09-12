@@ -49,8 +49,19 @@ public class SysDictController {
      * @param code
      * @return
      */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable("id") Integer id) {
+        sysDictService.delete(id);
+        return RestReturn.ok();
+    }
+    /**
+     * 删除
+     *
+     * @param code
+     * @return
+     */
     @DeleteMapping("/deleteByCode/{code}")
-    public ResponseEntity delte(@PathVariable("code") String code) {
+    public ResponseEntity deleteByCode(@PathVariable("code") String code) {
         sysDictService.deleteByCode(code);
         return RestReturn.ok();
     }
