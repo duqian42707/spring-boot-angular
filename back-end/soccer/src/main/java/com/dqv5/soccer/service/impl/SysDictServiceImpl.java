@@ -29,6 +29,11 @@ public class SysDictServiceImpl implements SysDictService {
     }
 
     @Override
+    public void delete(int id) {
+        sysDictMapper.delete(id);
+    }
+
+    @Override
     public void deleteByCode(String code) {
         if (StringUtils.isBlank(code)) {
             throw new CommonRuntimeException("code不能为空！");

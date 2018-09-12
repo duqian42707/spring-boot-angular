@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
-import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {_HttpClient, ModalHelper} from '@delon/theme';
+import {SimpleTableColumn, SimpleTableComponent} from '@delon/abc';
+import {SFSchema} from '@delon/form';
+import {SysDictEditComponent} from "./edit/edit.component";
+import {DictService} from "@core/service/sys/dict.service";
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-sys-dict',
@@ -19,28 +22,39 @@ export class SysDictComponent implements OnInit {
   };
   @ViewChild('st') st: SimpleTableComponent;
   columns: SimpleTableColumn[] = [
-    { title: '名称', index: 'name' },
-    { title: '编码', index: 'code' },
-    { title: '值', index: 'value' },
-    { title: '显示值',index: 'display' },
-    { title: '顺序号', index: 'orderNo' },
+    {title: '名称', index: 'name'},
+    {title: '编码', index: 'code'},
+    {title: '值', index: 'value'},
+    {title: '显示值', index: 'display'},
+    {title: '顺序号', index: 'orderNo'},
     {
-      title: '',
+      title: '操作',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        {text: '编辑', type: 'static', click: 'reload'},
+        {text: '删除', type: 'del', click: (item: any) => this.delete(item.id)}
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  constructor(private dictService: DictService,
+              private modal: ModalHelper,
+              private msgService: NzMessageService) {
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.modal
+      .createStatic(SysDictEditComponent, {i: {id: 0}})
+      .subscribe(() => this.st.reload());
+  }
+
+  delete(id) {
+    this.dictService.delete(id).subscribe(res => {
+      this.msgService.success(res.msg);
+      this.st.reload();
+    })
   }
 
 }
