@@ -1,0 +1,53 @@
+{
+  "app": {
+    "name": "Auth Center",
+    "description": "Auth Center for dqv5.com"
+  },
+  "user": {
+    "name": "Admin",
+    "avatar": "./assets/tmp/img/avatar.jpg",
+    "email": "duqian42707@163.com"
+  },
+  "menu": [
+    {
+      "text": "主导航",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "仪表盘",
+          "icon": "anticon-dashboard",
+          "children": [
+            {
+              "text": "仪表盘",
+              "link": "/dashboard"
+            }
+          ]
+        },
+        {
+          "text": "系统管理",
+          "icon": "anticon-setting",
+          "shortcutRoot": true,
+          "children": [
+            {
+              "text": "用户管理",
+              "link": "/base/user"
+            },
+            {
+              "text": "角色管理",
+              "link": "/base/role"
+            },
+            {
+              "text": "菜单管理",
+              "link": "/base/menu"
+            },
+            {
+              "text": "系统日志",
+              "link": "/sys/log"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

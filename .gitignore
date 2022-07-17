@@ -1,7 +1,5 @@
 .idea/
-target/
-node_modules/
-/logs/
-/back-end/soccer/logs/
 *.iml
 relbel.xml
+node_modules/
+/soccer-server/target/

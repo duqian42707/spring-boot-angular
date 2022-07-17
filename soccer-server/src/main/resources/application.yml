@@ -1,0 +1,51 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: soccer-server
+  thymeleaf:
+    prefix: classpath:/templates/
+  datasource:
+    #    driver-class-name: org.postgresql.Driver
+    #    url: jdbc:postgresql://localhost:5432/auth
+    #    username: postgres
+    #    password: 123456
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:auth
+    username: sa
+    password: 111111
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  web:
+    resources:
+      cache:
+        cachecontrol:
+          cache-public: true
+          max-age: 86400
+  jpa:
+    properties:
+      hibernate.hbm2ddl.auto: update
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} %clr(%5p) [%12.12t] %clr(%-50.50logger{49}){cyan} [%5.5L] : %m%n%wEx'
+  level:
+    root: info
+    com.dqv5: debug
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+soccer:
+  users:
+    - username: duqian
+      password: 123456
+      role: ROLE_ADMIN
+    - username: tom
+      password: 111111
+      role: ROLE_NORMAL
+    - username: jerry
+      password: 222222
+      role: ROLE_NORMAL
+    - username: blank
+      password: 333333
