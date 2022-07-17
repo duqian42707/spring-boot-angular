@@ -8,7 +8,7 @@ import { ModalHelper, _HttpClient } from '@delon/theme';
   templateUrl: './user.component.html',
 })
 export class BaseUserComponent implements OnInit {
-  url = `/user`;
+  url = `/api/user/list`;
   searchSchema: SFSchema = {
     properties: {
       no: {

@@ -1,7 +1,7 @@
 {
   "app": {
-    "name": "Auth Center",
-    "description": "Auth Center for dqv5.com"
+    "name": "Soccer",
+    "description": "Springboot + Angular 开发框架"
   },
   "user": {
     "name": "Admin",
