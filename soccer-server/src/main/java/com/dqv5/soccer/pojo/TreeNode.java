@@ -6,7 +6,7 @@ import java.util.List;
  * @author duq
  * @date 2022/7/17
  */
-public  class TreeNode {
+public class TreeNode {
     private Integer id;
     private String name;
     private List<TreeNode> children;

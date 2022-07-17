@@ -15,7 +15,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,15 +48,15 @@ public class SecurityConfig {
 
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        JwtAuthenticationFilter filter = new JwtAuthenticationFilter();
+    public JWTAuthenticationFilter jwtAuthenticationFilter() {
+        JWTAuthenticationFilter filter = new JWTAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager());
         return filter;
     }
 
     @Bean
-    public JwtAuthorizationTokenFilter jwtAuthorizationTokenFilter() {
-        return new JwtAuthorizationTokenFilter(authenticationManager(), userDetailsService());
+    public JWTAuthorizationTokenFilter jwtAuthorizationTokenFilter() {
+        return new JWTAuthorizationTokenFilter(authenticationManager(), userDetailsService());
     }
 
 
@@ -67,14 +66,16 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(a -> a.frameOptions().sameOrigin())
-                .exceptionHandling(a -> a.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED)))
+                .exceptionHandling(a -> a.authenticationEntryPoint(new JWTAuthenticationEntryPoint()))
                 // don't create session
                 .sessionManagement(a -> a.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(a -> a.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+                        // 访问页面 - 允许
+                        .antMatchers(HttpMethod.GET, "/", "/passport/**", "/dashboard/**", "/base/**").permitAll()
                         // 鉴权接口 - 允许
                         .antMatchers(HttpMethod.POST, "/login").permitAll()
                         // 其他接口 - 需要验证
-                        .antMatchers("/api/**").authenticated())
+                        .anyRequest().authenticated())
                 .addFilter(jwtAuthenticationFilter())
                 .addFilter(jwtAuthorizationTokenFilter())
         ;

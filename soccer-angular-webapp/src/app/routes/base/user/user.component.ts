@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent } from '@delon/abc/st';
-import { SFSchema } from '@delon/form';
-import { ModalHelper, _HttpClient } from '@delon/theme';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {STColumn, STComponent} from '@delon/abc/st';
+import {SFSchema} from '@delon/form';
+import {ModalHelper, _HttpClient} from '@delon/theme';
 
 @Component({
   selector: 'app-base-user',
@@ -19,22 +19,24 @@ export class BaseUserComponent implements OnInit {
   };
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    {title: '编号', type: 'no'},
+    {title: '账号', index: 'account'},
+    {title: '昵称', index: 'nickName'},
+    {title: '头像', type: 'img', width: '64px', index: 'avatarUrl'},
+    {title: '时间', type: 'date', index: 'updatedAt'},
     {
-      title: '',
+      title: '操作',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        // {text: '编辑', type: 'static', component: FormEditComponent, click: 'reload'},
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper) {
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   add(): void {
     // this.modal

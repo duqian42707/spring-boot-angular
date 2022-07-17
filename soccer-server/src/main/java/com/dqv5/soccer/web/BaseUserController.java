@@ -1,10 +1,11 @@
 package com.dqv5.soccer.web;
 
+import com.dqv5.soccer.common.RestReturnEntity;
+import com.dqv5.soccer.pojo.PageInfo;
 import com.dqv5.soccer.pojo.entity.BaseUser;
-import com.dqv5.soccer.pojo.result.RestReturn;
+import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.service.BaseUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,10 +31,11 @@ public class BaseUserController {
      * @return
      */
     @GetMapping("/list")
-    public Page<BaseUser> userList(@RequestParam(defaultValue = "1") int pageNum,
-                                   @RequestParam(defaultValue = "10") int pageSize) {
+    public ResponseEntity<RestReturnEntity<PageInfo<BaseUser>>> userList(@RequestParam(defaultValue = "1") int pageNum,
+                                                                         @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.ASC, "account");
-        return baseUserService.findAll(pageable);
+        PageInfo<BaseUser> pageInfo = baseUserService.findAll(pageable);
+        return RestReturn.ok(pageInfo);
     }
 
     /**
@@ -42,20 +44,34 @@ public class BaseUserController {
      * @param id
      * @return
      */
-    @GetMapping("/get/{id}")
-    public ResponseEntity getInfo(@PathVariable("id") Integer id) {
-        return RestReturn.ok("");
+    @GetMapping("/info/{id}")
+    public ResponseEntity<RestReturnEntity<BaseUser>> userInfo(@PathVariable("id") String id) {
+        BaseUser baseUser = baseUserService.findOne(id);
+        return RestReturn.ok(baseUser);
     }
 
     /**
-     * 新增、更新用户信息
+     * 新增用户
      *
      * @param baseUser
      * @return
      */
-    @PostMapping("/save")
-    public ResponseEntity save(@RequestBody BaseUser baseUser) {
-        return RestReturn.ok(baseUser);
+    @PostMapping("/insert")
+    public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody BaseUser baseUser) {
+        baseUserService.insert(baseUser);
+        return RestReturn.ok();
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param baseUser
+     * @return
+     */
+    @PostMapping("/update")
+    public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody BaseUser baseUser) {
+        baseUserService.update(baseUser);
+        return RestReturn.ok();
     }
 
     /**
@@ -65,7 +81,8 @@ public class BaseUserController {
      * @return
      */
     @PostMapping("/delete/{id}")
-    public ResponseEntity delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<RestReturnEntity<Object>> delete(@PathVariable("id") String id) {
+        baseUserService.deleteById(id);
         return RestReturn.ok();
     }
 

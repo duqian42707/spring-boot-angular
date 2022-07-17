@@ -4,7 +4,7 @@ spring:
   application:
     name: soccer-server
   thymeleaf:
-    prefix: classpath:/templates/
+    prefix: classpath:/static/
   datasource:
     #    driver-class-name: org.postgresql.Driver
     #    url: jdbc:postgresql://localhost:5432/auth

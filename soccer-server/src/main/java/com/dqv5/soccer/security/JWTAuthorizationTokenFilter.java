@@ -10,18 +10,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class JwtAuthorizationTokenFilter extends BasicAuthenticationFilter {
+public class JWTAuthorizationTokenFilter extends BasicAuthenticationFilter {
 
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthorizationTokenFilter(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+    public JWTAuthorizationTokenFilter(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
         super(authenticationManager);
         this.userDetailsService = userDetailsService;
     }
