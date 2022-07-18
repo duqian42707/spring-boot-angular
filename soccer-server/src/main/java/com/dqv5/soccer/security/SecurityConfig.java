@@ -69,13 +69,15 @@ public class SecurityConfig {
                 .exceptionHandling(a -> a.authenticationEntryPoint(new JWTAuthenticationEntryPoint()))
                 // don't create session
                 .sessionManagement(a -> a.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests(a -> a.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
-                        // 访问页面 - 允许
-                        .antMatchers(HttpMethod.GET, "/", "/passport/**", "/dashboard/**", "/base/**").permitAll()
-                        // 鉴权接口 - 允许
-                        .antMatchers(HttpMethod.POST, "/login").permitAll()
-                        // 其他接口 - 需要验证
-                        .anyRequest().authenticated())
+                .authorizeRequests(a ->
+                        // todo 配置方式需要优化
+                        a.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/**/*.json", "/**/*.svg").permitAll()
+                                // 访问页面 - 允许
+                                .antMatchers(HttpMethod.GET, "/", "/passport/**", "/dashboard/**", "/base/**").permitAll()
+                                // 鉴权接口 - 允许
+                                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                                // 其他接口 - 需要验证
+                                .anyRequest().authenticated())
                 .addFilter(jwtAuthenticationFilter())
                 .addFilter(jwtAuthorizationTokenFilter())
         ;

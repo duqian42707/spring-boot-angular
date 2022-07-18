@@ -32,9 +32,10 @@ public class AuthUser implements UserDetails, Serializable {
         this.authorities = authorities;
     }
 
-    public AuthUser(String userId, String account, String nickName, String avatarUrl, String gender, Collection<? extends GrantedAuthority> authorities) {
+    public AuthUser(String userId, String account, String password, String nickName, String avatarUrl, String gender, Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
         this.account = account;
+        this.password = password;
         this.nickName = nickName;
         this.avatarUrl = avatarUrl;
         this.gender = gender;
