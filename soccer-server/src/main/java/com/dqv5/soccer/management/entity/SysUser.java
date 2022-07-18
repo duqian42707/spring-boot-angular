@@ -1,5 +1,6 @@
-package com.dqv5.soccer.pojo.entity;
+package com.dqv5.soccer.management.entity;
 
+import com.dqv5.soccer.pojo.AbstractBaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,9 +20,9 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "base_user")
+@Table(name = "sys_user")
 @EntityListeners(AuditingEntityListener.class)
-public class BaseUser extends BaseEntity implements Serializable {
+public class SysUser extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
@@ -42,5 +43,5 @@ public class BaseUser extends BaseEntity implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "base_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<BaseRole> roles = new HashSet<>();
+    private Set<SysRole> roles = new HashSet<>();
 }

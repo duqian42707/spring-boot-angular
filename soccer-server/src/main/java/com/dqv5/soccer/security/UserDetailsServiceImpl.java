@@ -1,7 +1,7 @@
 package com.dqv5.soccer.security;
 
-import com.dqv5.soccer.pojo.entity.BaseUser;
-import com.dqv5.soccer.repository.BaseUserRepository;
+import com.dqv5.soccer.management.entity.SysUser;
+import com.dqv5.soccer.management.repository.SysUserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,17 +17,17 @@ import java.util.stream.Collectors;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Resource
-    private BaseUserRepository baseUserRepository;
+    private SysUserRepository sysUserRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 查出用户对象
-        BaseUser baseUser = baseUserRepository.findByAccount(username).orElseThrow(() -> new UsernameNotFoundException("用户不存在!"));
+        SysUser sysUser = sysUserRepository.findByAccount(username).orElseThrow(() -> new UsernameNotFoundException("用户不存在!"));
         // 构造权限集合
-        Set<GrantedAuthority> auths = baseUser.getRoles().stream()
+        Set<GrantedAuthority> auths = sysUser.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleValue()))
                 .collect(Collectors.toSet());
         // 构造一个UserDetails对象返回，至少需要这些参数：用户名、密码、权限集合
-        return new AuthUser(baseUser.getAccount(), baseUser.getPassword(), auths);
+        return new AuthUser(sysUser.getAccount(), sysUser.getPassword(), auths);
     }
 }

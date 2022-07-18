@@ -1,5 +1,6 @@
-package com.dqv5.soccer.pojo.entity;
+package com.dqv5.soccer.management.entity;
 
+import com.dqv5.soccer.pojo.AbstractBaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,8 +11,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "base_auth")
-public class BaseAuth extends BaseEntity implements Serializable {
+@Table(name = "sys_auth")
+public class SysAuth extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -29,7 +30,7 @@ public class BaseAuth extends BaseEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "menu_id")
-    private BaseMenu baseMenu;
+    private SysMenu sysMenu;
 
 
 }

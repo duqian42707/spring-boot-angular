@@ -1,4 +1,4 @@
-package com.dqv5.soccer.service;
+package com.dqv5.soccer.management.service;
 
 /**
  * @author admin

@@ -1,4 +1,4 @@
-package com.dqv5.soccer.pojo.entity;
+package com.dqv5.soccer.management.entity;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

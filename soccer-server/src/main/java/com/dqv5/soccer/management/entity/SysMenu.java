@@ -1,5 +1,6 @@
-package com.dqv5.soccer.pojo.entity;
+package com.dqv5.soccer.management.entity;
 
+import com.dqv5.soccer.pojo.AbstractBaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,8 +12,8 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "base_menu")
-public class BaseMenu extends BaseEntity implements Serializable {
+@Table(name = "sys_menu")
+public class SysMenu extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(generator = "uuid")
@@ -65,15 +66,15 @@ public class BaseMenu extends BaseEntity implements Serializable {
     /**
      * 父级菜单
      */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = BaseMenu.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = SysMenu.class)
     @JoinColumn(name = "parent_id")
-    private BaseMenu parentMenu;
+    private SysMenu parentMenu;
 
     /**
      * 下级菜单
      */
     @OneToMany(mappedBy = "parentMenu", fetch = FetchType.LAZY)
-    private Set<BaseMenu> children;
+    private Set<SysMenu> children;
 
 
 }

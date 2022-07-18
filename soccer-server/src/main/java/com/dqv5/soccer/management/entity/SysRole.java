@@ -1,5 +1,6 @@
-package com.dqv5.soccer.pojo.entity;
+package com.dqv5.soccer.management.entity;
 
+import com.dqv5.soccer.pojo.AbstractBaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,8 +23,8 @@ import java.io.Serializable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "base_role")
-public class BaseRole extends BaseEntity implements Serializable {
+@Table(name = "sys_role")
+public class SysRole extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

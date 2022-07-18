@@ -1,10 +1,10 @@
-package com.dqv5.soccer.web;
+package com.dqv5.soccer.management.web;
 
 import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.pojo.PageInfo;
-import com.dqv5.soccer.pojo.entity.BaseUser;
+import com.dqv5.soccer.management.entity.SysUser;
 import com.dqv5.soccer.common.RestReturn;
-import com.dqv5.soccer.service.BaseUserService;
+import com.dqv5.soccer.management.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +21,9 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/api/user")
 @Slf4j
-public class BaseUserController {
+public class SysUserController {
     @Resource
-    private BaseUserService baseUserService;
+    private SysUserService sysUserService;
 
     /**
      * 获取用户列表
@@ -31,10 +31,10 @@ public class BaseUserController {
      * @return
      */
     @GetMapping("/list")
-    public ResponseEntity<RestReturnEntity<PageInfo<BaseUser>>> userList(@RequestParam(defaultValue = "1") int pageNum,
-                                                                         @RequestParam(defaultValue = "10") int pageSize) {
+    public ResponseEntity<RestReturnEntity<PageInfo<SysUser>>> userList(@RequestParam(defaultValue = "1") int pageNum,
+                                                                        @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.ASC, "account");
-        PageInfo<BaseUser> pageInfo = baseUserService.findAll(pageable);
+        PageInfo<SysUser> pageInfo = sysUserService.findAll(pageable);
         return RestReturn.ok(pageInfo);
     }
 
@@ -45,32 +45,32 @@ public class BaseUserController {
      * @return
      */
     @GetMapping("/info/{id}")
-    public ResponseEntity<RestReturnEntity<BaseUser>> userInfo(@PathVariable("id") String id) {
-        BaseUser baseUser = baseUserService.findOne(id);
-        return RestReturn.ok(baseUser);
+    public ResponseEntity<RestReturnEntity<SysUser>> userInfo(@PathVariable("id") String id) {
+        SysUser sysUser = sysUserService.findOne(id);
+        return RestReturn.ok(sysUser);
     }
 
     /**
      * 新增用户
      *
-     * @param baseUser
+     * @param sysUser
      * @return
      */
     @PostMapping("/insert")
-    public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody BaseUser baseUser) {
-        baseUserService.insert(baseUser);
+    public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody SysUser sysUser) {
+        sysUserService.insert(sysUser);
         return RestReturn.ok();
     }
 
     /**
      * 更新用户信息
      *
-     * @param baseUser
+     * @param sysUser
      * @return
      */
     @PostMapping("/update")
-    public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody BaseUser baseUser) {
-        baseUserService.update(baseUser);
+    public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody SysUser sysUser) {
+        sysUserService.update(sysUser);
         return RestReturn.ok();
     }
 
@@ -82,7 +82,7 @@ public class BaseUserController {
      */
     @PostMapping("/delete/{id}")
     public ResponseEntity<RestReturnEntity<Object>> delete(@PathVariable("id") String id) {
-        baseUserService.deleteById(id);
+        sysUserService.deleteById(id);
         return RestReturn.ok();
     }
 

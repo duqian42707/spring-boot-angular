@@ -1,4 +1,4 @@
-package com.dqv5.soccer.pojo.entity;
+package com.dqv5.soccer.pojo;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+public abstract class AbstractBaseEntity {
     @CreatedBy
     @Column(name = "created_by", updatable = false)
     private String createdBy;
