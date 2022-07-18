@@ -31,15 +31,15 @@
           "children": [
             {
               "text": "用户管理",
-              "link": "/base/user"
+              "link": "/sys/user"
             },
             {
               "text": "角色管理",
-              "link": "/base/role"
+              "link": "/sys/role"
             },
             {
               "text": "菜单管理",
-              "link": "/base/menu"
+              "link": "/sys/menu"
             },
             {
               "text": "系统日志",
