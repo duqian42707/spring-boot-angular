@@ -28,6 +28,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getRoleValue()))
                 .collect(Collectors.toSet());
         // 构造一个UserDetails对象返回，至少需要这些参数：用户名、密码、权限集合
-        return new AuthUser(sysUser.getAccount(), sysUser.getPassword(), auths);
+        return new AuthUser(sysUser.getUserId(), sysUser.getAccount(), sysUser.getNickName(), sysUser.getAvatarUrl(), sysUser.getGender(), auths);
     }
 }

@@ -5,6 +5,8 @@ import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.management.entity.SysRole;
 import com.dqv5.soccer.management.service.SysRoleService;
 import com.dqv5.soccer.pojo.PageInfo;
+import com.dqv5.soccer.security.AuthUser;
+import com.dqv5.soccer.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,22 +29,19 @@ public class SysRoleController {
 
     /**
      * 获取角色列表
-     *
-     * @return
      */
     @GetMapping("/list")
     public ResponseEntity<RestReturnEntity<PageInfo<SysRole>>> userList(@RequestParam(defaultValue = "1") int pageNum,
                                                                         @RequestParam(defaultValue = "10") int pageSize) {
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.ASC, "account");
+        AuthUser userDetail = SecurityUtils.getCurrentUserDetail();
+        log.info("{}", userDetail);
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.DESC, "lastModifiedDate");
         PageInfo<SysRole> pageInfo = sysRoleService.findAll(pageable);
         return RestReturn.ok(pageInfo);
     }
 
     /**
      * 获取单个角色
-     *
-     * @param id
-     * @return
      */
     @GetMapping("/info/{id}")
     public ResponseEntity<RestReturnEntity<SysRole>> userInfo(@PathVariable("id") String id) {
@@ -52,9 +51,6 @@ public class SysRoleController {
 
     /**
      * 新增角色
-     *
-     * @param param
-     * @return
      */
     @PostMapping("/insert")
     public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody SysRole param) {
@@ -64,9 +60,6 @@ public class SysRoleController {
 
     /**
      * 更新角色信息
-     *
-     * @param param
-     * @return
      */
     @PostMapping("/update")
     public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody SysRole param) {
@@ -76,9 +69,6 @@ public class SysRoleController {
 
     /**
      * 删除角色
-     *
-     * @param id
-     * @return
      */
     @PostMapping("/delete/{id}")
     public ResponseEntity<RestReturnEntity<Object>> delete(@PathVariable("id") String id) {

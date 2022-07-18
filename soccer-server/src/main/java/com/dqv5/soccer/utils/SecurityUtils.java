@@ -19,11 +19,14 @@ public final class SecurityUtils {
      */
     public static AuthUser getCurrentUserDetail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof AuthUser) {
-            return (AuthUser) principal;
+        if (authentication == null) {
+            return null;
         }
-        return new AuthUser("Anonymous", "NoPassword", new HashSet<>());
+        Object principal = authentication.getPrincipal();
+        if (!(principal instanceof AuthUser)) {
+            return null;
+        }
+        return (AuthUser) principal;
     }
 
     public static String getCurrentUserName() {

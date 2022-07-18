@@ -26,13 +26,20 @@ public class AuthUser implements UserDetails, Serializable {
     private String gender;
     private Collection<? extends GrantedAuthority> authorities;
 
-
     public AuthUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         this.account = username;
         this.password = password;
         this.authorities = authorities;
     }
 
+    public AuthUser(String userId, String account, String nickName, String avatarUrl, String gender, Collection<? extends GrantedAuthority> authorities) {
+        this.userId = userId;
+        this.account = account;
+        this.nickName = nickName;
+        this.avatarUrl = avatarUrl;
+        this.gender = gender;
+        this.authorities = authorities;
+    }
 
     //-----------implements from UserDetails start----------//
     @Override

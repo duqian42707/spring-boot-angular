@@ -4,10 +4,10 @@ import { SFSchema } from '@delon/form';
 import { ModalHelper, _HttpClient } from '@delon/theme';
 
 @Component({
-  selector: 'app-base-menu',
+  selector: 'app-sys-menu',
   templateUrl: './menu.component.html',
 })
-export class BaseMenuComponent implements OnInit {
+export class SysMenuComponent implements OnInit {
   url = `/user`;
   searchSchema: SFSchema = {
     properties: {

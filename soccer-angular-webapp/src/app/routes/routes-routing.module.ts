@@ -26,9 +26,6 @@ const routes: Routes = [
       {path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule)},
       // 业务子模块
       {path: 'sys', loadChildren: () => import('./sys/sys.module').then((m) => m.SysModule)},
-      {
-        path: 'base', loadChildren: () => import('./base/base.module').then((m) => m.BaseModule)
-      }
     ]
   },
   // 空白布局

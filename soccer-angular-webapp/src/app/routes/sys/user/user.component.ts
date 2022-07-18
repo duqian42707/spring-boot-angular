@@ -4,10 +4,10 @@ import {SFSchema} from '@delon/form';
 import {ModalHelper, _HttpClient} from '@delon/theme';
 
 @Component({
-  selector: 'app-base-user',
+  selector: 'app-sys-user',
   templateUrl: './user.component.html',
 })
-export class BaseUserComponent implements OnInit {
+export class SysUserComponent implements OnInit {
   url = `/api/user/list`;
   searchSchema: SFSchema = {
     properties: {

@@ -37,15 +37,24 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 soccer:
+  roles:
+    - roleValue: ROLE_NORMAL
+      roleName: 普通用户
+    - roleValue: ROLE_ADMIN
+      roleName: 超级管理员
   users:
     - username: duqian
       password: 123456
+      nickName: 杜谦
       role: ROLE_ADMIN
     - username: tom
       password: 111111
+      nickName: 汤姆
       role: ROLE_NORMAL
     - username: jerry
       password: 222222
+      nickName: 杰瑞
       role: ROLE_NORMAL
     - username: blank
       password: 333333
+      nickName: 白板

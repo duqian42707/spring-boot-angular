@@ -1,5 +1,6 @@
 package com.dqv5.soccer.config;
 
+import com.dqv5.soccer.pojo.RoleInfo;
 import com.dqv5.soccer.pojo.UserInfo;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,4 +19,5 @@ import java.util.List;
 @ConfigurationProperties(prefix = "soccer")
 public class SoccerProperties {
     private List<UserInfo> users;
+    private List<RoleInfo> roles;
 }

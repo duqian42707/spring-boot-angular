@@ -25,14 +25,14 @@ public abstract class AbstractBaseEntity {
     private String createdBy;
 
     @CreatedDate
-    @Column(name = "created_time", updatable = false)
-    private Date createdTime;
+    @Column(name = "created_date", updatable = false)
+    private Date createdDate;
 
     @LastModifiedBy
-    @Column(name = "updated_by")
-    private String updatedBy;
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
 
     @LastModifiedDate
-    @Column(name = "updated_time")
-    private Date updatedTime;
+    @Column(name = "last_modified_date")
+    private Date lastModifiedDate;
 }

@@ -1,5 +1,6 @@
 package com.dqv5.soccer.config;
 
+import com.dqv5.soccer.pojo.RoleInfo;
 import com.dqv5.soccer.pojo.UserInfo;
 import com.dqv5.soccer.management.entity.SysRole;
 import com.dqv5.soccer.management.entity.SysUser;
@@ -31,8 +32,23 @@ public class AutoRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         log.info("------------系统初始化开始------------");
+        initRoles();
         initUsers();
         log.info("------------系统初始化结束------------");
+    }
+
+    private void initRoles() {
+        long count = sysRoleRepository.count();
+        if (count > 0) {
+            return;
+        }
+        List<RoleInfo> initRoles = soccerProperties.getRoles();
+        for (RoleInfo initRole : initRoles) {
+            SysRole sysRole = new SysRole();
+            sysRole.setRoleValue(initRole.getRoleValue());
+            sysRole.setRoleName(initRole.getRoleName());
+            sysRoleRepository.save(sysRole);
+        }
     }
 
     private void initUsers() {
@@ -43,17 +59,15 @@ public class AutoRunner implements CommandLineRunner {
         List<UserInfo> initUsers = soccerProperties.getUsers();
         for (UserInfo initUserInfo : initUsers) {
             String username = initUserInfo.getUsername();
+            String nickName = initUserInfo.getNickName();
             String encodedPassword = passwordEncoder.encode(initUserInfo.getPassword());
             SysUser sysUser = new SysUser();
             sysUser.setAccount(username);
             sysUser.setPassword(encodedPassword);
+            sysUser.setNickName(nickName);
             String role = initUserInfo.getRole();
             if (StringUtils.isNotBlank(role)) {
-                SysRole sysRole = sysRoleRepository.findByRoleValue(role).orElse(new SysRole());
-                sysRole.setRoleValue(role);
-                sysRole.setRoleName(role);
-                sysRoleRepository.save(sysRole);
-                sysUser.getRoles().add(sysRole);
+                sysRoleRepository.findByRoleValue(role).ifPresent(sysRole -> sysUser.getRoles().add(sysRole));
             }
             sysUserRepository.save(sysUser);
         }
