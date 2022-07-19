@@ -27,8 +27,8 @@ public class SysMenuController {
      * 获取菜单树
      */
     @GetMapping("/tree")
-    public ResponseEntity<RestReturnEntity<List<TreeNode>>> tree() {
-        List<TreeNode> tree = sysMenuService.findAllTree();
+    public ResponseEntity<RestReturnEntity<List<SysMenu>>> tree() {
+        List<SysMenu> tree = sysMenuService.findAllTree();
         return RestReturn.ok(tree);
     }
 

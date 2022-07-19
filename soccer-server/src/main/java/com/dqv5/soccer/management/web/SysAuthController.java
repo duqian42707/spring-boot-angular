@@ -4,7 +4,6 @@ import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.management.entity.SysAuth;
 import com.dqv5.soccer.management.service.SysAuthService;
-import com.dqv5.soccer.pojo.TreeNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

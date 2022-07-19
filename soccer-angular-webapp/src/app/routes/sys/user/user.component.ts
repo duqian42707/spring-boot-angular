@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {STColumn, STComponent} from '@delon/abc/st';
 import {SFSchema} from '@delon/form';
 import {ModalHelper, _HttpClient} from '@delon/theme';
+import {SysUserEditComponent} from './edit/edit.component';
 
 @Component({
   selector: 'app-sys-user',
@@ -27,7 +28,7 @@ export class SysUserComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        // {text: '编辑', type: 'static', component: FormEditComponent, click: 'reload'},
+        {text: '编辑', type: 'modal', modal: {component: SysUserEditComponent}, click: 'reload'},
       ]
     }
   ];
@@ -39,9 +40,9 @@ export class SysUserComponent implements OnInit {
   }
 
   add(): void {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.modal
+      .createStatic(SysUserEditComponent, {i: {id: 0}})
+      .subscribe(() => this.st.reload());
   }
 
 }

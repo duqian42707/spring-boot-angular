@@ -6,13 +6,16 @@ import com.dqv5.soccer.management.repository.SysMenuRepository;
 import com.dqv5.soccer.management.service.SysMenuService;
 import com.dqv5.soccer.pojo.PageInfo;
 import com.dqv5.soccer.pojo.TreeNode;
+import com.dqv5.soccer.utils.MenuTreeUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SysMenuServiceImpl implements SysMenuService {
@@ -61,7 +64,9 @@ public class SysMenuServiceImpl implements SysMenuService {
     }
 
     @Override
-    public List<TreeNode> findAllTree() {
-        return null;
+    public List<SysMenu> findAllTree() {
+        return sysMenuRepository.findAllByParentMenu(null);
     }
+
+
 }

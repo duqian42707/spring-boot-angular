@@ -1,18 +1,23 @@
 package com.dqv5.soccer.management.entity;
 
 import com.dqv5.soccer.pojo.AbstractBaseEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "sys_menu")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class SysMenu extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,12 +68,12 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
      */
     private Integer displayIndex;
 
-
     /**
      * 父级菜单
      */
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = SysMenu.class)
     @JoinColumn(name = "parent_id")
+    @JsonIgnore // 避免死循环
     private SysMenu parentMenu;
 
     /**
@@ -77,5 +82,36 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
     @OneToMany(mappedBy = "parentMenu", fetch = FetchType.LAZY)
     private Set<SysMenu> children;
 
+    /**
+     * 重写equals、hashCode、toString 方法，不要加父级菜单和下级菜单，可避免jpa无限循环查询
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        SysMenu sysMenu = (SysMenu) o;
+        return hide == sysMenu.hide && hideChildren == sysMenu.hideChildren && Objects.equals(menuId, sysMenu.menuId) && Objects.equals(menuName, sysMenu.menuName) && Objects.equals(menuCode, sysMenu.menuCode) && Objects.equals(link, sysMenu.link) && Objects.equals(externalLink, sysMenu.externalLink) && Objects.equals(intro, sysMenu.intro) && Objects.equals(icon, sysMenu.icon) && Objects.equals(displayIndex, sysMenu.displayIndex);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), menuId, menuName, menuCode, link, externalLink, intro, icon, hide, hideChildren, displayIndex);
+    }
+
+    @Override
+    public String toString() {
+        return "SysMenu{" +
+                "menuId='" + menuId + '\'' +
+                ", menuName='" + menuName + '\'' +
+                ", menuCode='" + menuCode + '\'' +
+                ", link='" + link + '\'' +
+                ", externalLink='" + externalLink + '\'' +
+                ", intro='" + intro + '\'' +
+                ", icon='" + icon + '\'' +
+                ", hide=" + hide +
+                ", hideChildren=" + hideChildren +
+                ", displayIndex=" + displayIndex +
+                '}';
+    }
 }

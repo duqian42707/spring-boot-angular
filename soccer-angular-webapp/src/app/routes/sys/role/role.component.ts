@@ -35,7 +35,7 @@ export class SysRoleComponent implements OnInit {
       title: '操作',
       buttons: [
         {text: '编辑', type: 'modal', modal: {component: SysRoleEditComponent}, click: 'reload'},
-        {text: '删除', type: 'del', click: (item: any) => this.delete(item)},
+        {text: '删除', type: 'del',  click: (item: any) => this.delete(item)},
       ]
     }
   ];
@@ -48,7 +48,7 @@ export class SysRoleComponent implements OnInit {
 
   add(): void {
     this.modal
-      .createStatic(SysRoleEditComponent, {i: {id: 0}})
+      .createStatic(SysRoleEditComponent, {i: {roleId: null}})
       .subscribe(() => this.st.reload());
   }
 

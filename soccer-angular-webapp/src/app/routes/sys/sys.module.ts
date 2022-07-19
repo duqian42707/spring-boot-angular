@@ -11,10 +11,14 @@ import {SysUserService} from './user/user.service';
 import {SysRoleService} from './role/role.service';
 import {SysMenuService} from './menu/menu.service';
 import { SysRoleEditComponent } from './role/edit/edit.component';
+import { SysMenuEditComponent } from './menu/edit/edit.component';
+import { SysUserEditComponent } from './user/edit/edit.component';
 
 const COMPONENTS: Type<void>[] = [
   SysLogComponent, SysUserComponent, SysRoleComponent, SysMenuComponent,
-  SysRoleEditComponent];
+  SysRoleEditComponent,
+  SysMenuEditComponent,
+  SysUserEditComponent];
 
 @NgModule({
   imports: [

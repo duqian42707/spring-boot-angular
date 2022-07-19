@@ -4,6 +4,39 @@
   </ng-template>
 </page-header>
 <nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [columns]="columns"></st>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="search($event)" (formReset)="reset($event)"></sf>
+  <nz-table #expandTable [nzLoading]="loading" [nzData]="listOfMapData" nzTableLayout="fixed">
+    <thead>
+    <tr>
+      <th>菜单名称</th>
+      <th>菜单编码</th>
+      <th>链接</th>
+      <th>图标</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let data of expandTable.data">
+      <ng-container *ngFor="let item of mapOfExpandedData[data.menuId]">
+        <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+          <td
+              [nzIndentSize]="item.level! * 20"
+              [nzShowExpand]="!!item.children && item.children.length>0"
+              [(nzExpand)]="item.expand"
+              (nzExpandChange)="collapse(mapOfExpandedData[data.menuId], item, $event)"
+          >
+            {{ item.menuName }}
+          </td>
+          <td>{{ item.menuCode }}</td>
+          <td>{{ item.link }}</td>
+          <td>{{ item.icon }}</td>
+          <td>
+            <a nz-button nzType="link" (click)="edit(item)">编辑</a>
+            <a nz-button nzType="link" nzDanger (click)="delete(item)">删除</a>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </nz-table>
 </nz-card>

@@ -6,14 +6,12 @@ import com.dqv5.soccer.management.entity.SysMenu;
 import com.dqv5.soccer.management.repository.SysAuthRepository;
 import com.dqv5.soccer.management.service.SysAuthService;
 import com.dqv5.soccer.pojo.PageInfo;
-import com.dqv5.soccer.pojo.TreeNode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Service

@@ -1,7 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent } from '@delon/abc/st';
-import { SFSchema } from '@delon/form';
-import { ModalHelper, _HttpClient } from '@delon/theme';
+import {Component, OnInit} from '@angular/core';
+import {SFSchema} from '@delon/form';
+import {_HttpClient, ModalHelper} from '@delon/theme';
+import {SysMenuEditComponent} from './edit/edit.component';
+
+export interface TreeNodeInterface {
+  menuId: string;
+  menuName: string;
+  menuCode: string;
+  link: string;
+  icon: string;
+  children?: TreeNodeInterface[];
+  level?: number;
+  expand?: boolean;
+  parent?: TreeNodeInterface;
+}
 
 @Component({
   selector: 'app-sys-menu',
@@ -17,29 +29,93 @@ export class SysMenuComponent implements OnInit {
       }
     }
   };
-  @ViewChild('st') private readonly st!: STComponent;
-  columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
-    {
-      title: '',
-      buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
-      ]
+
+  loading = false;
+  listOfMapData: TreeNodeInterface[] = [];
+  mapOfExpandedData: { [menuId: string]: TreeNodeInterface[] } = {};
+
+  constructor(private http: _HttpClient, private modal: ModalHelper) {
+  }
+
+  ngOnInit(): void {
+    this.queryTree();
+  }
+
+  queryTree() {
+    this.loading = true;
+    this.http.get(`/api/menu/tree`).subscribe(res => {
+      this.listOfMapData = res.data;
+      this.listOfMapData.forEach(item => {
+        this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);
+      });
+      this.loading = false;
+    });
+  }
+
+
+  collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
+    if (!$event) {
+      if (data.children) {
+        data.children.forEach(d => {
+          const target = array.find(a => a.menuId === d.menuId)!;
+          target.expand = false;
+          this.collapse(array, target, false);
+        });
+      } else {
+        return;
+      }
     }
-  ];
+  }
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  convertTreeToList(root: TreeNodeInterface): TreeNodeInterface[] {
+    const stack: TreeNodeInterface[] = [];
+    const array: TreeNodeInterface[] = [];
+    const hashMap = {};
+    stack.push({...root, level: 0, expand: false});
 
-  ngOnInit(): void { }
+    while (stack.length !== 0) {
+      const node = stack.pop()!;
+      this.visitNode(node, hashMap, array);
+      if (node.children) {
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          stack.push({...node.children[i], level: node.level! + 1, expand: false, parent: node});
+        }
+      }
+    }
+
+    return array;
+  }
+
+  visitNode(node: TreeNodeInterface, hashMap: { [menuId: string]: boolean }, array: TreeNodeInterface[]): void {
+    if (!hashMap[node.menuId]) {
+      hashMap[node.menuId] = true;
+      array.push(node);
+    }
+  }
+
 
   add(): void {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.modal
+      .createStatic(SysMenuEditComponent, {i: {menuId: null}})
+      .subscribe(() => this.queryTree());
+  }
+
+  search(evt: any) {
+    this.queryTree();
+  }
+
+  reset(evt: any) {
+    this.queryTree();
+  }
+
+  edit(item: any) {
+    this.modal
+      .createStatic(SysMenuEditComponent, {i: item})
+      .subscribe(() => this.queryTree());
+  }
+
+  delete(item: any) {
+
   }
 
 }

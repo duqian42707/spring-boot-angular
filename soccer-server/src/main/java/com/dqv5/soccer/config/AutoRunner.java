@@ -1,11 +1,13 @@
 package com.dqv5.soccer.config;
 
-import com.dqv5.soccer.pojo.RoleInfo;
-import com.dqv5.soccer.pojo.UserInfo;
+import com.dqv5.soccer.management.entity.SysMenu;
 import com.dqv5.soccer.management.entity.SysRole;
 import com.dqv5.soccer.management.entity.SysUser;
+import com.dqv5.soccer.management.repository.SysMenuRepository;
 import com.dqv5.soccer.management.repository.SysRoleRepository;
 import com.dqv5.soccer.management.repository.SysUserRepository;
+import com.dqv5.soccer.pojo.RoleInfo;
+import com.dqv5.soccer.pojo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +27,8 @@ public class AutoRunner implements CommandLineRunner {
     private PasswordEncoder passwordEncoder;
 
     @Resource
+    private SysMenuRepository sysMenuRepository;
+    @Resource
     private SysRoleRepository sysRoleRepository;
     @Resource
     private SysUserRepository sysUserRepository;
@@ -32,9 +36,30 @@ public class AutoRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         log.info("------------系统初始化开始------------");
+        initMenus();
         initRoles();
         initUsers();
         log.info("------------系统初始化结束------------");
+    }
+
+    private void initMenus() {
+        long count = sysMenuRepository.count();
+        if (count > 0) {
+            return;
+        }
+
+        SysMenu dashboard = sysMenuRepository.save(SysMenu.builder().menuName("仪表盘").build());
+        SysMenu p1 = new SysMenu();
+        p1.setMenuId(dashboard.getMenuId());
+        sysMenuRepository.save(SysMenu.builder().parentMenu(p1).menuName("仪表盘").link("/dashboard").build());
+
+        SysMenu sys = sysMenuRepository.save(SysMenu.builder().menuName("系统管理").build());
+        SysMenu p2 = new SysMenu();
+        p2.setMenuId(sys.getMenuId());
+        sysMenuRepository.save(SysMenu.builder().parentMenu(p2).menuName("用户管理").link("/sys/user").build());
+        sysMenuRepository.save(SysMenu.builder().parentMenu(p2).menuName("角色管理").link("/sys/role").build());
+        sysMenuRepository.save(SysMenu.builder().parentMenu(p2).menuName("菜单管理").link("/sys/menu").build());
+        sysMenuRepository.save(SysMenu.builder().parentMenu(p2).menuName("系统日志").link("/sys/log").build());
     }
 
     private void initRoles() {

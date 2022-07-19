@@ -11,5 +11,5 @@ import java.util.List;
  * @date 2022/7/17
  */
 public interface SysMenuService extends BaseService<SysMenu> {
-    List<TreeNode> findAllTree();
+    List<SysMenu> findAllTree();
 }
