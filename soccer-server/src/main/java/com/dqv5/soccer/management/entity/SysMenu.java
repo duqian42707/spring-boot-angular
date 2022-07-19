@@ -23,6 +23,11 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
      * 菜单名称
      */
     private String menuName;
+    /**
+     * 唯一标识
+     */
+    @Column(name = "MENU_CODE", unique = true)
+    private String menuCode;
 
     /**
      * 路由链接
@@ -57,11 +62,7 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
      * 显示顺序
      */
     private Integer displayIndex;
-    /**
-     * 唯一标识
-     */
-    @Column(name = "SYSTEM_CODE", unique = true)
-    private String systemCode;
+
 
     /**
      * 父级菜单

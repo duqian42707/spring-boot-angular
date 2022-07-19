@@ -26,7 +26,7 @@ public class SysUserServiceImpl implements SysUserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public PageInfo<SysUser> findAll(Pageable pageable) {
+    public PageInfo<SysUser> queryListForPage(Pageable pageable) {
         Page<SysUser> page = sysUserRepository.findAll(pageable);
         return PageInfo.of(page.getTotalElements(), page.getContent());
     }

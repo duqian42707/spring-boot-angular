@@ -2,7 +2,6 @@ package com.dqv5.soccer.management.service.impl;
 
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.management.entity.SysRole;
-import com.dqv5.soccer.management.entity.SysUser;
 import com.dqv5.soccer.management.repository.SysRoleRepository;
 import com.dqv5.soccer.management.service.SysRoleService;
 import com.dqv5.soccer.pojo.PageInfo;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 /**
  * @author duq
@@ -24,7 +22,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     private SysRoleRepository sysRoleRepository;
 
     @Override
-    public PageInfo<SysRole> findAll(Pageable pageable) {
+    public PageInfo<SysRole> queryListForPage(Pageable pageable) {
         Page<SysRole> page = sysRoleRepository.findAll(pageable);
         return PageInfo.of(page.getTotalElements(), page.getContent());
     }

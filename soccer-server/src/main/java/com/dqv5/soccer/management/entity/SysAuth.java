@@ -30,7 +30,7 @@ public class SysAuth extends AbstractBaseEntity implements Serializable {
      */
     @ManyToOne
     @JoinColumn(name = "menu_id")
-    private SysMenu sysMenu;
+    private SysMenu menu;
 
 
 }

@@ -31,10 +31,10 @@ public class SysUserController {
      * @return
      */
     @GetMapping("/list")
-    public ResponseEntity<RestReturnEntity<PageInfo<SysUser>>> userList(@RequestParam(defaultValue = "1") int pageNum,
-                                                                        @RequestParam(defaultValue = "10") int pageSize) {
+    public ResponseEntity<RestReturnEntity<PageInfo<SysUser>>> list(@RequestParam(defaultValue = "1") int pageNum,
+                                                                    @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.ASC, "account");
-        PageInfo<SysUser> pageInfo = sysUserService.findAll(pageable);
+        PageInfo<SysUser> pageInfo = sysUserService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
     }
 
@@ -45,7 +45,7 @@ public class SysUserController {
      * @return
      */
     @GetMapping("/info/{id}")
-    public ResponseEntity<RestReturnEntity<SysUser>> userInfo(@PathVariable("id") String id) {
+    public ResponseEntity<RestReturnEntity<SysUser>> info(@PathVariable("id") String id) {
         SysUser sysUser = sysUserService.findOne(id);
         return RestReturn.ok(sysUser);
     }

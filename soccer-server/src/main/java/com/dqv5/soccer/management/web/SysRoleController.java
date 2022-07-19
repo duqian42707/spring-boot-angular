@@ -5,8 +5,6 @@ import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.management.entity.SysRole;
 import com.dqv5.soccer.management.service.SysRoleService;
 import com.dqv5.soccer.pojo.PageInfo;
-import com.dqv5.soccer.security.AuthUser;
-import com.dqv5.soccer.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,12 +29,10 @@ public class SysRoleController {
      * 获取角色列表
      */
     @GetMapping("/list")
-    public ResponseEntity<RestReturnEntity<PageInfo<SysRole>>> userList(@RequestParam(defaultValue = "1") int pageNum,
-                                                                        @RequestParam(defaultValue = "10") int pageSize) {
-        AuthUser userDetail = SecurityUtils.getCurrentUserDetail();
-        log.info("{}", userDetail);
+    public ResponseEntity<RestReturnEntity<PageInfo<SysRole>>> list(@RequestParam(defaultValue = "1") int pageNum,
+                                                                    @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.DESC, "lastModifiedDate");
-        PageInfo<SysRole> pageInfo = sysRoleService.findAll(pageable);
+        PageInfo<SysRole> pageInfo = sysRoleService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
     }
 
@@ -44,7 +40,7 @@ public class SysRoleController {
      * 获取单个角色
      */
     @GetMapping("/info/{id}")
-    public ResponseEntity<RestReturnEntity<SysRole>> userInfo(@PathVariable("id") String id) {
+    public ResponseEntity<RestReturnEntity<SysRole>> info(@PathVariable("id") String id) {
         SysRole result = sysRoleService.findOne(id);
         return RestReturn.ok(result);
     }

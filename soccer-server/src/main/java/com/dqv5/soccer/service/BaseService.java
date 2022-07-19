@@ -4,7 +4,7 @@ import com.dqv5.soccer.pojo.PageInfo;
 import org.springframework.data.domain.Pageable;
 
 public interface BaseService<T> {
-    PageInfo<T> findAll(Pageable pageable);
+    PageInfo<T> queryListForPage(Pageable pageable);
 
     T findOne(String id);
 
