@@ -31,7 +31,8 @@
       "@env/*": [
         "src/environments/*"
       ]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

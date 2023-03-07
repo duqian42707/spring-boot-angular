@@ -1,7 +1,11 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "@schematics/angular",
+      "ng-alain"
+    ]
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -74,7 +78,9 @@
               "ajv",
               "ajv-formats",
               "date-fns",
-              "file-saver"
+              "extend",
+              "file-saver",
+              "mockjs"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
