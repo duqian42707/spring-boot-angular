@@ -41,7 +41,7 @@
     "ajv": "^8.10.0",
     "ajv-formats": "^2.1.1",
     "ng-alain": "^13.5.2",
-    "ng-zorro-antd": "^13.3.2",
+    "ng-zorro-antd": "^14.3.0",
     "rxjs": "~7.5.0",
     "screenfull": "^6.0.1",
     "tslib": "^2.3.0",
