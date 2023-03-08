@@ -43,9 +43,9 @@ soccer:
     - roleValue: ROLE_ADMIN
       roleName: 超级管理员
   users:
-    - username: duqian
+    - username: admin
       password: 123456
-      nickName: 杜谦
+      nickName: 管理员
       role: ROLE_ADMIN
     - username: tom
       password: 111111

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, Optional} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {StartupService} from '@core';
 import {ReuseTabService} from '@delon/abc/reuse-tab';
@@ -18,7 +18,7 @@ import {finalize} from 'rxjs';
 })
 export class UserLoginComponent implements OnDestroy {
   constructor(
-    fb: FormBuilder,
+    fb: UntypedFormBuilder,
     private router: Router,
     private settingsService: SettingsService,
     private socialService: SocialService,
@@ -47,7 +47,7 @@ export class UserLoginComponent implements OnDestroy {
     return this.form.get('password')!;
   }
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   error = '';
   loading = false;
 

@@ -16,8 +16,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.servlet.http.HttpServletResponse;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -73,7 +71,7 @@ public class SecurityConfig {
                         // todo 配置方式需要优化
                         a.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/**/*.json", "/**/*.svg").permitAll()
                                 // 访问页面 - 允许
-                                .antMatchers(HttpMethod.GET, "/", "/passport/**", "/dashboard/**", "/base/**").permitAll()
+                                .antMatchers(HttpMethod.GET, "/", "/passport/**", "/dashboard/**", "/sys/**").permitAll()
                                 // 鉴权接口 - 允许
                                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                                 // 其他接口 - 需要验证
