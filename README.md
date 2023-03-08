@@ -22,6 +22,7 @@
 - [ ] 系统配置管理
 - [ ] 个人信息、修改密码
 
+
 ## 依赖
 
 ### java后端依赖环境
@@ -60,6 +61,11 @@
 * [Ant design](https://ant.design/):      一个服务于企业级产品的设计体系。
 * [ng-zorro](https://ng.ant.design/):      Ant Design 的 Angular 实现
 * [ng-alain](https://ng-alain.com/):     一个基于 Antd 中后台前端解决方案
+
+## TODO
+
+- [ ] 前端统一异常提示
+- [ ] 前端遇到接口异常时，按钮的loading状态要取消
 
 ## License
 

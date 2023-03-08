@@ -39,8 +39,8 @@ export class SysMenuEditComponent implements OnInit {
   }
 
   save(value: any): void {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
-      this.msgSrv.success('保存成功');
+    this.http.post(`/api/menu/update`, value).subscribe(res => {
+      this.msgSrv.success(res.msg);
       this.modal.close(true);
     });
   }

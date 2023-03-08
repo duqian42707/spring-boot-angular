@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SFSchema} from '@delon/form';
 import {_HttpClient, ModalHelper} from '@delon/theme';
 import {SysMenuEditComponent} from './edit/edit.component';
+import {SysMenuAuthComponent} from './auth/auth.component';
 
 export interface TreeNodeInterface {
   menuId: string;
@@ -20,7 +21,6 @@ export interface TreeNodeInterface {
   templateUrl: './menu.component.html',
 })
 export class SysMenuComponent implements OnInit {
-  url = `/user`;
   searchSchema: SFSchema = {
     properties: {
       no: {
@@ -111,6 +111,12 @@ export class SysMenuComponent implements OnInit {
   edit(item: any) {
     this.modal
       .createStatic(SysMenuEditComponent, {i: item})
+      .subscribe(() => this.queryTree());
+  }
+
+  authMgmt(item: any) {
+    this.modal
+      .createStatic(SysMenuAuthComponent, {i: item})
       .subscribe(() => this.queryTree());
   }
 

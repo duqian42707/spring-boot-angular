@@ -1,0 +1,117 @@
+<div class="modal-header">
+  <div class="modal-title">编辑权限信息</div>
+</div>
+<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+<div *ngIf="i">
+  <!--  “Table表格”组件——可编辑的行（https://ng.ant.design/components/table/zh#components-table-demo-edit-row）-->
+  <nz-table #editRowTable2
+            [nzShowPagination]="false"
+            [nzFrontPagination]="false"
+            [nzTotal]="powerList.length"
+            [nzData]="powerList"
+            [nzSize]="'small'"
+            [nzLoading]="listLoading"
+            class="yz-editable-table">
+    <thead>
+    <tr>
+      <th nzWidth="50px">序号</th>
+      <th nzWidth="150px">权限名称</th>
+      <th nzWidth="150px">权限代号</th>
+      <th nzWidth="50px">排序</th>
+      <th nzWidth="80px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of editRowTable2.data;let i = index;">
+      <!--序号-->
+      <td>{{i + 1}}</td>
+      <!--权限名称-->
+      <td>
+        <ng-container *ngIf="!editCache[data.authId].edit; else nameInputTpl2">
+          <div nz-tooltip nzTooltipTitle="{{data.authName}}">
+            {{ data.authName }}
+          </div>
+        </ng-container>
+        <ng-template #nameInputTpl2>
+          <nz-input-group [nzSuffix]="nameSuffixTemplate2">
+            <input type="text" [maxLength]="80" nz-input
+                   placeholder="权限名称" [(ngModel)]="editCache[data.authId].data.authName"/>
+          </nz-input-group>
+          <ng-template #nameSuffixTemplate2>
+            <i
+                nz-icon
+                nz-tooltip
+                class="ant-input-clear-icon"
+                nzTheme="fill"
+                nzType="close-circle"
+                *ngIf="editCache[data.authId].data.authName"
+                (click)="editCache[data.authId].data.authName = null"
+            ></i>
+          </ng-template>
+        </ng-template>
+      </td>
+      <!-- 权限代号 -->
+      <td>
+        <ng-container *ngIf="!editCache[data.authId].edit; else valueInputTpl2">
+          <div nz-tooltip nzTooltipTitle="{{data.authValue}}">
+            {{ data.authValue }}
+          </div>
+        </ng-container>
+        <ng-template #valueInputTpl2>
+          <nz-input-group [nzSuffix]="valueSuffixTemplate2">
+            <input type="text" [maxLength]="80" nz-input
+                   placeholder="权限代码" [(ngModel)]="editCache[data.authId].data.authValue"/>
+          </nz-input-group>
+          <ng-template #valueSuffixTemplate2>
+            <i
+                nz-icon
+                nz-tooltip
+                class="ant-input-clear-icon"
+                nzTheme="fill"
+                nzType="close-circle"
+                *ngIf="editCache[data.authId].data.authValue"
+                (click)="editCache[data.authId].data.authValue = null"
+            ></i>
+          </ng-template>
+        </ng-template>
+      </td>
+
+      <!-- 排序 -->
+      <td>
+        <ng-container *ngIf="!editCache[data.authId].edit; else valueInputTpl3">
+          <div nz-tooltip nzTooltipTitle="{{data.displayIndex}}">
+            {{ data.displayIndex }}
+          </div>
+        </ng-container>
+        <ng-template #valueInputTpl3>
+          <nz-input-number nz-input nzPlaceHolder="排序号" [nzMin]="1" [(ngModel)]="editCache[data.authId].data.displayIndex"></nz-input-number>
+        </ng-template>
+      </td>
+      <!-- 操作按钮 -->
+      <td nzRight="true">
+        <!--操作-->
+        <ng-container *ngIf="!editCache[data.authId].edit; else saveTpl2">
+          <a (click)="startEdit(data.authId)">编辑</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a nz-popconfirm="" nzPopconfirmTitle="是否要删除此行?" (nzOnConfirm)="recordDel(data.authId)" *ngIf="!editCache[data.authId].edit">
+            删除
+          </a>
+        </ng-container>
+
+        <ng-template #saveTpl2>
+          <a (click)="saveEdit(data.authId)">保存</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="cancelEdit(data)">取消</a>
+
+        </ng-template>
+
+      </td>
+
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <button nz-button nzType="dashed" nzBlock (click)="addListData()" style="margin-top: 16px">
+    <i nz-icon nzType="plus" nzTheme="outline"></i>添加权限
+  </button>
+</div>

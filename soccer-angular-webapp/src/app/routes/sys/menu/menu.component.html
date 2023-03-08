@@ -32,6 +32,7 @@
           <td>{{ item.icon }}</td>
           <td>
             <a nz-button nzType="link" (click)="edit(item)">编辑</a>
+            <a nz-button nzType="link" (click)="authMgmt(item)">权限管理</a>
             <a nz-button nzType="link" nzDanger (click)="delete(item)">删除</a>
           </td>
         </tr>
