@@ -37,6 +37,8 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 soccer:
+  system:
+    log: true
   roles:
     - roleValue: ROLE_NORMAL
       roleName: 普通用户

@@ -1,5 +1,6 @@
 <page-header></page-header>
 <nz-card>
   <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [page]="{toTop:false}" [columns]="columns"></st>
+  <st #st [data]="url" [page]="{toTop:false}" [req]="{reName:{pi:'pageNum',ps:'pageSize'}}" [res]="{reName:{total:'data.total',list:'data.list'}}"
+      [columns]="columns"></st>
 </nz-card>
