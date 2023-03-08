@@ -1,10 +1,8 @@
 package com.dqv5.soccer.web;
 
-import com.dqv5.soccer.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author admin
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class PageController {
 
-    @GetMapping({"/", "/passport/**", "/dashboard/**", "/base/**"})
+    @GetMapping({"/", "/passport/**", "/dashboard/**", "/sys/**"})
     public String index() {
         return "portal/index";
     }

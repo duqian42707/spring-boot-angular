@@ -13,11 +13,14 @@
 ### 电脑端
 
 - [x] 登录、退出登录
+- [ ] 部门管理
 - [x] 用户管理
 - [x] 菜单管理
 - [x] 角色管理
-- [ ] 修改密码、记住密码
 - [ ] 权限管理
+- [ ] 日志管理
+- [ ] 系统配置管理
+- [ ] 个人信息、修改密码
 
 ## 依赖
 
@@ -25,22 +28,26 @@
 
 * Maven 3
 * Java 8
+* Spring Boot 2.7.9
 * PostgreSQL
 
 ### 前端依赖环境
 
 * node
-* npm
-* angular@13
-* ng-zorro-antd@13
+* npm or yarn
+* angular@15
+* ng-zorro-antd@15
+* ng-alain@15
 
 ## 工程说明
 
 完善中...
 
-## 部署说明
+## 本地运行
 
-完善中...
+1. 启动后台项目: 使用idea启动，或打包后 `java -jar xxx.jar`
+2. 启动前台项目: `npm start`
+3. 电脑打开页面：`http://localhost:4200`
 
 ## 效果图
 
