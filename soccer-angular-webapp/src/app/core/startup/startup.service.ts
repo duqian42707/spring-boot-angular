@@ -1,15 +1,15 @@
-import {Injectable, Inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
-import {ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService} from '@delon/theme';
-import {ACLService} from '@delon/acl';
-import {Observable, zip, of, catchError, map} from 'rxjs';
-import type {NzSafeAny} from 'ng-zorro-antd/core/types';
-import {NzIconService} from 'ng-zorro-antd/icon';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { ACLService } from '@delon/acl';
+import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
+import type { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzIconService } from 'ng-zorro-antd/icon';
+import { Observable, zip, of, catchError, map } from 'rxjs';
 
-import {ICONS} from '../../../style-icons';
-import {ICONS_AUTO} from '../../../style-icons-auto';
+import { ICONS } from '../../../style-icons';
+import { ICONS_AUTO } from '../../../style-icons-auto';
 
 /**
  * Used for application startup
@@ -29,7 +29,6 @@ export class StartupService {
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
-
 
   load(): Observable<void> {
     return this.httpClient.get('assets/tmp/app-data.json').pipe(

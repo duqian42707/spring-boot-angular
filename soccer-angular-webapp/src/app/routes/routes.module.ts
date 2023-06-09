@@ -1,5 +1,6 @@
 import { NgModule, Type } from '@angular/core';
 import { SharedModule } from '@shared';
+
 // dashboard pages
 import { DashboardComponent } from './dashboard/dashboard.component';
 // single pages
@@ -19,11 +20,11 @@ const COMPONENTS: Array<Type<void>> = [
   UserRegisterResultComponent,
   // single pages
   CallbackComponent,
-  UserLockComponent,
+  UserLockComponent
 ];
 
 @NgModule({
   imports: [SharedModule, RouteRoutingModule],
-  declarations: COMPONENTS,
+  declarations: COMPONENTS
 })
 export class RoutesModule {}
