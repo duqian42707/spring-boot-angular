@@ -5,7 +5,8 @@
     "schematicCollections": [
       "@schematics/angular",
       "ng-alain"
-    ]
+    ],
+    "packageManager": "yarn"
   },
   "version": 1,
   "newProjectRoot": "projects",
