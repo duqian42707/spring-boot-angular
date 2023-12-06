@@ -2,17 +2,10 @@ server:
   port: 8080
 spring:
   datasource:
-    #    driver-class-name: org.postgresql.Driver
-    #    url: jdbc:postgresql://localhost:5432/auth
-    #    username: postgres
-    #    password: 123456
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:auth
-    username: sa
-    password: 111111
-  jpa:
-    properties:
-      hibernate.hbm2ddl.auto: update
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/soccer
+    username: postgres
+    password: 123456
 logging:
   file:
     path: logs

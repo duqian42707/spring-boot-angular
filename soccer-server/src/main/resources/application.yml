@@ -6,14 +6,15 @@ spring:
   thymeleaf:
     prefix: classpath:/static/
   datasource:
-    #    driver-class-name: org.postgresql.Driver
-    #    url: jdbc:postgresql://localhost:5432/auth
-    #    username: postgres
-    #    password: 123456
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:auth
     username: sa
     password: 111111
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/common/db.changelog-master.xml
+    database-change-log-table: LIQUIBASE_CHANGELOG
+    database-change-log-lock-table: LIQUIBASE_CHANGELOG_LOCK
   servlet:
     multipart:
       max-file-size: 10MB
@@ -24,9 +25,6 @@ spring:
         cachecontrol:
           cache-public: true
           max-age: 86400
-  jpa:
-    properties:
-      hibernate.hbm2ddl.auto: update
 logging:
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} %clr(%5p) [%12.12t] %clr(%-50.50logger{49}){cyan} [%5.5L] : %m%n%wEx'

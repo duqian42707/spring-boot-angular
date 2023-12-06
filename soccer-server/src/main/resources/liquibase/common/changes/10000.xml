@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                   http://www.liquibase.org/xml/ns/pro
+                   http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="10000-001" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_user"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_user" remarks="用户表">
+            <column name="user_id" type="varchar(50)" remarks="用户id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_user_pk"/>
+            </column>
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"/>
+            <column name="account" type="varchar(100)" remarks="登录账号"/>
+            <column name="password" type="varchar(200)" remarks="用户密码"/>
+            <column name="nick_name" type="varchar(200)" remarks="昵称"/>
+            <column name="avatar_url" type="varchar(1000)" remarks="头像图片url"/>
+            <column name="gender" type="varchar(1)" remarks="性别"/>
+            <column name="phone" type="varchar(100)" remarks="手机号"/>
+            <column name="email" type="varchar(200)" remarks="邮箱"/>
+            <column name="status" type="varchar(1)" remarks="状态"/>
+            <column name="openid" type="varchar(100)" remarks="openid"/>
+            <column name="last_login_time" type="timestamp" remarks="最后登录时间"/>
+            <column name="last_password_reset_time" type="timestamp" remarks="最后重置密码时间"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10000-002" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_role"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_role" remarks="角色表">
+            <column name="role_id" type="varchar(50)" remarks="角色id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_role_pk"/>
+            </column>
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"/>
+            <column name="role_value" type="varchar(100)" remarks="角色标识"/>
+            <column name="role_name" type="varchar(200)" remarks="角色名称"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10000-003" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_menu"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_menu" remarks="菜单表">
+            <column name="menu_id" type="varchar(50)" remarks="菜单id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_menu_pk"/>
+            </column>
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"/>
+            <column name="parent_id" type="varchar(50)" remarks="上级菜单id"/>
+            <column name="menu_code" type="varchar(100)" remarks="菜单标识"/>
+            <column name="menu_name" type="varchar(200)" remarks="菜单名称"/>
+            <column name="link" type="varchar(200)" remarks="路由链接"/>
+            <column name="external_link" type="varchar(1000)" remarks="外部链接"/>
+            <column name="intro" type="varchar(1000)" remarks="介绍"/>
+            <column name="icon" type="varchar(100)" remarks="图标"/>
+            <column name="hide" type="varchar(1)" remarks="是否隐藏菜单"/>
+            <column name="hide_children" type="varchar(1)" remarks="是否隐藏子菜单"/>
+            <column name="display_index" type="integer" remarks="显示顺序"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10000-004" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_auth"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_auth" remarks="权限表">
+            <column name="auth_id" type="varchar(50)" remarks="权限id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_auth_pk"/>
+            </column>
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"/>
+            <column name="menu_id" type="varchar(50)" remarks="所属菜单id"/>
+            <column name="auth_value" type="varchar(100)" remarks="权限值"/>
+            <column name="auth_name" type="varchar(200)" remarks="权限名称"/>
+            <column name="display_index" type="integer" remarks="显示顺序"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10000-005" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_log"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_log" remarks="权限表">
+            <column name="log_id" type="varchar(50)" remarks="日志id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_log_pk"/>
+            </column>
+            <column name="created_date" type="timestamp" remarks="创建时间"/>
+            <column name="user_id" type="varchar(50)" remarks="用户id"/>
+            <column name="username" type="varchar(50)" remarks="用户账号"/>
+            <column name="nick_name" type="varchar(10)" remarks="用户昵称"/>
+            <column name="ip" type="varchar(100)" remarks="ip地址"/>
+            <column name="address" type="varchar(200)" remarks="所在地址"/>
+            <column name="class_name" type="varchar(200)" remarks="类名"/>
+            <column name="method_name" type="varchar(200)" remarks="方法名"/>
+            <column name="method_desc" type="varchar(200)" remarks="方法描述"/>
+            <column name="args" type="text" remarks="参数"/>
+            <column name="request_url" type="varchar(1000)" remarks="请求url"/>
+            <column name="request_type" type="varchar(100)" remarks="请求方法"/>
+            <column name="status" type="integer" remarks="状态"/>
+            <column name="error_info" type="text" remarks="错误信息"/>
+            <column name="run_time" type="integer" remarks="运行时间"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10000-006" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_user_role"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_user_role" remarks="用户角色关联表">
+            <column name="user_id" type="varchar(50)" remarks="用户id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_user_role_pk"/>
+            </column>
+            <column name="role_id" type="varchar(50)" remarks="角色id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_user_role_pk"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

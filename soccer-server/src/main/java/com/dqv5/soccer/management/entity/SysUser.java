@@ -42,6 +42,6 @@ public class SysUser extends AbstractBaseEntity implements Serializable {
     private Date lastPasswordResetTime;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "base_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    @JoinTable(name = "sys_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<SysRole> roles = new HashSet<>();
 }
