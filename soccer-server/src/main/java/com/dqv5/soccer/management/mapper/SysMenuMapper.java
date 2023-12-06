@@ -1,7 +1,7 @@
-package com.dqv5.soccer.management.repository;
+package com.dqv5.soccer.management.mapper;
 
-import com.dqv5.soccer.management.entity.SysMenu;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dqv5.soccer.management.table.SysMenu;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @author duq
  * @date 2022/7/18
  */
-public interface SysMenuRepository extends JpaRepository<SysMenu, String> {
+public interface SysMenuMapper extends BaseMapper<SysMenu> {
     boolean existsByMenuCode(String menuCode);
 
     boolean existsByMenuCodeAndMenuIdNot(String menuCode, String menuId);

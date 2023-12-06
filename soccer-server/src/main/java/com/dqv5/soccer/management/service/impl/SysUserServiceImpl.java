@@ -1,17 +1,18 @@
 package com.dqv5.soccer.management.service.impl;
 
 import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.pojo.PageInfo;
-import com.dqv5.soccer.management.entity.SysUser;
-import com.dqv5.soccer.management.repository.SysUserRepository;
+import com.dqv5.soccer.management.table.SysUser;
+import com.dqv5.soccer.management.mapper.SysUserMapper;
 import com.dqv5.soccer.management.service.SysUserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,42 +22,43 @@ import java.util.Optional;
 @Service
 public class SysUserServiceImpl implements SysUserService {
     @Resource
-    private SysUserRepository sysUserRepository;
+    private SysUserMapper sysUserMapper;
     @Resource
     private PasswordEncoder passwordEncoder;
 
     @Override
     public PageInfo<SysUser> queryListForPage(Pageable pageable) {
-        Page<SysUser> page = sysUserRepository.findAll(pageable);
-        return PageInfo.of(page.getTotalElements(), page.getContent());
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
+        List<SysUser> list = sysUserMapper.selectList(null);
+        return new PageInfo<>(list);
     }
 
     @Override
     public SysUser findOne(String id) {
-        return sysUserRepository.findById(id).orElseThrow(() -> new CommonRuntimeException("用户id不存在:" + id));
+        return sysUserMapper.selectById(id);
     }
 
     @Override
     public void insert(SysUser sysUser) {
-        Optional<SysUser> opt = sysUserRepository.findByAccount(sysUser.getAccount());
+        Optional<SysUser> opt = sysUserMapper.findByAccount(sysUser.getAccount());
         if (opt.isPresent()) {
             throw new CommonRuntimeException("账号已存在：" + sysUser.getAccount());
         }
         sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
-        sysUserRepository.save(sysUser);
+        sysUserMapper.insert(sysUser);
     }
 
     @Override
     public void update(SysUser sysUser) {
-        SysUser userInDb = sysUserRepository.findById(sysUser.getUserId()).orElseThrow(() -> new CommonRuntimeException("用户id不存在:" + sysUser.getUserId()));
+        SysUser userInDb = sysUserMapper.selectById(sysUser.getUserId());
         // todo 属性拷贝
         userInDb.setNickName(sysUser.getNickName());
-        sysUserRepository.save(userInDb);
+        sysUserMapper.updateById(userInDb);
     }
 
     @Override
     @Transactional
     public void deleteById(String id) {
-        sysUserRepository.deleteById(id);
+        sysUserMapper.deleteById(id);
     }
 }

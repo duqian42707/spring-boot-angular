@@ -1,14 +1,12 @@
 package com.dqv5.soccer.management.web;
 
-import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.pojo.PageInfo;
-import com.dqv5.soccer.management.entity.SysUser;
 import com.dqv5.soccer.common.RestReturn;
+import com.dqv5.soccer.common.RestReturnEntity;
+import com.dqv5.soccer.management.table.SysUser;
 import com.dqv5.soccer.management.service.SysUserService;
+import com.dqv5.soccer.pojo.Pageable;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +31,7 @@ public class SysUserController {
     @GetMapping("/list")
     public ResponseEntity<RestReturnEntity<PageInfo<SysUser>>> list(@RequestParam(defaultValue = "1") int pageNum,
                                                                     @RequestParam(defaultValue = "10") int pageSize) {
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.ASC, "account");
+        Pageable pageable = Pageable.of(pageNum, pageSize);
         PageInfo<SysUser> pageInfo = sysUserService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
     }

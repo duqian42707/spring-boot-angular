@@ -1,34 +1,38 @@
 package com.dqv5.soccer.management.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.management.entity.SysLog;
-import com.dqv5.soccer.management.repository.SysLogRepository;
+import com.dqv5.soccer.management.table.SysLog;
+import com.dqv5.soccer.management.mapper.SysLogMapper;
 import com.dqv5.soccer.management.service.SysLogService;
-import com.dqv5.soccer.pojo.PageInfo;
 import com.dqv5.soccer.security.AuthUser;
 import com.dqv5.soccer.utils.SecurityUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 public class SysLogServiceImpl implements SysLogService {
     @Resource
-    private SysLogRepository sysLogRepository;
+    private SysLogMapper sysLogMapper;
 
 
     @Override
     public PageInfo<SysLog> queryListForPage(Pageable pageable) {
-        Page<SysLog> page = sysLogRepository.findAll(pageable);
-        return PageInfo.of(page.getTotalElements(), page.getContent());
+        QueryWrapper<SysLog> queryWrapper = new QueryWrapper<>();
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
+        List<SysLog> list = sysLogMapper.selectList(queryWrapper);
+        return new PageInfo<>(list);
     }
 
     @Override
     public SysLog findOne(String id) {
-        return sysLogRepository.findById(id).orElseThrow(() -> new CommonRuntimeException("菜单id不存在:" + id));
+        return sysLogMapper.selectById(id);
     }
 
     @Override
@@ -40,7 +44,7 @@ public class SysLogServiceImpl implements SysLogService {
             param.setUsername(user.getUsername());
             param.setNickName(user.getNickName());
         }
-        sysLogRepository.save(param);
+        sysLogMapper.insert(param);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class SysLogServiceImpl implements SysLogService {
     @Override
     @Transactional
     public void deleteById(String id) {
-        sysLogRepository.deleteById(id);
+        sysLogMapper.deleteById(id);
     }
 
 }

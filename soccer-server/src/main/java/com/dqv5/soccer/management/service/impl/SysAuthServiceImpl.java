@@ -1,40 +1,41 @@
 package com.dqv5.soccer.management.service.impl;
 
 import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.management.entity.SysAuth;
-import com.dqv5.soccer.management.entity.SysMenu;
-import com.dqv5.soccer.management.repository.SysAuthRepository;
+import com.dqv5.soccer.management.table.SysAuth;
+import com.dqv5.soccer.management.table.SysMenu;
+import com.dqv5.soccer.management.mapper.SysAuthMapper;
 import com.dqv5.soccer.management.service.SysAuthService;
-import com.dqv5.soccer.pojo.PageInfo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 public class SysAuthServiceImpl implements SysAuthService {
     @Resource
-    private SysAuthRepository sysAuthRepository;
+    private SysAuthMapper sysAuthMapper;
 
     @Override
     public List<SysAuth> findAll(String menuId) {
         SysMenu menu = new SysMenu();
         menu.setMenuId(menuId);
-        return sysAuthRepository.findByMenu(menu);
+        return sysAuthMapper.findByMenu(menu);
     }
 
     @Override
     public PageInfo<SysAuth> queryListForPage(Pageable pageable) {
-        Page<SysAuth> page = sysAuthRepository.findAll(pageable);
-        return PageInfo.of(page.getTotalElements(), page.getContent());
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
+        List<SysAuth> list = sysAuthMapper.selectList(null);
+        return new PageInfo<>(list);
     }
 
     @Override
     public SysAuth findOne(String id) {
-        return sysAuthRepository.findById(id).orElseThrow(() -> new CommonRuntimeException("菜单id不存在:" + id));
+        return sysAuthMapper.selectById(id);
     }
 
     @Override
@@ -43,13 +44,13 @@ public class SysAuthServiceImpl implements SysAuthService {
         String authValue = param.getAuthValue();
         String authName = param.getAuthName();
         SysMenu menu = param.getMenu();
-        if (sysAuthRepository.existsByAuthValueAndMenu(authValue, menu)) {
+        if (sysAuthMapper.existsByAuthValueAndMenu(authValue, menu)) {
             throw new CommonRuntimeException("权限标识已存在：" + authValue);
         }
-        if (sysAuthRepository.existsByAuthNameAndMenu(authName, menu)) {
+        if (sysAuthMapper.existsByAuthNameAndMenu(authName, menu)) {
             throw new CommonRuntimeException("权限名称已存在：" + authName);
         }
-        sysAuthRepository.save(param);
+        sysAuthMapper.insert(param);
     }
 
     @Override
@@ -58,23 +59,23 @@ public class SysAuthServiceImpl implements SysAuthService {
         String authValue = param.getAuthValue();
         String authName = param.getAuthName();
         SysMenu menu = param.getMenu();
-        SysAuth dataInDB = sysAuthRepository.findById(authId).orElseThrow(() -> new CommonRuntimeException("权限id不存在:" + authId));
-        if (sysAuthRepository.existsByAuthValueAndMenuAndAuthIdNot(authValue, menu, authId)) {
+        SysAuth dataInDB = sysAuthMapper.selectById(authId);
+        if (sysAuthMapper.existsByAuthValueAndMenuAndAuthIdNot(authValue, menu, authId)) {
             throw new CommonRuntimeException("权限标识已存在：" + authValue);
         }
-        if (sysAuthRepository.existsByAuthNameAndMenuAndAuthIdNot(authName, menu, authId)) {
+        if (sysAuthMapper.existsByAuthNameAndMenuAndAuthIdNot(authName, menu, authId)) {
             throw new CommonRuntimeException("权限名称已存在：" + authName);
         }
         dataInDB.setAuthValue(param.getAuthValue());
         dataInDB.setAuthName(param.getAuthName());
         dataInDB.setMenu(param.getMenu());
-        sysAuthRepository.save(dataInDB);
+        sysAuthMapper.updateById(dataInDB);
     }
 
     @Override
     @Transactional
     public void deleteById(String id) {
-        sysAuthRepository.deleteById(id);
+        sysAuthMapper.deleteById(id);
     }
 
 }

@@ -16,5 +16,3 @@ logging:
   level:
     root: info
     com.dqv5: info
-    org.hibernate.SQL: error
-    org.hibernate.type.descriptor.sql.BasicBinder: error

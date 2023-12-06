@@ -31,8 +31,6 @@ logging:
   level:
     root: info
     com.dqv5: debug
-    org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 soccer:
   system:

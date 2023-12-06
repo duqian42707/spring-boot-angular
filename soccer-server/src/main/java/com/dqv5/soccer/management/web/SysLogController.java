@@ -2,13 +2,11 @@ package com.dqv5.soccer.management.web;
 
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.management.entity.SysLog;
+import com.dqv5.soccer.management.table.SysLog;
 import com.dqv5.soccer.management.service.SysLogService;
-import com.dqv5.soccer.pojo.PageInfo;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +32,7 @@ public class SysLogController {
     @GetMapping("/list")
     public ResponseEntity<RestReturnEntity<PageInfo<SysLog>>> list(@RequestParam(defaultValue = "1") int pageNum,
                                                                    @RequestParam(defaultValue = "10") int pageSize) {
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.DESC, "createdDate");
+        Pageable pageable = Pageable.of(pageNum , pageSize);
         PageInfo<SysLog> pageInfo = sysLogService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
     }

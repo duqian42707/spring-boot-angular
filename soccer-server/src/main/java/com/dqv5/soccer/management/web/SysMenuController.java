@@ -2,9 +2,8 @@ package com.dqv5.soccer.management.web;
 
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.management.entity.SysMenu;
+import com.dqv5.soccer.management.table.SysMenu;
 import com.dqv5.soccer.management.service.SysMenuService;
-import com.dqv5.soccer.pojo.TreeNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

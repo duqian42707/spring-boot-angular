@@ -1,23 +1,22 @@
-package com.dqv5.soccer.management.entity;
+package com.dqv5.soccer.management.table;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.dqv5.soccer.pojo.AbstractBaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Entity
-@Table(name = "sys_auth")
+@TableName("sys_auth")
 public class SysAuth extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @TableId(type = IdType.ASSIGN_UUID)
     private String authId;
 
     private String authValue;
@@ -28,8 +27,10 @@ public class SysAuth extends AbstractBaseEntity implements Serializable {
     /**
      * 所属菜单
      */
-    @ManyToOne
-    @JoinColumn(name = "menu_id")
+//    @ManyToOne
+//    @JoinColumn(name = "menu_id")
+
+    @TableField(exist = false)
     private SysMenu menu;
 
 

@@ -1,6 +1,6 @@
 package com.dqv5.soccer.config;
 
-import com.dqv5.soccer.management.entity.SysLog;
+import com.dqv5.soccer.management.table.SysLog;
 import com.dqv5.soccer.management.service.SysLogService;
 import com.dqv5.soccer.security.AuthUser;
 import com.dqv5.soccer.utils.AspectUtil;

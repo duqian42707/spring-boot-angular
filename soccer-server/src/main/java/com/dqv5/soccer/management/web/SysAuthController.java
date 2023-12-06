@@ -2,7 +2,7 @@ package com.dqv5.soccer.management.web;
 
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.management.entity.SysAuth;
+import com.dqv5.soccer.management.table.SysAuth;
 import com.dqv5.soccer.management.service.SysAuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

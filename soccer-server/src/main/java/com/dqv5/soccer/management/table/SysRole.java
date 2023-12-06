@@ -1,14 +1,12 @@
-package com.dqv5.soccer.management.entity;
+package com.dqv5.soccer.management.table;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.dqv5.soccer.pojo.AbstractBaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -22,14 +20,11 @@ import java.io.Serializable;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Entity
-@Table(name = "sys_role")
+@TableName("sys_role")
 public class SysRole extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @GeneratedValue(generator = "uuid")
+    @TableId(type = IdType.ASSIGN_UUID)
     private String roleId;
     private String roleValue;
     private String roleName;

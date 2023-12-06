@@ -1,16 +1,16 @@
 package com.dqv5.soccer.management.service.impl;
 
 import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.management.entity.SysRole;
-import com.dqv5.soccer.management.repository.SysRoleRepository;
+import com.dqv5.soccer.management.table.SysRole;
+import com.dqv5.soccer.management.mapper.SysRoleMapper;
 import com.dqv5.soccer.management.service.SysRoleService;
-import com.dqv5.soccer.pojo.PageInfo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.github.pagehelper.PageInfo;
+import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 /**
  * @author duq
@@ -19,17 +19,17 @@ import javax.transaction.Transactional;
 @Service
 public class SysRoleServiceImpl implements SysRoleService {
     @Resource
-    private SysRoleRepository sysRoleRepository;
+    private SysRoleMapper sysRoleMapper;
 
     @Override
     public PageInfo<SysRole> queryListForPage(Pageable pageable) {
-        Page<SysRole> page = sysRoleRepository.findAll(pageable);
-        return PageInfo.of(page.getTotalElements(), page.getContent());
+        List<SysRole> list = sysRoleMapper.selectList(null);
+        return new PageInfo<>(list);
     }
 
     @Override
     public SysRole findOne(String id) {
-        return sysRoleRepository.findById(id).orElseThrow(() -> new CommonRuntimeException("角色id不存在:" + id));
+        return sysRoleMapper.selectById(id);
     }
 
     @Override
@@ -37,13 +37,13 @@ public class SysRoleServiceImpl implements SysRoleService {
         param.setRoleId(null);
         String roleValue = param.getRoleValue();
         String roleName = param.getRoleName();
-        if (sysRoleRepository.existsByRoleValue(roleValue)) {
+        if (sysRoleMapper.existsByRoleValue(roleValue)) {
             throw new CommonRuntimeException("角色标识已存在：" + roleValue);
         }
-        if (sysRoleRepository.existsByRoleName(roleName)) {
+        if (sysRoleMapper.existsByRoleName(roleName)) {
             throw new CommonRuntimeException("角色名称已存在：" + roleName);
         }
-        sysRoleRepository.save(param);
+        sysRoleMapper.insert(param);
     }
 
     @Override
@@ -51,21 +51,21 @@ public class SysRoleServiceImpl implements SysRoleService {
         String roleId = param.getRoleId();
         String roleValue = param.getRoleValue();
         String roleName = param.getRoleName();
-        SysRole dataInDB = sysRoleRepository.findById(roleId).orElseThrow(() -> new CommonRuntimeException("角色id不存在:" + roleId));
-        if (sysRoleRepository.existsByRoleValueAndRoleIdNot(roleValue, roleId)) {
+        SysRole dataInDB = sysRoleMapper.selectById(roleId);
+        if (sysRoleMapper.existsByRoleValueAndRoleIdNot(roleValue, roleId)) {
             throw new CommonRuntimeException("角色标识已存在：" + roleValue);
         }
-        if (sysRoleRepository.existsByRoleNameAndRoleIdNot(roleName, roleId)) {
+        if (sysRoleMapper.existsByRoleNameAndRoleIdNot(roleName, roleId)) {
             throw new CommonRuntimeException("角色名称已存在：" + roleName);
         }
         dataInDB.setRoleValue(roleValue);
         dataInDB.setRoleName(roleName);
-        sysRoleRepository.save(dataInDB);
+        sysRoleMapper.updateById(dataInDB);
     }
 
     @Override
     @Transactional
     public void deleteById(String id) {
-        sysRoleRepository.deleteById(id);
+        sysRoleMapper.deleteById(id);
     }
 }

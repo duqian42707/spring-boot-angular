@@ -1,6 +1,6 @@
 package com.dqv5.soccer.management.service;
 
-import com.dqv5.soccer.management.entity.SysAuth;
+import com.dqv5.soccer.management.table.SysAuth;
 import com.dqv5.soccer.service.BaseService;
 
 import java.util.List;

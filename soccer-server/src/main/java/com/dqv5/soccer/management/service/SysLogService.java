@@ -1,6 +1,6 @@
 package com.dqv5.soccer.management.service;
 
-import com.dqv5.soccer.management.entity.SysLog;
+import com.dqv5.soccer.management.table.SysLog;
 import com.dqv5.soccer.service.BaseService;
 
 /**

@@ -1,71 +1,68 @@
 package com.dqv5.soccer.management.service.impl;
 
 import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.management.entity.SysMenu;
-import com.dqv5.soccer.management.repository.SysMenuRepository;
+import com.dqv5.soccer.management.table.SysMenu;
+import com.dqv5.soccer.management.mapper.SysMenuMapper;
 import com.dqv5.soccer.management.service.SysMenuService;
-import com.dqv5.soccer.pojo.PageInfo;
-import com.dqv5.soccer.pojo.TreeNode;
-import com.dqv5.soccer.utils.MenuTreeUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
-import java.util.Collection;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SysMenuServiceImpl implements SysMenuService {
     @Resource
-    private SysMenuRepository sysMenuRepository;
+    private SysMenuMapper sysMenuMapper;
 
     @Override
     public PageInfo<SysMenu> queryListForPage(Pageable pageable) {
-        Page<SysMenu> page = sysMenuRepository.findAll(pageable);
-        return PageInfo.of(page.getTotalElements(), page.getContent());
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
+        List<SysMenu> list = sysMenuMapper.selectList(null);
+        return new PageInfo<>(list);
     }
 
     @Override
     public SysMenu findOne(String id) {
-        return sysMenuRepository.findById(id).orElseThrow(() -> new CommonRuntimeException("菜单id不存在:" + id));
+        return sysMenuMapper.selectById(id);
     }
 
     @Override
     public void insert(SysMenu param) {
         param.setMenuId(null);
         String menuCode = param.getMenuCode();
-        if (sysMenuRepository.existsByMenuCode(menuCode)) {
+        if (sysMenuMapper.existsByMenuCode(menuCode)) {
             throw new CommonRuntimeException("菜单编码已存在：" + menuCode);
         }
-        sysMenuRepository.save(param);
+        sysMenuMapper.insert(param);
     }
 
     @Override
     public void update(SysMenu param) {
         String menuId = param.getMenuId();
         String menuCode = param.getMenuCode();
-        SysMenu dataInDB = sysMenuRepository.findById(menuId).orElseThrow(() -> new CommonRuntimeException("菜单id不存在:" + menuId));
-        if (sysMenuRepository.existsByMenuCodeAndMenuIdNot(menuCode, menuId)) {
+        SysMenu dataInDB = sysMenuMapper.selectById(menuId);
+        if (sysMenuMapper.existsByMenuCodeAndMenuIdNot(menuCode, menuId)) {
             throw new CommonRuntimeException("菜单编码已存在：" + menuCode);
         }
         // todo 拷贝属性
         dataInDB.setMenuCode(param.getMenuCode());
         dataInDB.setMenuName(param.getMenuName());
-        sysMenuRepository.save(dataInDB);
+        sysMenuMapper.updateById(dataInDB);
     }
 
     @Override
     @Transactional
     public void deleteById(String id) {
-        sysMenuRepository.deleteById(id);
+        sysMenuMapper.deleteById(id);
     }
 
     @Override
     public List<SysMenu> findAllTree() {
-        return sysMenuRepository.findAllByParentMenu(null);
+        return sysMenuMapper.findAllByParentMenu(null);
     }
 
 

@@ -2,13 +2,11 @@ package com.dqv5.soccer.management.web;
 
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.management.entity.SysRole;
+import com.dqv5.soccer.management.table.SysRole;
 import com.dqv5.soccer.management.service.SysRoleService;
-import com.dqv5.soccer.pojo.PageInfo;
+import com.dqv5.soccer.pojo.Pageable;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +29,7 @@ public class SysRoleController {
     @GetMapping("/list")
     public ResponseEntity<RestReturnEntity<PageInfo<SysRole>>> list(@RequestParam(defaultValue = "1") int pageNum,
                                                                     @RequestParam(defaultValue = "10") int pageSize) {
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize, Sort.Direction.DESC, "lastModifiedDate");
+        Pageable pageable = Pageable.of(pageNum , pageSize);
         PageInfo<SysRole> pageInfo = sysRoleService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
     }

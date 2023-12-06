@@ -1,16 +1,15 @@
-package com.dqv5.soccer.management.repository;
+package com.dqv5.soccer.management.mapper;
 
-import com.dqv5.soccer.management.entity.SysRole;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dqv5.soccer.management.table.SysRole;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
  * @author duq
  * @date 2022/7/5
  */
-public interface SysRoleRepository extends JpaRepository<SysRole, String> {
+public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     boolean existsByRoleValue(String roleValue);
 

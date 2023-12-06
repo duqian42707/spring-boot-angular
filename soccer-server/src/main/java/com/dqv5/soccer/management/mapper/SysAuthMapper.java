@@ -1,8 +1,8 @@
-package com.dqv5.soccer.management.repository;
+package com.dqv5.soccer.management.mapper;
 
-import com.dqv5.soccer.management.entity.SysAuth;
-import com.dqv5.soccer.management.entity.SysMenu;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dqv5.soccer.management.table.SysAuth;
+import com.dqv5.soccer.management.table.SysMenu;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author duq
  * @date 2022/7/18
  */
-public interface SysAuthRepository extends JpaRepository<SysAuth, String> {
+public interface SysAuthMapper extends BaseMapper<SysAuth> {
 
     List<SysAuth> findByMenu(SysMenu menu);
 

@@ -1,11 +1,16 @@
 package com.dqv5.soccer.config;
 
-import com.dqv5.soccer.management.entity.SysMenu;
-import com.dqv5.soccer.management.entity.SysRole;
-import com.dqv5.soccer.management.entity.SysUser;
-import com.dqv5.soccer.management.repository.SysMenuRepository;
-import com.dqv5.soccer.management.repository.SysRoleRepository;
-import com.dqv5.soccer.management.repository.SysUserRepository;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dqv5.soccer.management.mapper.SysUserRoleMapper;
+import com.dqv5.soccer.management.table.SysMenu;
+import com.dqv5.soccer.management.table.SysRole;
+import com.dqv5.soccer.management.table.SysUser;
+import com.dqv5.soccer.management.mapper.SysMenuMapper;
+import com.dqv5.soccer.management.mapper.SysRoleMapper;
+import com.dqv5.soccer.management.mapper.SysUserMapper;
+import com.dqv5.soccer.management.table.SysUserRole;
 import com.dqv5.soccer.pojo.RoleInfo;
 import com.dqv5.soccer.pojo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +32,13 @@ public class AutoRunner implements CommandLineRunner {
     private PasswordEncoder passwordEncoder;
 
     @Resource
-    private SysMenuRepository sysMenuRepository;
+    private SysMenuMapper sysMenuMapper;
     @Resource
-    private SysRoleRepository sysRoleRepository;
+    private SysRoleMapper sysRoleMapper;
     @Resource
-    private SysUserRepository sysUserRepository;
+    private SysUserMapper sysUserMapper;
+    @Resource
+    private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
     public void run(String... args) {
@@ -43,27 +50,27 @@ public class AutoRunner implements CommandLineRunner {
     }
 
     private void initMenus() {
-        long count = sysMenuRepository.count();
+        long count = sysMenuMapper.selectCount(null);
         if (count > 0) {
             return;
         }
-
-        SysMenu dashboard = sysMenuRepository.save(SysMenu.builder().menuName("仪表盘").build());
+        SysMenu dashboard = SysMenu.builder().menuName("仪表盘").build();
+        sysMenuMapper.insert(dashboard);
         SysMenu p1 = new SysMenu();
         p1.setMenuId(dashboard.getMenuId());
-        sysMenuRepository.save(SysMenu.builder().parentMenu(p1).menuName("仪表盘").link("/dashboard").build());
-
-        SysMenu sys = sysMenuRepository.save(SysMenu.builder().menuName("系统管理").build());
+        sysMenuMapper.insert(SysMenu.builder().parentMenu(p1).menuName("仪表盘").link("/dashboard").build());
+        SysMenu sys = SysMenu.builder().menuName("系统管理").build();
+        sysMenuMapper.insert(sys);
         SysMenu p2 = new SysMenu();
         p2.setMenuId(sys.getMenuId());
-        sysMenuRepository.save(SysMenu.builder().parentMenu(p2).menuName("用户管理").link("/sys/user").build());
-        sysMenuRepository.save(SysMenu.builder().parentMenu(p2).menuName("角色管理").link("/sys/role").build());
-        sysMenuRepository.save(SysMenu.builder().parentMenu(p2).menuName("菜单管理").link("/sys/menu").build());
-        sysMenuRepository.save(SysMenu.builder().parentMenu(p2).menuName("系统日志").link("/sys/log").build());
+        sysMenuMapper.insert(SysMenu.builder().parentMenu(p2).menuName("用户管理").link("/sys/user").build());
+        sysMenuMapper.insert(SysMenu.builder().parentMenu(p2).menuName("角色管理").link("/sys/role").build());
+        sysMenuMapper.insert(SysMenu.builder().parentMenu(p2).menuName("菜单管理").link("/sys/menu").build());
+        sysMenuMapper.insert(SysMenu.builder().parentMenu(p2).menuName("系统日志").link("/sys/log").build());
     }
 
     private void initRoles() {
-        long count = sysRoleRepository.count();
+        long count = sysRoleMapper.selectCount(null);
         if (count > 0) {
             return;
         }
@@ -72,12 +79,12 @@ public class AutoRunner implements CommandLineRunner {
             SysRole sysRole = new SysRole();
             sysRole.setRoleValue(initRole.getRoleValue());
             sysRole.setRoleName(initRole.getRoleName());
-            sysRoleRepository.save(sysRole);
+            sysRoleMapper.insert(sysRole);
         }
     }
 
     private void initUsers() {
-        long count = sysUserRepository.count();
+        long count = sysUserMapper.selectCount(null);
         if (count > 0) {
             return;
         }
@@ -90,11 +97,19 @@ public class AutoRunner implements CommandLineRunner {
             sysUser.setAccount(username);
             sysUser.setPassword(encodedPassword);
             sysUser.setNickName(nickName);
+            sysUserMapper.insert(sysUser);
             String role = initUserInfo.getRole();
             if (StringUtils.isNotBlank(role)) {
-                sysRoleRepository.findByRoleValue(role).ifPresent(sysRole -> sysUser.getRoles().add(sysRole));
+                QueryWrapper<SysRole> queryWrapper = Wrappers.query(SysRole.class)
+                        .eq("role_value", role);
+                SysRole sysRole = sysRoleMapper.selectOne(queryWrapper);
+                if (sysRole != null) {
+                    SysUserRole sysUserRole = new SysUserRole();
+                    sysUserRole.setUserId(sysUser.getUserId());
+                    sysUserRole.setRoleId(sysRole.getRoleId());
+                    sysUserRoleMapper.insert(sysUserRole);
+                }
             }
-            sysUserRepository.save(sysUser);
         }
     }
 

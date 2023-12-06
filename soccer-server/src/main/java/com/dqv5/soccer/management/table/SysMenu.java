@@ -1,28 +1,28 @@
-package com.dqv5.soccer.management.entity;
+package com.dqv5.soccer.management.table;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.dqv5.soccer.pojo.AbstractBaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
 @Data
-@Entity
-@Table(name = "sys_menu")
+@TableName("sys_menu")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class SysMenu extends AbstractBaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @TableId(type = IdType.ASSIGN_UUID)
     private String menuId;
     /**
      * 菜单名称
@@ -31,7 +31,6 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
     /**
      * 唯一标识
      */
-    @Column(name = "MENU_CODE", unique = true)
     private String menuCode;
 
     /**
@@ -41,7 +40,6 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
     /**
      * 外部链接
      */
-    @Column(name = "EXTERNAL_LINK", length = 1000)
     private String externalLink;
     /**
      * 介绍
@@ -54,15 +52,11 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
     /**
      * 是否隐藏菜单
      */
-    @Column(name = "hide")
-    @org.hibernate.annotations.Type(type = "yes_no")
-    private boolean hide;
+    private Integer hide;
     /**
      * 是否隐藏菜单
      */
-    @Column(name = "hide_children")
-    @org.hibernate.annotations.Type(type = "yes_no")
-    private boolean hideChildren;
+    private Integer hideChildren;
     /**
      * 显示顺序
      */
@@ -71,15 +65,17 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
     /**
      * 父级菜单
      */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = SysMenu.class)
-    @JoinColumn(name = "parent_id")
+//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = SysMenu.class)
+//    @JoinColumn(name = "parent_id")
     @JsonIgnore // 避免死循环
+    @TableField(exist = false)
     private SysMenu parentMenu;
 
     /**
      * 下级菜单
      */
-    @OneToMany(mappedBy = "parentMenu", fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "parentMenu", fetch = FetchType.LAZY)
+    @TableField(exist = false)
     private Set<SysMenu> children;
 
     /**
@@ -91,7 +87,7 @@ public class SysMenu extends AbstractBaseEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         SysMenu sysMenu = (SysMenu) o;
-        return hide == sysMenu.hide && hideChildren == sysMenu.hideChildren && Objects.equals(menuId, sysMenu.menuId) && Objects.equals(menuName, sysMenu.menuName) && Objects.equals(menuCode, sysMenu.menuCode) && Objects.equals(link, sysMenu.link) && Objects.equals(externalLink, sysMenu.externalLink) && Objects.equals(intro, sysMenu.intro) && Objects.equals(icon, sysMenu.icon) && Objects.equals(displayIndex, sysMenu.displayIndex);
+        return Objects.equals(hide, sysMenu.hide) && Objects.equals(hideChildren, sysMenu.hideChildren) && Objects.equals(menuId, sysMenu.menuId) && Objects.equals(menuName, sysMenu.menuName) && Objects.equals(menuCode, sysMenu.menuCode) && Objects.equals(link, sysMenu.link) && Objects.equals(externalLink, sysMenu.externalLink) && Objects.equals(intro, sysMenu.intro) && Objects.equals(icon, sysMenu.icon) && Objects.equals(displayIndex, sysMenu.displayIndex);
     }
 
     @Override

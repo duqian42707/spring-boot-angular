@@ -1,6 +1,6 @@
 package com.dqv5.soccer.utils;
 
-import com.dqv5.soccer.management.entity.SysMenu;
+import com.dqv5.soccer.management.table.SysMenu;
 import com.dqv5.soccer.pojo.TreeNode;
 
 import java.util.ArrayList;
