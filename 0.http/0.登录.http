@@ -2,7 +2,7 @@
 POST {{server}}/login
 Content-Type: application/x-www-form-urlencoded
 
-username=duqian&password=123456
+username=admin&password=123456
 
 ### 获取用户信息
 GET {{server}}/user

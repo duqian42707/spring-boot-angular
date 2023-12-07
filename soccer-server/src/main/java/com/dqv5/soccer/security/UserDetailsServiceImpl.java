@@ -1,5 +1,8 @@
 package com.dqv5.soccer.security;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dqv5.soccer.management.mapper.SysRoleMapper;
 import com.dqv5.soccer.management.mapper.SysUserMapper;
 import com.dqv5.soccer.management.table.SysRole;
 import com.dqv5.soccer.management.table.SysUser;
@@ -11,8 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,14 +22,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Resource
     private SysUserMapper sysUserMapper;
+    @Resource
+    private SysRoleMapper sysRoleMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 查出用户对象
-        SysUser sysUser = sysUserMapper.findByAccount(username).orElseThrow(() -> new UsernameNotFoundException("用户不存在!"));
+        SysUser sysUser = sysUserMapper.selectOne(Wrappers.query(SysUser.class).eq("account", username));
+        if (sysUser == null) {
+            throw new UsernameNotFoundException("用户不存在!");
+        }
 
-        // todo 查出用户拥有的角色列表
-        Set<SysRole> roles = new HashSet<>();
+        // 查出用户拥有的角色列表
+        List<SysRole> roles = sysRoleMapper.queryByUserId(sysUser.getUserId());
         // 构造权限集合
         Set<GrantedAuthority> auths = roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleValue()))

@@ -3,6 +3,7 @@ package com.dqv5.soccer.management.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dqv5.soccer.management.table.SysRole;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,5 +20,5 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     boolean existsByRoleNameAndRoleIdNot(String roleName, String roleId);
 
-    Optional<SysRole> findByRoleValue(String roleValue);
+    List<SysRole> queryByUserId(String userId);
 }

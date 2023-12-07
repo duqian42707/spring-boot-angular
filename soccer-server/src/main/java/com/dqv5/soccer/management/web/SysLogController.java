@@ -5,6 +5,8 @@ import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.management.table.SysLog;
 import com.dqv5.soccer.management.service.SysLogService;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +23,17 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api/log")
+@Api(tags = "系统日志")
 @Slf4j
 public class SysLogController {
     @Resource
     private SysLogService sysLogService;
 
-    /**
-     * 获取日志列表
-     */
     @GetMapping("/list")
+    @ApiOperation("获取日志列表")
     public ResponseEntity<RestReturnEntity<PageInfo<SysLog>>> list(@RequestParam(defaultValue = "1") int pageNum,
                                                                    @RequestParam(defaultValue = "10") int pageSize) {
-        Pageable pageable = Pageable.of(pageNum , pageSize);
+        Pageable pageable = Pageable.of(pageNum, pageSize);
         PageInfo<SysLog> pageInfo = sysLogService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
     }

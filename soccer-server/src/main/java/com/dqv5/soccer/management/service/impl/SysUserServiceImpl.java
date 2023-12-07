@@ -1,5 +1,6 @@
 package com.dqv5.soccer.management.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.management.table.SysUser;
 import com.dqv5.soccer.management.mapper.SysUserMapper;
@@ -40,8 +41,8 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public void insert(SysUser sysUser) {
-        Optional<SysUser> opt = sysUserMapper.findByAccount(sysUser.getAccount());
-        if (opt.isPresent()) {
+        boolean exist = sysUserMapper.exists(Wrappers.query(SysUser.class).eq("account", sysUser.getAccount()));
+        if (exist) {
             throw new CommonRuntimeException("账号已存在：" + sysUser.getAccount());
         }
         sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));

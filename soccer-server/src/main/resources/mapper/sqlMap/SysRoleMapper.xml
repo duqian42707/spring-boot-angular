@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dqv5.soccer.management.mapper.SysRoleMapper">
+    <resultMap id="baseMap" type="com.dqv5.soccer.management.table.SysRole">
+    </resultMap>
+    <select id="queryByUserId" resultMap="baseMap">
+        select t.*
+        from sys_role t
+                 join sys_user_role ur on ur.role_id = t.role_id
+        where ur.user_id = #{userId}
+    </select>
+</mapper>

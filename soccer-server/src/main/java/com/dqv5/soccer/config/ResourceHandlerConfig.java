@@ -13,6 +13,8 @@ public class ResourceHandlerConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         CacheControl cacheControl = CacheControl.maxAge(Duration.ofDays(365)).cachePublic();
+        registry.addResourceHandler("/swagger-ui/")
+                .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/portal/")
                 .setCacheControl(cacheControl);

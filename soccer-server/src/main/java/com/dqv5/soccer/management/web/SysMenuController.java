@@ -4,6 +4,8 @@ import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.management.table.SysMenu;
 import com.dqv5.soccer.management.service.SysMenuService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,50 +20,41 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/menu")
 @Slf4j
+@Api(tags = "菜单管理")
 public class SysMenuController {
     @Resource
     private SysMenuService sysMenuService;
 
-    /**
-     * 获取菜单树
-     */
     @GetMapping("/tree")
+    @ApiOperation("获取菜单树")
     public ResponseEntity<RestReturnEntity<List<SysMenu>>> tree() {
         List<SysMenu> tree = sysMenuService.findAllTree();
         return RestReturn.ok(tree);
     }
 
-    /**
-     * 获取单个菜单
-     */
     @GetMapping("/info/{id}")
+    @ApiOperation("获取单个菜单")
     public ResponseEntity<RestReturnEntity<SysMenu>> info(@PathVariable("id") String id) {
         SysMenu result = sysMenuService.findOne(id);
         return RestReturn.ok(result);
     }
 
-    /**
-     * 新增菜单
-     */
     @PostMapping("/insert")
+    @ApiOperation("新增菜单")
     public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody SysMenu param) {
         sysMenuService.insert(param);
         return RestReturn.ok();
     }
 
-    /**
-     * 更新菜单信息
-     */
     @PostMapping("/update")
+    @ApiOperation("更新菜单信息")
     public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody SysMenu param) {
         sysMenuService.update(param);
         return RestReturn.ok();
     }
 
-    /**
-     * 删除菜单
-     */
     @PostMapping("/delete/{id}")
+    @ApiOperation("删除菜单")
     public ResponseEntity<RestReturnEntity<Object>> delete(@PathVariable("id") String id) {
         sysMenuService.deleteById(id);
         return RestReturn.ok();

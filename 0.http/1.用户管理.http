@@ -1,3 +1,0 @@
-### 查询用户列表
-GET {{server}}/api/user/list
-Authorization: bearer {{token}}

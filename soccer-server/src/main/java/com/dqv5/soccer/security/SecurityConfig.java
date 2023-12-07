@@ -74,6 +74,8 @@ public class SecurityConfig {
                                 .antMatchers(HttpMethod.GET, "/", "/passport/**", "/dashboard/**", "/sys/**").permitAll()
                                 // 鉴权接口 - 允许
                                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                                // swagger -允许
+                                .antMatchers(HttpMethod.GET, "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
                                 // 其他接口 - 需要验证
                                 .anyRequest().authenticated())
                 .addFilter(jwtAuthenticationFilter())

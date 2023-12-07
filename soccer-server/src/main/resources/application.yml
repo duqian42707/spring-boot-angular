@@ -1,6 +1,9 @@
 server:
   port: 8080
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
   application:
     name: soccer-server
   thymeleaf:
@@ -25,6 +28,9 @@ spring:
         cachecontrol:
           cache-public: true
           max-age: 86400
+mybatis-plus:
+  mapper-locations: classpath:/mapper/sqlMap/*.xml
+  config-location: classpath:/mapper/mybatis-config.xml
 logging:
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} %clr(%5p) [%12.12t] %clr(%-50.50logger{49}){cyan} [%5.5L] : %m%n%wEx'
