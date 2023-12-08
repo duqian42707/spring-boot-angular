@@ -21,7 +21,8 @@ public class MenuTreeUtils {
             TreeNode treeNode = new TreeNode();
             treeNode.setKey(i.getMenuId());
             treeNode.setName(i.getMenuName());
-            treeNode.setChildren(buildTree(i.getChildren()));
+            // todo setChildren
+//            treeNode.setChildren(buildTree(i.getChildren()));
             return treeNode;
         }).collect(Collectors.toList());
     }

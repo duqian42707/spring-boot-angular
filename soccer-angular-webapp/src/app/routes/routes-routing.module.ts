@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {JWTGuard} from '@delon/auth';
+import {authJWTCanActivate, authJWTCanActivateChild} from '@delon/auth';
 import {environment} from '@env/environment';
 // layout
 import {LayoutBasicComponent} from '../layout/basic/basic.component';
@@ -19,7 +19,8 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutBasicComponent,
-    canActivate: [JWTGuard],
+    canActivate: [authJWTCanActivate],
+    canActivateChild: [authJWTCanActivateChild],
     children: [
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: DashboardComponent, data: {title: '仪表盘', titleI18n: 'dashboard'}},

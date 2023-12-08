@@ -1,15 +1,14 @@
 package com.dqv5.soccer.config;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dqv5.soccer.management.mapper.SysMenuMapper;
+import com.dqv5.soccer.management.mapper.SysRoleMapper;
+import com.dqv5.soccer.management.mapper.SysUserMapper;
 import com.dqv5.soccer.management.mapper.SysUserRoleMapper;
 import com.dqv5.soccer.management.table.SysMenu;
 import com.dqv5.soccer.management.table.SysRole;
 import com.dqv5.soccer.management.table.SysUser;
-import com.dqv5.soccer.management.mapper.SysMenuMapper;
-import com.dqv5.soccer.management.mapper.SysRoleMapper;
-import com.dqv5.soccer.management.mapper.SysUserMapper;
 import com.dqv5.soccer.management.table.SysUserRole;
 import com.dqv5.soccer.pojo.RoleInfo;
 import com.dqv5.soccer.pojo.UserInfo;
@@ -56,17 +55,13 @@ public class AutoRunner implements CommandLineRunner {
         }
         SysMenu dashboard = SysMenu.builder().menuName("仪表盘").build();
         sysMenuMapper.insert(dashboard);
-        SysMenu p1 = new SysMenu();
-        p1.setMenuId(dashboard.getMenuId());
-        sysMenuMapper.insert(SysMenu.builder().parentMenu(p1).menuName("仪表盘").link("/dashboard").build());
+        sysMenuMapper.insert(SysMenu.builder().parentId(dashboard.getMenuId()).menuName("仪表盘").link("/dashboard").build());
         SysMenu sys = SysMenu.builder().menuName("系统管理").build();
         sysMenuMapper.insert(sys);
-        SysMenu p2 = new SysMenu();
-        p2.setMenuId(sys.getMenuId());
-        sysMenuMapper.insert(SysMenu.builder().parentMenu(p2).menuName("用户管理").link("/sys/user").build());
-        sysMenuMapper.insert(SysMenu.builder().parentMenu(p2).menuName("角色管理").link("/sys/role").build());
-        sysMenuMapper.insert(SysMenu.builder().parentMenu(p2).menuName("菜单管理").link("/sys/menu").build());
-        sysMenuMapper.insert(SysMenu.builder().parentMenu(p2).menuName("系统日志").link("/sys/log").build());
+        sysMenuMapper.insert(SysMenu.builder().parentId(sys.getMenuId()).menuName("用户管理").link("/sys/user").build());
+        sysMenuMapper.insert(SysMenu.builder().parentId(sys.getMenuId()).menuName("角色管理").link("/sys/role").build());
+        sysMenuMapper.insert(SysMenu.builder().parentId(sys.getMenuId()).menuName("菜单管理").link("/sys/menu").build());
+        sysMenuMapper.insert(SysMenu.builder().parentId(sys.getMenuId()).menuName("系统日志").link("/sys/log").build());
     }
 
     private void initRoles() {
@@ -100,8 +95,7 @@ public class AutoRunner implements CommandLineRunner {
             sysUserMapper.insert(sysUser);
             String role = initUserInfo.getRole();
             if (StringUtils.isNotBlank(role)) {
-                QueryWrapper<SysRole> queryWrapper = Wrappers.query(SysRole.class)
-                        .eq("role_value", role);
+                QueryWrapper<SysRole> queryWrapper = Wrappers.query(SysRole.class).eq("role_value", role);
                 SysRole sysRole = sysRoleMapper.selectOne(queryWrapper);
                 if (sysRole != null) {
                     SysUserRole sysUserRole = new SysUserRole();

@@ -1,5 +1,7 @@
 package com.dqv5.soccer.management.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.management.table.SysAuth;
 import com.dqv5.soccer.management.table.SysMenu;
@@ -21,9 +23,8 @@ public class SysAuthServiceImpl implements SysAuthService {
 
     @Override
     public List<SysAuth> findAll(String menuId) {
-        SysMenu menu = new SysMenu();
-        menu.setMenuId(menuId);
-        return sysAuthMapper.findByMenu(menu);
+        QueryWrapper<SysAuth> queryWrapper = Wrappers.query(SysAuth.class).eq("menu_id", menuId);
+        return sysAuthMapper.selectList(queryWrapper);
     }
 
     @Override
@@ -43,11 +44,13 @@ public class SysAuthServiceImpl implements SysAuthService {
         param.setAuthId(null);
         String authValue = param.getAuthValue();
         String authName = param.getAuthName();
-        SysMenu menu = param.getMenu();
-        if (sysAuthMapper.existsByAuthValueAndMenu(authValue, menu)) {
+        String menuId = param.getMenuId();
+        QueryWrapper<SysAuth> query1 = Wrappers.query(SysAuth.class).eq("auth_value", authValue).eq("menu_id", menuId);
+        if (sysAuthMapper.exists(query1)) {
             throw new CommonRuntimeException("权限标识已存在：" + authValue);
         }
-        if (sysAuthMapper.existsByAuthNameAndMenu(authName, menu)) {
+        QueryWrapper<SysAuth> query2 = Wrappers.query(SysAuth.class).eq("auth_name", authName).eq("menu_id", menuId);
+        if (sysAuthMapper.exists(query2)) {
             throw new CommonRuntimeException("权限名称已存在：" + authName);
         }
         sysAuthMapper.insert(param);
@@ -58,17 +61,19 @@ public class SysAuthServiceImpl implements SysAuthService {
         String authId = param.getAuthId();
         String authValue = param.getAuthValue();
         String authName = param.getAuthName();
-        SysMenu menu = param.getMenu();
+        String menuId = param.getMenuId();
         SysAuth dataInDB = sysAuthMapper.selectById(authId);
-        if (sysAuthMapper.existsByAuthValueAndMenuAndAuthIdNot(authValue, menu, authId)) {
+        QueryWrapper<SysAuth> query1 = Wrappers.query(SysAuth.class).eq("auth_value", authValue).eq("menu_id", menuId).ne("auth_id", authId);
+        if (sysAuthMapper.exists(query1)) {
             throw new CommonRuntimeException("权限标识已存在：" + authValue);
         }
-        if (sysAuthMapper.existsByAuthNameAndMenuAndAuthIdNot(authName, menu, authId)) {
+        QueryWrapper<SysAuth> query2 = Wrappers.query(SysAuth.class).eq("auth_name", authName).eq("menu_id", menuId).ne("auth_id", authId);
+        if (sysAuthMapper.exists(query2)) {
             throw new CommonRuntimeException("权限名称已存在：" + authName);
         }
         dataInDB.setAuthValue(param.getAuthValue());
         dataInDB.setAuthName(param.getAuthName());
-        dataInDB.setMenu(param.getMenu());
+        dataInDB.setMenuId(param.getMenuId());
         sysAuthMapper.updateById(dataInDB);
     }
 

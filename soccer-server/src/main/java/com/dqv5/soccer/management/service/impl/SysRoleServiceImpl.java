@@ -1,5 +1,7 @@
 package com.dqv5.soccer.management.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.management.table.SysRole;
 import com.dqv5.soccer.management.mapper.SysRoleMapper;
@@ -9,7 +11,9 @@ import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -37,10 +41,12 @@ public class SysRoleServiceImpl implements SysRoleService {
         param.setRoleId(null);
         String roleValue = param.getRoleValue();
         String roleName = param.getRoleName();
-        if (sysRoleMapper.existsByRoleValue(roleValue)) {
+        QueryWrapper<SysRole> query1 = Wrappers.query(SysRole.class).eq("role_value", roleValue);
+        if (sysRoleMapper.exists(query1)) {
             throw new CommonRuntimeException("角色标识已存在：" + roleValue);
         }
-        if (sysRoleMapper.existsByRoleName(roleName)) {
+        QueryWrapper<SysRole> query2 = Wrappers.query(SysRole.class).eq("role_name", roleName);
+        if (sysRoleMapper.exists(query2)) {
             throw new CommonRuntimeException("角色名称已存在：" + roleName);
         }
         sysRoleMapper.insert(param);
@@ -52,10 +58,12 @@ public class SysRoleServiceImpl implements SysRoleService {
         String roleValue = param.getRoleValue();
         String roleName = param.getRoleName();
         SysRole dataInDB = sysRoleMapper.selectById(roleId);
-        if (sysRoleMapper.existsByRoleValueAndRoleIdNot(roleValue, roleId)) {
+        QueryWrapper<SysRole> query1 = Wrappers.query(SysRole.class).eq("role_value", roleValue).ne("role_id", roleId);
+        if (sysRoleMapper.exists(query1)) {
             throw new CommonRuntimeException("角色标识已存在：" + roleValue);
         }
-        if (sysRoleMapper.existsByRoleNameAndRoleIdNot(roleName, roleId)) {
+        QueryWrapper<SysRole> query2 = Wrappers.query(SysRole.class).eq("role_name", roleName).ne("role_id", roleId);
+        if (sysRoleMapper.exists(query2)) {
             throw new CommonRuntimeException("角色名称已存在：" + roleName);
         }
         dataInDB.setRoleValue(roleValue);

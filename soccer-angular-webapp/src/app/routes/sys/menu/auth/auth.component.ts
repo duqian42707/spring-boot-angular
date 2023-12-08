@@ -63,9 +63,7 @@ export class SysMenuAuthComponent implements OnInit {
       authName: element.authName,
       authValue: element.authValue,
       displayIndex: element.displayIndex,
-      menu: {
-        menuId: this.menuId,
-      }
+      menuId: this.menuId,
     }).subscribe((res: any) => {
       this.msgSrv.success(res.msg);
       this.loadData();

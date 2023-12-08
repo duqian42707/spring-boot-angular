@@ -69,9 +69,7 @@ public class SecurityConfig {
                 .sessionManagement(a -> a.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(a ->
                         // todo 配置方式需要优化
-                        a.antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js", "/**/*.json", "/**/*.svg").permitAll()
-                                // 访问页面 - 允许
-                                .antMatchers(HttpMethod.GET, "/", "/passport/**", "/dashboard/**", "/sys/**").permitAll()
+                        a.antMatchers(HttpMethod.GET, "/", "/web/**").permitAll()
                                 // 鉴权接口 - 允许
                                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                                 // swagger -允许

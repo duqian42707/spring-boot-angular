@@ -1,7 +1,6 @@
 package com.dqv5.soccer.management.table;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.dqv5.soccer.pojo.AbstractBaseEntity;
@@ -23,15 +22,9 @@ public class SysAuth extends AbstractBaseEntity implements Serializable {
 
     private String authName;
 
-    private Integer displayIndex;
-    /**
-     * 所属菜单
-     */
-//    @ManyToOne
-//    @JoinColumn(name = "menu_id")
+    private String menuId;
 
-    @TableField(exist = false)
-    private SysMenu menu;
+    private Integer displayIndex;
 
 
 }

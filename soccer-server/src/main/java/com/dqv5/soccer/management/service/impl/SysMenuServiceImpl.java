@@ -1,5 +1,7 @@
 package com.dqv5.soccer.management.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.management.table.SysMenu;
 import com.dqv5.soccer.management.mapper.SysMenuMapper;
@@ -10,7 +12,9 @@ import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -34,7 +38,8 @@ public class SysMenuServiceImpl implements SysMenuService {
     public void insert(SysMenu param) {
         param.setMenuId(null);
         String menuCode = param.getMenuCode();
-        if (sysMenuMapper.existsByMenuCode(menuCode)) {
+        QueryWrapper<SysMenu> queryWrapper = Wrappers.query(SysMenu.class).eq("menu_code", menuCode);
+        if (sysMenuMapper.exists(queryWrapper)) {
             throw new CommonRuntimeException("菜单编码已存在：" + menuCode);
         }
         sysMenuMapper.insert(param);
@@ -45,7 +50,8 @@ public class SysMenuServiceImpl implements SysMenuService {
         String menuId = param.getMenuId();
         String menuCode = param.getMenuCode();
         SysMenu dataInDB = sysMenuMapper.selectById(menuId);
-        if (sysMenuMapper.existsByMenuCodeAndMenuIdNot(menuCode, menuId)) {
+        QueryWrapper<SysMenu> queryWrapper = Wrappers.query(SysMenu.class).eq("menu_code", menuCode).ne("menu_id", menuId);
+        if (sysMenuMapper.exists(queryWrapper)) {
             throw new CommonRuntimeException("菜单编码已存在：" + menuCode);
         }
         // todo 拷贝属性
@@ -62,7 +68,8 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public List<SysMenu> findAllTree() {
-        return sysMenuMapper.findAllByParentMenu(null);
+        QueryWrapper<SysMenu> queryWrapper = Wrappers.query(SysMenu.class).isNull("parent_id");
+        return sysMenuMapper.selectList(queryWrapper);
     }
 
 
