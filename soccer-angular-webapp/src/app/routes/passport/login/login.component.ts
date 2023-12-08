@@ -74,7 +74,7 @@ export class UserLoginComponent implements OnDestroy {
     const formData = new FormData();
     formData.set('username', this.userName.value);
     formData.set('password', this.password.value);
-    this.http.post('/login?_allow_anonymous=true', formData).pipe(
+    this.http.post('/api/login?_allow_anonymous=true', formData).pipe(
       finalize(() => {
         this.loading = false;
         this.cdr.detectChanges();

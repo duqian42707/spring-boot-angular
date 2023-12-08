@@ -20,6 +20,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final String AUTH_URL = "/api/login";
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new CustomPasswordEncoder();
@@ -49,6 +51,7 @@ public class SecurityConfig {
     public JWTAuthenticationFilter jwtAuthenticationFilter() {
         JWTAuthenticationFilter filter = new JWTAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager());
+        filter.setFilterProcessesUrl(AUTH_URL);
         return filter;
     }
 
@@ -71,7 +74,7 @@ public class SecurityConfig {
                         // todo 配置方式需要优化
                         a.antMatchers(HttpMethod.GET, "/", "/web/**").permitAll()
                                 // 鉴权接口 - 允许
-                                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                                .antMatchers(HttpMethod.POST, AUTH_URL).permitAll()
                                 // swagger -允许
                                 .antMatchers(HttpMethod.GET, "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
                                 // 其他接口 - 需要验证
