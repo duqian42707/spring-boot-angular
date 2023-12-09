@@ -1,12 +1,12 @@
 # spring-boot-angular
 
-基于Spring boot + angular 的前后端分离框架。
+基于 Spring Boot + Angular 的前后端分离框架。
 
 ## 项目简介
 
-* 这是一套基于Spring boot + jpa + angular的前后端分离框架。
-* 后端使用Maven对项目进行管理，提高项目的易开发性、扩展性。
-* 前端使用angular构建单页面应用，UI采用[NG-ZORRO](https://ng.ant.design/)。
+* 这是一套基于 Spring Boot + MyBatis-Plus + Angular 的前后端分离框架。
+* 后端使用 Maven 对项目进行管理，提高项目的易开发性、扩展性。
+* 前端使用 Angular 构建单页面应用，UI 采用 [NG-ZORRO](https://ng.ant.design/)。
 
 ## 主要功能（开发中...）
 
@@ -29,16 +29,16 @@
 
 * Maven 3
 * Java 8
-* Spring Boot 2.7.9
+* Spring Boot 2.7.18
 * PostgreSQL
 
 ### 前端依赖环境
 
-* node
-* npm or yarn
-* angular@15
-* ng-zorro-antd@15
-* ng-alain@15
+* Node.js
+* npm & yarn
+* Angular 16
+* ng-zorro-antd 16
+* ng-alain 16
 
 ## 工程说明
 
@@ -65,7 +65,7 @@
 ## TODO
 
 - [ ] 前端统一异常提示
-- [ ] 前端遇到接口异常时，按钮的loading状态要取消
+- [ ] 前端遇到接口异常时，按钮的 loading 状态要取消
 
 ## License
 
