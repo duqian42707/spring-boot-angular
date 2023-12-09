@@ -1,5 +1,7 @@
 package com.dqv5.soccer.web;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,9 +15,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Controller
+@Api(tags = "页面导航")
 public class PageController {
 
     @GetMapping("/")
+    @ApiOperation("首页")
     public String index(HttpServletRequest request) {
         String url = request.getRequestURI();
         url = "redirect:" + url + (url.endsWith("/") ? "" : "/") + "web/";
@@ -24,6 +28,7 @@ public class PageController {
     }
 
     @GetMapping("/web/")
+    @ApiOperation("web端页面")
     public String web() {
         return "web/index";
     }

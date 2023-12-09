@@ -2,14 +2,14 @@ package com.dqv5.soccer.config;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dqv5.soccer.management.mapper.SysMenuMapper;
-import com.dqv5.soccer.management.mapper.SysRoleMapper;
-import com.dqv5.soccer.management.mapper.SysUserMapper;
-import com.dqv5.soccer.management.mapper.SysUserRoleMapper;
-import com.dqv5.soccer.management.table.SysMenu;
-import com.dqv5.soccer.management.table.SysRole;
-import com.dqv5.soccer.management.table.SysUser;
-import com.dqv5.soccer.management.table.SysUserRole;
+import com.dqv5.soccer.mapper.SysMenuMapper;
+import com.dqv5.soccer.mapper.SysRoleMapper;
+import com.dqv5.soccer.mapper.SysUserMapper;
+import com.dqv5.soccer.mapper.SysUserRoleMapper;
+import com.dqv5.soccer.table.SysMenuTable;
+import com.dqv5.soccer.table.SysRoleTable;
+import com.dqv5.soccer.table.SysUserTable;
+import com.dqv5.soccer.table.SysUserRoleTable;
 import com.dqv5.soccer.pojo.RoleInfo;
 import com.dqv5.soccer.pojo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -53,15 +53,15 @@ public class AutoRunner implements CommandLineRunner {
         if (count > 0) {
             return;
         }
-        SysMenu dashboard = SysMenu.builder().menuName("仪表盘").build();
+        SysMenuTable dashboard = SysMenuTable.builder().menuName("仪表盘").build();
         sysMenuMapper.insert(dashboard);
-        sysMenuMapper.insert(SysMenu.builder().parentId(dashboard.getMenuId()).menuName("仪表盘").link("/dashboard").build());
-        SysMenu sys = SysMenu.builder().menuName("系统管理").build();
+        sysMenuMapper.insert(SysMenuTable.builder().parentId(dashboard.getMenuId()).menuName("仪表盘").link("/dashboard").build());
+        SysMenuTable sys = SysMenuTable.builder().menuName("系统管理").build();
         sysMenuMapper.insert(sys);
-        sysMenuMapper.insert(SysMenu.builder().parentId(sys.getMenuId()).menuName("用户管理").link("/sys/user").build());
-        sysMenuMapper.insert(SysMenu.builder().parentId(sys.getMenuId()).menuName("角色管理").link("/sys/role").build());
-        sysMenuMapper.insert(SysMenu.builder().parentId(sys.getMenuId()).menuName("菜单管理").link("/sys/menu").build());
-        sysMenuMapper.insert(SysMenu.builder().parentId(sys.getMenuId()).menuName("系统日志").link("/sys/log").build());
+        sysMenuMapper.insert(SysMenuTable.builder().parentId(sys.getMenuId()).menuName("用户管理").link("/sys/user").build());
+        sysMenuMapper.insert(SysMenuTable.builder().parentId(sys.getMenuId()).menuName("角色管理").link("/sys/role").build());
+        sysMenuMapper.insert(SysMenuTable.builder().parentId(sys.getMenuId()).menuName("菜单管理").link("/sys/menu").build());
+        sysMenuMapper.insert(SysMenuTable.builder().parentId(sys.getMenuId()).menuName("系统日志").link("/sys/log").build());
     }
 
     private void initRoles() {
@@ -71,10 +71,10 @@ public class AutoRunner implements CommandLineRunner {
         }
         List<RoleInfo> initRoles = soccerProperties.getRoles();
         for (RoleInfo initRole : initRoles) {
-            SysRole sysRole = new SysRole();
-            sysRole.setRoleValue(initRole.getRoleValue());
-            sysRole.setRoleName(initRole.getRoleName());
-            sysRoleMapper.insert(sysRole);
+            SysRoleTable sysRoleTable = new SysRoleTable();
+            sysRoleTable.setRoleValue(initRole.getRoleValue());
+            sysRoleTable.setRoleName(initRole.getRoleName());
+            sysRoleMapper.insert(sysRoleTable);
         }
     }
 
@@ -88,20 +88,20 @@ public class AutoRunner implements CommandLineRunner {
             String username = initUserInfo.getUsername();
             String nickName = initUserInfo.getNickName();
             String encodedPassword = passwordEncoder.encode(initUserInfo.getPassword());
-            SysUser sysUser = new SysUser();
-            sysUser.setAccount(username);
-            sysUser.setPassword(encodedPassword);
-            sysUser.setNickName(nickName);
-            sysUserMapper.insert(sysUser);
+            SysUserTable sysUserTable = new SysUserTable();
+            sysUserTable.setAccount(username);
+            sysUserTable.setPassword(encodedPassword);
+            sysUserTable.setNickName(nickName);
+            sysUserMapper.insert(sysUserTable);
             String role = initUserInfo.getRole();
             if (StringUtils.isNotBlank(role)) {
-                QueryWrapper<SysRole> queryWrapper = Wrappers.query(SysRole.class).eq("role_value", role);
-                SysRole sysRole = sysRoleMapper.selectOne(queryWrapper);
-                if (sysRole != null) {
-                    SysUserRole sysUserRole = new SysUserRole();
-                    sysUserRole.setUserId(sysUser.getUserId());
-                    sysUserRole.setRoleId(sysRole.getRoleId());
-                    sysUserRoleMapper.insert(sysUserRole);
+                QueryWrapper<SysRoleTable> queryWrapper = Wrappers.query(SysRoleTable.class).eq("role_value", role);
+                SysRoleTable sysRoleTable = sysRoleMapper.selectOne(queryWrapper);
+                if (sysRoleTable != null) {
+                    SysUserRoleTable sysUserRoleTable = new SysUserRoleTable();
+                    sysUserRoleTable.setUserId(sysUserTable.getUserId());
+                    sysUserRoleTable.setRoleId(sysRoleTable.getRoleId());
+                    sysUserRoleMapper.insert(sysUserRoleTable);
                 }
             }
         }

@@ -1,7 +1,7 @@
 package com.dqv5.soccer.config;
 
-import com.dqv5.soccer.management.table.SysLog;
-import com.dqv5.soccer.management.service.SysLogService;
+import com.dqv5.soccer.table.SysLogTable;
+import com.dqv5.soccer.service.SysLogService;
 import com.dqv5.soccer.security.AuthUser;
 import com.dqv5.soccer.utils.AspectUtil;
 import com.dqv5.soccer.utils.IpIpFreeUtils;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 /**
- *
+ * 日志切面
  */
 @Aspect
 @Component
@@ -77,7 +77,7 @@ public class ControllerAspect {
         String nickName = currentUserDetail.getNickName();
         String ip = AspectUtil.getIP(request);
         String address = IpIpFreeUtils.getAddressFromIp(ip);
-        SysLog sl = SysLog.builder()
+        SysLogTable sl = SysLogTable.builder()
                 .ip(ip)
                 .address(address)
                 .userId(userId)
@@ -123,7 +123,7 @@ public class ControllerAspect {
         String nickName = currentUserDetail.getNickName();
         String ip = AspectUtil.getIP(request);
         String address = IpIpFreeUtils.getAddressFromIp(ip);
-        SysLog sl = SysLog.builder()
+        SysLogTable sl = SysLogTable.builder()
                 .ip(ip)
                 .address(address)
                 .userId(userId)

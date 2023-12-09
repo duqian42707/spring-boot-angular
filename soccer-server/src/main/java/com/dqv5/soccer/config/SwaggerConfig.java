@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .pathMapping("/")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.dqv5.soccer.management.web"))
+                .apis(RequestHandlerSelectors.basePackage("com.dqv5.soccer.web"))
                 .build()
                 .securityContexts(Collections.singletonList(securityContext()))
                 .securitySchemes(Collections.singletonList((securityScheme())));
