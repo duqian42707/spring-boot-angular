@@ -12,7 +12,7 @@ spring:
     prefix: classpath:/static/
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:auth
+    url: jdbc:h2:mem:soccer
     username: sa
     password: 111111
   liquibase:

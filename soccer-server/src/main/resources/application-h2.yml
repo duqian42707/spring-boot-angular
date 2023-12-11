@@ -3,7 +3,8 @@ server:
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost:9092/E:\workspace_personal\spring-boot-angular\1.data\soccer
+    #    url: jdbc:h2:tcp://localhost:9092/E:\workspace_personal\spring-boot-angular\1.data\soccer
+    url: jdbc:h2:mem:soccer
     username: sa
     password: 111111
 logging:
