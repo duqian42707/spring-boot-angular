@@ -13,4 +13,6 @@ import java.util.List;
 public interface SysMenuMapper extends BaseMapper<SysMenuTable> {
 
     List<SysMenuTable> queryByRoleId(String roleId);
+
+    List<SysMenuTable> queryByUserId(String userId);
 }

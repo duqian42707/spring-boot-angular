@@ -46,8 +46,11 @@ public class SysRoleServiceImpl implements SysRoleService {
     }
 
     @Override
-    public SysRoleTable findOne(String id) {
-        return sysRoleMapper.selectById(id);
+    public SysRole findOne(String roleId) {
+        SysRoleTable sysRoleTable = sysRoleMapper.selectById(roleId);
+        SysRole sysRole = SysRole.of(sysRoleTable);
+        setMenuAndAuth(sysRole);
+        return sysRole;
     }
 
     @Override
@@ -92,15 +95,6 @@ public class SysRoleServiceImpl implements SysRoleService {
     }
 
     @Override
-    public SysRole getRoleMenuAuth(String roleId) {
-        List<SysMenuTable> menuTables = sysMenuMapper.queryByRoleId(roleId);
-        List<SysMenu> menus = menuTables.stream().map(SysMenu::of).collect(Collectors.toList());
-        List<SysAuthTable> authTables = sysAuthMapper.queryByRoleId(roleId);
-        List<SysAuth> auths = authTables.stream().map(SysAuth::of).collect(Collectors.toList());
-        return SysRole.builder().roleId(roleId).menus(menus).auths(auths).build();
-    }
-
-    @Override
     public void saveRoleMenuAuth(SysRole param) {
         String roleId = param.getRoleId();
         List<SysMenu> menus = param.getMenus();
@@ -121,5 +115,25 @@ public class SysRoleServiceImpl implements SysRoleService {
             table.setAuthId(x.getAuthId());
             sysRoleAuthMapper.insert(table);
         });
+    }
+
+    @Override
+    public List<SysRole> queryByUserId(String userId) {
+        List<SysRoleTable> sysRoleTables = sysRoleMapper.queryByUserId(userId);
+        return sysRoleTables.stream()
+                .map(SysRole::of)
+                .peek(this::setMenuAndAuth)
+                .collect(Collectors.toList());
+    }
+
+
+    private void setMenuAndAuth(SysRole sysRole) {
+        String roleId = sysRole.getRoleId();
+        List<SysMenuTable> menuTables = sysMenuMapper.queryByRoleId(roleId);
+        List<SysMenu> menus = menuTables.stream().map(SysMenu::of).collect(Collectors.toList());
+        List<SysAuthTable> authTables = sysAuthMapper.queryByRoleId(roleId);
+        List<SysAuth> auths = authTables.stream().map(SysAuth::of).collect(Collectors.toList());
+        sysRole.setMenus(menus);
+        sysRole.setAuths(auths);
     }
 }

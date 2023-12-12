@@ -2,14 +2,8 @@ package com.dqv5.soccer.config;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dqv5.soccer.mapper.SysMenuMapper;
-import com.dqv5.soccer.mapper.SysRoleMapper;
-import com.dqv5.soccer.mapper.SysUserMapper;
-import com.dqv5.soccer.mapper.SysUserRoleMapper;
-import com.dqv5.soccer.table.SysMenuTable;
-import com.dqv5.soccer.table.SysRoleTable;
-import com.dqv5.soccer.table.SysUserTable;
-import com.dqv5.soccer.table.SysUserRoleTable;
+import com.dqv5.soccer.mapper.*;
+import com.dqv5.soccer.table.*;
 import com.dqv5.soccer.pojo.RoleInfo;
 import com.dqv5.soccer.pojo.UserInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +27,8 @@ public class AutoRunner implements CommandLineRunner {
     @Resource
     private SysMenuMapper sysMenuMapper;
     @Resource
+    private SysAuthMapper sysAuthMapper;
+    @Resource
     private SysRoleMapper sysRoleMapper;
     @Resource
     private SysUserMapper sysUserMapper;
@@ -55,13 +51,23 @@ public class AutoRunner implements CommandLineRunner {
         }
         SysMenuTable dashboard = SysMenuTable.builder().menuName("仪表盘").build();
         sysMenuMapper.insert(dashboard);
-        sysMenuMapper.insert(SysMenuTable.builder().parentId(dashboard.getMenuId()).menuName("仪表盘").link("/dashboard").build());
+        SysMenuTable dashboard2 = SysMenuTable.builder().parentId(dashboard.getMenuId()).menuName("仪表盘").link("/dashboard").build();
+        sysMenuMapper.insert(dashboard2);
+
         SysMenuTable sys = SysMenuTable.builder().menuName("系统管理").build();
         sysMenuMapper.insert(sys);
-        sysMenuMapper.insert(SysMenuTable.builder().parentId(sys.getMenuId()).menuName("用户管理").link("/sys/user").build());
-        sysMenuMapper.insert(SysMenuTable.builder().parentId(sys.getMenuId()).menuName("角色管理").link("/sys/role").build());
-        sysMenuMapper.insert(SysMenuTable.builder().parentId(sys.getMenuId()).menuName("菜单管理").link("/sys/menu").build());
-        sysMenuMapper.insert(SysMenuTable.builder().parentId(sys.getMenuId()).menuName("系统日志").link("/sys/log").build());
+        SysMenuTable user = SysMenuTable.builder().parentId(sys.getMenuId()).menuName("用户管理").link("/sys/user").build();
+        SysMenuTable role = SysMenuTable.builder().parentId(sys.getMenuId()).menuName("角色管理").link("/sys/role").build();
+        SysMenuTable menu = SysMenuTable.builder().parentId(sys.getMenuId()).menuName("菜单管理").link("/sys/menu").build();
+        SysMenuTable log = SysMenuTable.builder().parentId(sys.getMenuId()).menuName("系统日志").link("/sys/log").build();
+        sysMenuMapper.insert(user);
+        sysMenuMapper.insert(role);
+        sysMenuMapper.insert(menu);
+        sysMenuMapper.insert(log);
+
+        SysAuthTable addUser = SysAuthTable.builder().menuId(user.getMenuId()).authValue("sys_user_add").authName("新增用户").build();
+        sysAuthMapper.insert(addUser);
+
     }
 
     private void initRoles() {

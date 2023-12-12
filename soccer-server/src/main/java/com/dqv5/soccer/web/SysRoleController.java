@@ -38,8 +38,8 @@ public class SysRoleController {
 
     @GetMapping("/info/{id}")
     @ApiOperation("获取单个角色")
-    public ResponseEntity<RestReturnEntity<SysRoleTable>> info(@PathVariable("id") String id) {
-        SysRoleTable result = sysRoleService.findOne(id);
+    public ResponseEntity<RestReturnEntity<SysRole>> info(@PathVariable("id") String id) {
+        SysRole result = sysRoleService.findOne(id);
         return RestReturn.ok(result);
     }
 
@@ -62,13 +62,6 @@ public class SysRoleController {
     public ResponseEntity<RestReturnEntity<Object>> delete(@PathVariable("id") String id) {
         sysRoleService.deleteById(id);
         return RestReturn.ok();
-    }
-
-    @PostMapping("/getRoleMenuAuth/{roleId}")
-    @ApiOperation("查询角色关联的菜单和权限")
-    public ResponseEntity<RestReturnEntity<SysRole>> getRoleMenuAuth(@PathVariable("roleId") String roleId) {
-        SysRole info = sysRoleService.getRoleMenuAuth(roleId);
-        return RestReturn.ok(info);
     }
 
     @PostMapping("/saveRoleMenuAuth")

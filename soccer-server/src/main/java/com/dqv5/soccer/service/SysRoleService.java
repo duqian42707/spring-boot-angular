@@ -5,6 +5,8 @@ import com.dqv5.soccer.pojo.SysRole;
 import com.dqv5.soccer.table.SysRoleTable;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * @author duq
  * @date 2022/7/10
@@ -13,7 +15,7 @@ public interface SysRoleService {
 
     PageInfo<SysRoleTable> queryListForPage(Pageable pageable);
 
-    SysRoleTable findOne(String id);
+    SysRole findOne(String id);
 
     void insert(SysRoleTable param);
 
@@ -21,7 +23,7 @@ public interface SysRoleService {
 
     void deleteById(String id);
 
-    SysRole getRoleMenuAuth(String roleId);
-
     void saveRoleMenuAuth(SysRole param);
+
+    List<SysRole> queryByUserId(String userId);
 }

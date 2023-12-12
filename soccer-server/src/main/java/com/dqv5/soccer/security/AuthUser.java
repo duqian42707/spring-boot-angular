@@ -1,5 +1,6 @@
 package com.dqv5.soccer.security;
 
+import com.dqv5.soccer.pojo.SysMenu;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author duq
@@ -24,6 +26,7 @@ public class AuthUser implements UserDetails, Serializable {
     private String nickName;
     private String avatarUrl;
     private String gender;
+    private List<SysMenu> menus;
     private Collection<? extends GrantedAuthority> authorities;
 
     public AuthUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -32,19 +35,19 @@ public class AuthUser implements UserDetails, Serializable {
         this.authorities = authorities;
     }
 
-    public AuthUser(String userId, String account, String password, String nickName, String avatarUrl, String gender, Collection<? extends GrantedAuthority> authorities) {
+    public AuthUser(String userId, String account, String password, String nickName, String avatarUrl, String gender, List<SysMenu> menus, Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
         this.account = account;
         this.password = password;
         this.nickName = nickName;
         this.avatarUrl = avatarUrl;
         this.gender = gender;
+        this.menus = menus;
         this.authorities = authorities;
     }
 
     //-----------implements from UserDetails start----------//
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
     }

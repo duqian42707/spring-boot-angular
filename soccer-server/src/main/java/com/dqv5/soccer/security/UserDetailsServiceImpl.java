@@ -1,8 +1,12 @@
 package com.dqv5.soccer.security;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.dqv5.soccer.mapper.SysRoleMapper;
 import com.dqv5.soccer.mapper.SysUserMapper;
+import com.dqv5.soccer.pojo.SysAuth;
+import com.dqv5.soccer.pojo.SysMenu;
+import com.dqv5.soccer.pojo.SysRole;
+import com.dqv5.soccer.service.SysMenuService;
+import com.dqv5.soccer.service.SysRoleService;
 import com.dqv5.soccer.table.SysRoleTable;
 import com.dqv5.soccer.table.SysUserTable;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +26,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Resource
     private SysUserMapper sysUserMapper;
     @Resource
-    private SysRoleMapper sysRoleMapper;
+    private SysMenuService sysMenuService;
+    @Resource
+    private SysRoleService sysRoleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,14 +37,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (sysUserTable == null) {
             throw new UsernameNotFoundException("用户不存在!");
         }
-
+        String userId = sysUserTable.getUserId();
+        // 查出用户拥有的菜单列表
+        List<SysMenu> menus = sysMenuService.queryByUserId(userId);
         // 查出用户拥有的角色列表
-        List<SysRoleTable> roles = sysRoleMapper.queryByUserId(sysUserTable.getUserId());
+        List<SysRole> roles = sysRoleService.queryByUserId(userId);
+
         // 构造权限集合
-        Set<GrantedAuthority> auths = roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleValue()))
-                .collect(Collectors.toSet());
+        Set<GrantedAuthority> auths = new HashSet<>();
+        roles.forEach(role -> {
+            auths.add(new SimpleGrantedAuthority(role.getRoleValue()));
+            List<SysAuth> sysAuths = role.getAuths();
+            sysAuths.forEach(sysAuth -> auths.add(new SimpleGrantedAuthority(sysAuth.getAuthValue())));
+        });
         // 构造一个UserDetails对象返回，至少需要这些参数：用户名、密码、权限集合
-        return new AuthUser(sysUserTable.getUserId(), sysUserTable.getAccount(), sysUserTable.getPassword(), sysUserTable.getNickName(), sysUserTable.getAvatarUrl(), sysUserTable.getGender(), auths);
+        return new AuthUser(userId, sysUserTable.getAccount(), sysUserTable.getPassword(), sysUserTable.getNickName(), sysUserTable.getAvatarUrl(), sysUserTable.getGender(), menus, auths);
     }
 }

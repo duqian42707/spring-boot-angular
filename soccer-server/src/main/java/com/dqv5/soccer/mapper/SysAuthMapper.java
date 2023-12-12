@@ -12,4 +12,6 @@ import java.util.List;
 public interface SysAuthMapper extends BaseMapper<SysAuthTable> {
 
     List<SysAuthTable> queryByRoleId(String roleId);
+
+    List<SysAuthTable> queryByUserId(String userId);
 }

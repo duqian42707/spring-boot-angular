@@ -73,5 +73,10 @@ public class SysMenuServiceImpl implements SysMenuService {
         sysMenuMapper.deleteById(id);
     }
 
-
+    @Override
+    public List<SysMenu> queryByUserId(String userId) {
+        List<SysMenuTable> menuTables = sysMenuMapper.queryByUserId(userId);
+        List<SysAuthTable> authTables = sysAuthMapper.queryByUserId(userId);
+        return MenuTreeUtils.buildTree(menuTables, authTables);
+    }
 }

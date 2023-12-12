@@ -23,4 +23,5 @@ public interface SysMenuService {
 
     void deleteById(String id);
 
+    List<SysMenu> queryByUserId(String userId);
 }

@@ -9,4 +9,12 @@
                  join sys_role_auth ra on ra.auth_id = t.auth_id
         where ra.role_id = #{roleId}
     </select>
+    <select id="queryByUserId" resultMap="baseMap">
+        select distinct *
+        from (select t.*
+              from sys_auth t
+                       join sys_role_auth ra on ra.auth_id = t.auth_id
+                       join sys_user_role ur on ur.role_id = ra.role_id
+              where ur.user_id = #{userId}) a
+    </select>
 </mapper>
