@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {STColumn, STComponent} from '@delon/abc/st';
 import {SFSchema} from '@delon/form';
-import {ModalHelper, _HttpClient} from '@delon/theme';
+import {ModalHelper, _HttpClient, DrawerHelper} from '@delon/theme';
 import {SysRoleEditComponent} from './edit/edit.component';
 import {formatUsername} from '../../../shared/utils/format-username';
+import {SysRoleMenuComponent} from "./menu/menu.component";
 
 @Component({
   selector: 'app-sys-role',
@@ -35,12 +36,18 @@ export class SysRoleComponent implements OnInit {
       title: '操作',
       buttons: [
         {text: '编辑', type: 'modal', modal: {component: SysRoleEditComponent}, click: 'reload'},
-        {text: '删除', type: 'del',  click: (item: any) => this.delete(item)},
+        {text: '删除', type: 'del', click: (item: any) => this.delete(item)},
+        {
+          text: '配置权限',
+          type: 'drawer',
+          drawer: {component: SysRoleMenuComponent, drawerOptions: {nzClosable: false}},
+          click: 'reload'
+        },
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) {
+  constructor(private http: _HttpClient, private modal: ModalHelper, private drawerHelper: DrawerHelper) {
   }
 
   ngOnInit(): void {

@@ -20,37 +20,31 @@ public class MenuTreeUtils {
         if (allMenus == null || allMenus.isEmpty()) {
             return new ArrayList<>();
         }
-        List<SysMenuTable> rootMenus = getChildren(allMenus, null);
-        return rootMenus.stream().map(i -> {
-            SysMenu sysMenu = SysMenu.of(i);
-            List<SysMenuTable> childrenTable = getChildren(allMenus, sysMenu.getMenuId());
-            List<SysMenu> children = childrenTable.stream().map(SysMenu::of).collect(Collectors.toList());
-            List<SysAuthTable> authTables = getAuths(allAuths, sysMenu.getMenuId());
-            List<SysAuth> auths = authTables.stream().map(SysAuth::of).collect(Collectors.toList());
-            sysMenu.setChildren(children);
-            sysMenu.setAuths(auths);
-            return sysMenu;
-        }).collect(Collectors.toList());
+        return getChildren(allMenus, allAuths, null);
     }
 
-    public static List<SysMenuTable> getChildren(List<SysMenuTable> allMenus, String parentId) {
+    public static List<SysMenu> getChildren(List<SysMenuTable> allMenus, List<SysAuthTable> allAuths, String parentId) {
         if (allMenus == null || allMenus.isEmpty()) {
             return new ArrayList<>();
         }
-        return allMenus.stream().filter(menu -> {
-            if (StringUtils.isBlank(parentId)) {
-                return StringUtils.isBlank(menu.getParentId());
-            } else {
-                return Objects.equals(parentId, menu.getParentId());
-            }
-        }).collect(Collectors.toList());
+        return allMenus.stream()
+                .filter(menu -> StringUtils.isBlank(parentId) ? StringUtils.isBlank(menu.getParentId()) : Objects.equals(parentId, menu.getParentId()))
+                .map(SysMenu::of)
+                .peek(sysMenu -> {
+                    sysMenu.setAuths(getAuths(allAuths, sysMenu.getMenuId()));
+                    sysMenu.setChildren(getChildren(allMenus, allAuths, sysMenu.getMenuId()));
+                })
+                .collect(Collectors.toList());
     }
 
-    public static List<SysAuthTable> getAuths(List<SysAuthTable> allAuths, String menuId) {
+    public static List<SysAuth> getAuths(List<SysAuthTable> allAuths, String menuId) {
         if (allAuths == null || allAuths.isEmpty() || StringUtils.isBlank(menuId)) {
             return new ArrayList<>();
         }
-        return allAuths.stream().filter(auth -> Objects.equals(menuId, auth.getMenuId())).collect(Collectors.toList());
+        return allAuths.stream()
+                .filter(auth -> Objects.equals(menuId, auth.getMenuId()))
+                .map(SysAuth::of)
+                .collect(Collectors.toList());
     }
 
 }

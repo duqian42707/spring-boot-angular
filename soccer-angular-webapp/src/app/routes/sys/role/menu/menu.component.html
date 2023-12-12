@@ -1,0 +1,8 @@
+<div style="width:300px">
+  <nz-tree #treeComponent *ngIf="treeNodes.length>0" nzCheckable nzMultiple nzExpandAll [nzData]="treeNodes"
+           [nzCheckedKeys]="defaultCheckedKeys"></nz-tree>
+</div>
+<div class="drawer-footer">
+  <button nz-button [nzType]="'default'" (click)="cancel()">关闭</button>
+  <button nz-button [nzType]="'primary'" (click)="ok()" [nzLoading]="saveLoading">保存</button>
+</div>
