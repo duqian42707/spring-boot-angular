@@ -52,7 +52,7 @@
 
 ## 效果图
 
-![](http://image.dqv5.com/public/2018/1543051392883.jpg)
+![](document/img/1543051392883.jpg)
 
 ## 相关链接
 

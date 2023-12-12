@@ -8,6 +8,7 @@ import lombok.*;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -53,7 +54,10 @@ public class SysMenu extends AbstractBaseTable implements Serializable {
     private String parentId;
 
     @ApiModelProperty("下级菜单")
-    private List<SysMenu> children;
+    private List<SysMenu> children = new ArrayList<>();
+
+    @ApiModelProperty("关联的权限")
+    private List<SysAuth> auths = new ArrayList<>();
 
     public static SysMenu of(SysMenuTable table) {
         SysMenu sysMenu = new SysMenu();

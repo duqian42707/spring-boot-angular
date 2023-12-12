@@ -3,8 +3,11 @@ package com.dqv5.soccer.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.table.SysRoleTable;
-import com.dqv5.soccer.mapper.SysRoleMapper;
+import com.dqv5.soccer.mapper.*;
+import com.dqv5.soccer.pojo.SysAuth;
+import com.dqv5.soccer.pojo.SysMenu;
+import com.dqv5.soccer.pojo.SysRole;
+import com.dqv5.soccer.table.*;
 import com.dqv5.soccer.service.SysRoleService;
 import com.github.pagehelper.PageInfo;
 import com.dqv5.soccer.pojo.Pageable;
@@ -14,7 +17,10 @@ import javax.annotation.Resource;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author duq
@@ -24,6 +30,14 @@ import java.util.List;
 public class SysRoleServiceImpl implements SysRoleService {
     @Resource
     private SysRoleMapper sysRoleMapper;
+    @Resource
+    private SysMenuMapper sysMenuMapper;
+    @Resource
+    private SysAuthMapper sysAuthMapper;
+    @Resource
+    private SysRoleMenuMapper sysRoleMenuMapper;
+    @Resource
+    private SysRoleAuthMapper sysRoleAuthMapper;
 
     @Override
     public PageInfo<SysRoleTable> queryListForPage(Pageable pageable) {
@@ -75,5 +89,37 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Transactional
     public void deleteById(String id) {
         sysRoleMapper.deleteById(id);
+    }
+
+    @Override
+    public SysRole getRoleMenuAuth(String roleId) {
+        List<SysMenuTable> menuTables = sysMenuMapper.queryByRoleId(roleId);
+        List<SysMenu> menus = menuTables.stream().map(SysMenu::of).collect(Collectors.toList());
+        List<SysAuthTable> authTables = sysAuthMapper.queryByRoleId(roleId);
+        List<SysAuth> auths = authTables.stream().map(SysAuth::of).collect(Collectors.toList());
+        return SysRole.builder().roleId(roleId).menus(menus).auths(auths).build();
+    }
+
+    @Override
+    public void saveRoleMenuAuth(SysRole param) {
+        String roleId = param.getRoleId();
+        List<SysMenu> menus = param.getMenus();
+        List<SysAuth> auths = param.getAuths();
+        Map<String, Object> delMap = new HashMap<>();
+        delMap.put("role_id", roleId);
+        sysRoleMenuMapper.deleteByMap(delMap);
+        sysRoleAuthMapper.deleteByMap(delMap);
+        menus.forEach(x -> {
+            SysRoleMenuTable table = new SysRoleMenuTable();
+            table.setRoleId(roleId);
+            table.setMenuId(x.getMenuId());
+            sysRoleMenuMapper.insert(table);
+        });
+        auths.forEach(x -> {
+            SysRoleAuthTable table = new SysRoleAuthTable();
+            table.setRoleId(roleId);
+            table.setAuthId(x.getAuthId());
+            sysRoleAuthMapper.insert(table);
+        });
     }
 }

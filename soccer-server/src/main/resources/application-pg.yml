@@ -6,8 +6,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/soccer
     username: postgres
     password: 123456
-application-prod:
-  yml:logging:
+logging:
   level:
     root: info
     com.dqv5: debug

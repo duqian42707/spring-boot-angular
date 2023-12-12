@@ -118,7 +118,7 @@
                 <tableExists tableName="sys_log"/>
             </not>
         </preConditions>
-        <createTable tableName="sys_log" remarks="权限表">
+        <createTable tableName="sys_log" remarks="系统日志表">
             <column name="log_id" type="varchar(50)" remarks="日志id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_log_pk"/>
             </column>
@@ -145,13 +145,58 @@
                 <tableExists tableName="sys_user_role"/>
             </not>
         </preConditions>
-        <createTable tableName="sys_user_role" remarks="用户角色关联表">
+        <createTable tableName="sys_user_role" remarks="用户-角色关联表">
             <column name="user_id" type="varchar(50)" remarks="用户id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_user_role_pk"/>
             </column>
             <column name="role_id" type="varchar(50)" remarks="角色id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_user_role_pk"/>
             </column>
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间" defaultValueComputed="current_timestamp"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"
+                    defaultValueComputed="current_timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10000-007" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_role_menu"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_role_menu" remarks="角色-菜单关联表">
+            <column name="role_id" type="varchar(50)" remarks="角色id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_role_menu_pk"/>
+            </column>
+            <column name="menu_id" type="varchar(50)" remarks="菜单id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_role_menu_pk"/>
+            </column>
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间" defaultValueComputed="current_timestamp"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"
+                    defaultValueComputed="current_timestamp"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10000-008" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_role_auth"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_role_auth" remarks="角色-权限关联表">
+            <column name="role_id" type="varchar(50)" remarks="角色id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_role_auth_pk"/>
+            </column>
+            <column name="auth_id" type="varchar(50)" remarks="权限id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_role_auth_pk"/>
+            </column>
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间" defaultValueComputed="current_timestamp"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"
+                    defaultValueComputed="current_timestamp"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

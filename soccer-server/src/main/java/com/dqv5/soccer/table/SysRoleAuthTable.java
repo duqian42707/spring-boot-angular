@@ -8,13 +8,19 @@ import java.io.Serializable;
 
 /**
  * @author duq
- * @date 2023/12/6
+ * @date 2022/7/12
  */
-@EqualsAndHashCode(callSuper = true)
+
+/**
+ * @author duq
+ * @date 2020/7/31
+ */
 @Data
-@TableName("sys_user_role")
-public class SysUserRoleTable extends AbstractBaseTable implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@TableName("sys_role_auth")
+public class SysRoleAuthTable extends AbstractBaseTable implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String userId;
+
     private String roleId;
+    private String authId;
 }

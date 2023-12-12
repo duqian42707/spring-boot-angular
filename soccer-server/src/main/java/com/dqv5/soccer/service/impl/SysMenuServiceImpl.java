@@ -3,7 +3,9 @@ package com.dqv5.soccer.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.exception.CommonRuntimeException;
+import com.dqv5.soccer.mapper.SysAuthMapper;
 import com.dqv5.soccer.pojo.SysMenu;
+import com.dqv5.soccer.table.SysAuthTable;
 import com.dqv5.soccer.table.SysMenuTable;
 import com.dqv5.soccer.mapper.SysMenuMapper;
 import com.dqv5.soccer.service.SysMenuService;
@@ -23,11 +25,14 @@ import java.util.List;
 public class SysMenuServiceImpl implements SysMenuService {
     @Resource
     private SysMenuMapper sysMenuMapper;
+    @Resource
+    private SysAuthMapper sysAuthMapper;
 
     @Override
     public List<SysMenu> findAllTree() {
-        List<SysMenuTable> allList = sysMenuMapper.selectList(null);
-        return MenuTreeUtils.buildTree(allList);
+        List<SysMenuTable> allMenus = sysMenuMapper.selectList(null);
+        List<SysAuthTable> allAuths = sysAuthMapper.selectList(null);
+        return MenuTreeUtils.buildTree(allMenus, allAuths);
     }
 
     @Override

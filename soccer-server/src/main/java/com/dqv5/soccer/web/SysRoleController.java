@@ -2,6 +2,7 @@ package com.dqv5.soccer.web;
 
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
+import com.dqv5.soccer.pojo.SysRole;
 import com.dqv5.soccer.table.SysRoleTable;
 import com.dqv5.soccer.service.SysRoleService;
 import com.dqv5.soccer.pojo.Pageable;
@@ -62,5 +63,20 @@ public class SysRoleController {
         sysRoleService.deleteById(id);
         return RestReturn.ok();
     }
+
+    @PostMapping("/getRoleMenuAuth/{roleId}")
+    @ApiOperation("查询角色关联的菜单和权限")
+    public ResponseEntity<RestReturnEntity<SysRole>> getRoleMenuAuth(@PathVariable("roleId") String roleId) {
+        SysRole info = sysRoleService.getRoleMenuAuth(roleId);
+        return RestReturn.ok(info);
+    }
+
+    @PostMapping("/saveRoleMenuAuth")
+    @ApiOperation("配置角色关联的菜单和权限")
+    public ResponseEntity<RestReturnEntity<Object>> saveRoleMenuAuth(@RequestBody SysRole param) {
+        sysRoleService.saveRoleMenuAuth(param);
+        return RestReturn.ok();
+    }
+
 
 }
