@@ -26,6 +26,12 @@ public class SysMenuServiceImpl implements SysMenuService {
     private SysAuthMapper sysAuthMapper;
 
     @Override
+    public List<SysMenu> findAll() {
+        List<SysMenuTable> allMenus = sysMenuMapper.selectList(null);
+        return MenuTreeUtils.buildTree(allMenus);
+    }
+
+    @Override
     public List<TreeNode> findAllTree() {
         List<SysMenuTable> allMenus = sysMenuMapper.selectList(null);
         return MenuTreeUtils.buildTree(allMenus).stream().map(SysMenu::toTreeNode).collect(Collectors.toList());

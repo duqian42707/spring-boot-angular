@@ -4,6 +4,8 @@ import {NzDrawerRef} from "ng-zorro-antd/drawer";
 import {NzTreeComponent} from "ng-zorro-antd/tree";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {SysAuthService} from "../../auth/sys-auth.service";
+import {NzTreeNode} from "ng-zorro-antd/core/tree/nz-tree-base-node";
+import {getCheckedNodes} from "../../../../shared/utils/treeUtils";
 
 @Component({
   selector: 'app-sys-role-auth',
@@ -46,11 +48,9 @@ export class SysRoleAuthComponent implements OnInit {
   }
 
   ok(): void {
-    const checkedNodeList = this.treeComponent.getCheckedNodeList();
-    const halfCheckedNodeList = this.treeComponent.getHalfCheckedNodeList();
-    const nodeList = [...checkedNodeList, ...halfCheckedNodeList];
+    const nodeList: NzTreeNode[] = getCheckedNodes(this.treeComponent);
     const authIds: string[] = [];
-    nodeList.forEach(node => {
+    nodeList.filter(node => node.origin['type'] === 'auth').forEach(node => {
       authIds.push(node.key);
     });
     const param = {

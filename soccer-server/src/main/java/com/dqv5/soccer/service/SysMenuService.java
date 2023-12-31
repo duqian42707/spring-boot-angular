@@ -12,6 +12,8 @@ import java.util.List;
  * @date 2022/7/17
  */
 public interface SysMenuService {
+    List<SysMenu> findAll();
+
     List<TreeNode> findAllTree();
 
     SysMenuTable findOne(String id);

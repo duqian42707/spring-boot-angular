@@ -5,6 +5,7 @@ import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.common.Pageable;
 import com.dqv5.soccer.pojo.SysAuth;
 import com.dqv5.soccer.common.TreeNode;
+import com.dqv5.soccer.pojo.SysAuthFolder;
 import com.dqv5.soccer.service.SysAuthService;
 import com.dqv5.soccer.table.SysAuthTable;
 import com.github.pagehelper.PageInfo;
@@ -43,6 +44,13 @@ public class SysAuthController {
         Pageable pageable = Pageable.of(pageNum, pageSize);
         PageInfo<SysAuth> pageInfo = sysAuthService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
+    }
+
+    @GetMapping("/folders")
+    @ApiOperation(value = "获取所有权限", notes = "按目录分组展示")
+    public ResponseEntity<RestReturnEntity<List<SysAuthFolder>>> folders() {
+        List<SysAuthFolder> folders = sysAuthService.findFolders();
+        return RestReturn.ok(folders);
     }
 
     @GetMapping("/info/{id}")

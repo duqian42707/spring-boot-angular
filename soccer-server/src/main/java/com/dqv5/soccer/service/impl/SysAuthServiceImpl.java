@@ -65,6 +65,12 @@ public class SysAuthServiceImpl implements SysAuthService {
     }
 
     @Override
+    public List<SysAuthFolder> findFolders() {
+        List<SysAuthFolderTable> list = sysAuthFolderMapper.selectList(null);
+        return list.stream().map(SysAuthFolder::of).collect(Collectors.toList());
+    }
+
+    @Override
     public SysAuthTable findOne(String id) {
         return sysAuthMapper.selectById(id);
     }

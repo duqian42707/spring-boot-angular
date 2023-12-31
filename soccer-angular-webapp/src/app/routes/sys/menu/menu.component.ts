@@ -42,7 +42,7 @@ export class SysMenuComponent implements OnInit {
 
   queryTree() {
     this.loading = true;
-    this.http.get(`/api/menu/tree`).subscribe(res => {
+    this.http.get(`/api/menu/all`).subscribe(res => {
       this.listOfMapData = res.data;
       this.listOfMapData.forEach(item => {
         this.mapOfExpandedData[item.menuId] = this.convertTreeToList(item);

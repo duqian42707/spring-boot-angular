@@ -4,6 +4,8 @@ import {SysMenuService} from "../../menu/sys-menu.service";
 import {NzDrawerRef} from "ng-zorro-antd/drawer";
 import {NzTreeComponent} from "ng-zorro-antd/tree";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {NzTreeNode} from "ng-zorro-antd/core/tree/nz-tree-base-node";
+import {getCheckedNodes} from "../../../../shared/utils/treeUtils";
 
 @Component({
   selector: 'app-sys-role-menu',
@@ -46,9 +48,7 @@ export class SysRoleMenuComponent implements OnInit {
   }
 
   ok(): void {
-    const checkedNodeList = this.treeComponent.getCheckedNodeList();
-    const halfCheckedNodeList = this.treeComponent.getHalfCheckedNodeList();
-    const nodeList = [...checkedNodeList, ...halfCheckedNodeList];
+    const nodeList: NzTreeNode[] = getCheckedNodes(this.treeComponent);
     const menuIds: string[] = [];
     nodeList.forEach(node => {
       menuIds.push(node.key);
