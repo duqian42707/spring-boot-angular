@@ -2,8 +2,12 @@ package com.dqv5.soccer.web;
 
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.table.SysAuthTable;
+import com.dqv5.soccer.common.Pageable;
+import com.dqv5.soccer.pojo.SysAuth;
+import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.service.SysAuthService;
+import com.dqv5.soccer.table.SysAuthTable;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +29,20 @@ public class SysAuthController {
     @Resource
     private SysAuthService sysAuthService;
 
-    @GetMapping("/all")
-    @ApiOperation("获取菜单下的所有权限")
-    public ResponseEntity<RestReturnEntity<List<SysAuthTable>>> all(@RequestParam String menuId) {
-        List<SysAuthTable> tree = sysAuthService.findAll(menuId);
+    @GetMapping("/tree")
+    @ApiOperation(value = "获取所有权限", notes = "按目录分组展示")
+    public ResponseEntity<RestReturnEntity<List<TreeNode>>> tree() {
+        List<TreeNode> tree = sysAuthService.findAuthTree();
         return RestReturn.ok(tree);
+    }
+
+    @GetMapping("/list")
+    @ApiOperation("获取权限列表")
+    public ResponseEntity<RestReturnEntity<PageInfo<SysAuth>>> list(@RequestParam(defaultValue = "1") int pageNum,
+                                                                    @RequestParam(defaultValue = "10") int pageSize) {
+        Pageable pageable = Pageable.of(pageNum, pageSize);
+        PageInfo<SysAuth> pageInfo = sysAuthService.queryListForPage(pageable);
+        return RestReturn.ok(pageInfo);
     }
 
     @GetMapping("/info/{id}")

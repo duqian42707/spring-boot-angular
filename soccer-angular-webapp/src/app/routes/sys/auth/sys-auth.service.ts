@@ -3,13 +3,13 @@ import {_HttpClient} from '@delon/theme';
 import {map, Observable} from "rxjs";
 
 @Injectable()
-export class SysMenuService {
+export class SysAuthService {
 
   constructor(private http: _HttpClient) {
   }
 
-  loadMenuTree(): Observable<any> {
-    return this.http.get('/api/menu/tree').pipe(
+  loadAuthTree(): Observable<any> {
+    return this.http.get('/api/auth/tree').pipe(
       map(res => res.data)
     )
   }

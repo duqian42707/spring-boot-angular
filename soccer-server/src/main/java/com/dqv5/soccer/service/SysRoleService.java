@@ -1,6 +1,6 @@
 package com.dqv5.soccer.service;
 
-import com.dqv5.soccer.pojo.Pageable;
+import com.dqv5.soccer.common.Pageable;
 import com.dqv5.soccer.pojo.SysRole;
 import com.dqv5.soccer.table.SysRoleTable;
 import com.github.pagehelper.PageInfo;
@@ -23,7 +23,9 @@ public interface SysRoleService {
 
     void deleteById(String id);
 
-    void saveRoleMenuAuth(SysRole param);
+    void saveRoleMenu(SysRole param);
+
+    void saveRoleAuth(SysRole param);
 
     List<SysRole> queryByUserId(String userId);
 }

@@ -42,6 +42,10 @@
               "link": "/sys/menu"
             },
             {
+              "text": "权限管理",
+              "link": "/sys/auth"
+            },
+            {
               "text": "系统日志",
               "link": "/sys/log"
             }

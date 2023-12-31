@@ -1,5 +1,7 @@
 package com.dqv5.soccer.pojo;
 
+import com.dqv5.soccer.common.TreeNode;
+import com.dqv5.soccer.common.TreeNodeType;
 import com.dqv5.soccer.table.AbstractBaseTable;
 import com.dqv5.soccer.table.SysMenuTable;
 import io.swagger.annotations.ApiModel;
@@ -10,6 +12,8 @@ import org.springframework.beans.BeanUtils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -56,9 +60,6 @@ public class SysMenu extends AbstractBaseTable implements Serializable {
     @ApiModelProperty("下级菜单")
     private List<SysMenu> children = new ArrayList<>();
 
-    @ApiModelProperty("关联的权限")
-    private List<SysAuth> auths = new ArrayList<>();
-
     public static SysMenu of(SysMenuTable table) {
         SysMenu sysMenu = new SysMenu();
         BeanUtils.copyProperties(table, sysMenu);
@@ -75,5 +76,17 @@ public class SysMenu extends AbstractBaseTable implements Serializable {
         return table;
     }
 
+    public TreeNode toTreeNode() {
+        TreeNode treeNode = new TreeNode();
+        treeNode.setType(TreeNodeType.menu);
+        treeNode.setOrigin(this);
+        treeNode.setKey(menuId);
+        treeNode.setTitle(menuName);
+        List<TreeNode> children = Optional.ofNullable(this.children).orElse(new ArrayList<>())
+                .stream().map(SysMenu::toTreeNode).collect(Collectors.toList());
+        treeNode.setChildren(children);
+        treeNode.setIsLeaf(children.isEmpty());
+        return treeNode;
+    }
 
 }

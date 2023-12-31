@@ -1,6 +1,8 @@
 package com.dqv5.soccer.service;
 
-import com.dqv5.soccer.pojo.Pageable;
+import com.dqv5.soccer.common.Pageable;
+import com.dqv5.soccer.pojo.SysAuth;
+import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.table.SysAuthTable;
 import com.github.pagehelper.PageInfo;
 
@@ -12,9 +14,9 @@ import java.util.List;
  */
 
 public interface SysAuthService {
-    List<SysAuthTable> findAll(String menuId);
+    List<TreeNode> findAuthTree();
 
-    PageInfo<SysAuthTable> queryListForPage(Pageable pageable);
+    PageInfo<SysAuth> queryListForPage(Pageable pageable);
 
     SysAuthTable findOne(String id);
 

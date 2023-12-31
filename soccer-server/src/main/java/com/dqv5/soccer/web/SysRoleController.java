@@ -5,7 +5,7 @@ import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.pojo.SysRole;
 import com.dqv5.soccer.table.SysRoleTable;
 import com.dqv5.soccer.service.SysRoleService;
-import com.dqv5.soccer.pojo.Pageable;
+import com.dqv5.soccer.common.Pageable;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -64,10 +64,17 @@ public class SysRoleController {
         return RestReturn.ok();
     }
 
-    @PostMapping("/saveRoleMenuAuth")
-    @ApiOperation("配置角色关联的菜单和权限")
-    public ResponseEntity<RestReturnEntity<Object>> saveRoleMenuAuth(@RequestBody SysRole param) {
-        sysRoleService.saveRoleMenuAuth(param);
+    @PostMapping("/saveRoleMenu")
+    @ApiOperation("配置角色关联的菜单")
+    public ResponseEntity<RestReturnEntity<Object>> saveRoleMenu(@RequestBody SysRole param) {
+        sysRoleService.saveRoleMenu(param);
+        return RestReturn.ok();
+    }
+
+    @PostMapping("/saveRoleAuth")
+    @ApiOperation("配置角色关联的权限")
+    public ResponseEntity<RestReturnEntity<Object>> saveRoleAuth(@RequestBody SysRole param) {
+        sysRoleService.saveRoleAuth(param);
         return RestReturn.ok();
     }
 

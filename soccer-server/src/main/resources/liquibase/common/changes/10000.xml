@@ -92,6 +92,27 @@
     <changeSet id="10000-004" author="soccer">
         <preConditions>
             <not>
+                <tableExists tableName="sys_auth_folder"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_auth_folder" remarks="权限目录表">
+            <column name="auth_folder_id" type="varchar(50)" remarks="权限id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_auth_folder_pk"/>
+            </column>
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间" defaultValueComputed="current_timestamp"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"
+                    defaultValueComputed="current_timestamp"/>
+            <column name="auth_folder_name" type="varchar(200)" remarks="权限目录名称">
+                <constraints unique="true"/>
+            </column>
+            <column name="display_index" type="integer" remarks="显示顺序"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="10000-005" author="soccer">
+        <preConditions>
+            <not>
                 <tableExists tableName="sys_auth"/>
             </not>
         </preConditions>
@@ -104,7 +125,7 @@
             <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
             <column name="last_modified_date" type="timestamp" remarks="最后修改时间"
                     defaultValueComputed="current_timestamp"/>
-            <column name="menu_id" type="varchar(50)" remarks="所属菜单id"/>
+            <column name="auth_folder_id" type="varchar(50)" remarks="所属目录id"/>
             <column name="auth_value" type="varchar(100)" remarks="权限值">
                 <constraints unique="true"/>
             </column>
@@ -112,7 +133,7 @@
             <column name="display_index" type="integer" remarks="显示顺序"/>
         </createTable>
     </changeSet>
-    <changeSet id="10000-005" author="soccer">
+    <changeSet id="10000-006" author="soccer">
         <preConditions>
             <not>
                 <tableExists tableName="sys_log"/>
@@ -139,7 +160,7 @@
             <column name="run_time" type="integer" remarks="运行时间"/>
         </createTable>
     </changeSet>
-    <changeSet id="10000-006" author="soccer">
+    <changeSet id="10000-007" author="soccer">
         <preConditions>
             <not>
                 <tableExists tableName="sys_user_role"/>
@@ -159,7 +180,7 @@
                     defaultValueComputed="current_timestamp"/>
         </createTable>
     </changeSet>
-    <changeSet id="10000-007" author="soccer">
+    <changeSet id="10000-008" author="soccer">
         <preConditions>
             <not>
                 <tableExists tableName="sys_role_menu"/>
@@ -179,7 +200,7 @@
                     defaultValueComputed="current_timestamp"/>
         </createTable>
     </changeSet>
-    <changeSet id="10000-008" author="soccer">
+    <changeSet id="10000-009" author="soccer">
         <preConditions>
             <not>
                 <tableExists tableName="sys_role_auth"/>

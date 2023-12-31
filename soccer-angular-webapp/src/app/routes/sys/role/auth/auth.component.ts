@@ -1,15 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {_HttpClient, DrawerHelper} from '@delon/theme';
-import {SysMenuService} from "../../menu/sys-menu.service";
+import {_HttpClient} from '@delon/theme';
 import {NzDrawerRef} from "ng-zorro-antd/drawer";
 import {NzTreeComponent} from "ng-zorro-antd/tree";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {SysAuthService} from "../../auth/sys-auth.service";
 
 @Component({
-  selector: 'app-sys-role-menu',
-  templateUrl: './menu.component.html',
+  selector: 'app-sys-role-auth',
+  templateUrl: './auth.component.html',
 })
-export class SysRoleMenuComponent implements OnInit {
+export class SysRoleAuthComponent implements OnInit {
   record: any = {};
   treeNodes = [];
   defaultCheckedKeys: string[] = [];
@@ -18,12 +18,12 @@ export class SysRoleMenuComponent implements OnInit {
   @ViewChild('treeComponent') private treeComponent!: NzTreeComponent
 
   constructor(public http: _HttpClient, private nzDrawerRef: NzDrawerRef,
-              private nzMessageService: NzMessageService, private sysMenuService: SysMenuService) {
+              private nzMessageService: NzMessageService, private sysAuthService: SysAuthService) {
   }
 
   ngOnInit(): void {
     console.log(this.record)
-    this.loadMenuTree();
+    this.loadAuthTree();
     this.loadRoleInfo();
   }
 
@@ -31,12 +31,12 @@ export class SysRoleMenuComponent implements OnInit {
     this.loading = true;
     this.http.get('/api/role/info/' + this.record.roleId).subscribe(res => {
       this.loading = false;
-      this.defaultCheckedKeys = res.data.menus.map((x: any) => x.menuId);
+      this.defaultCheckedKeys = res.data.auths.map((x: any) => x.authId);
     })
   }
 
-  loadMenuTree() {
-    this.sysMenuService.loadMenuTree().subscribe(data => {
+  loadAuthTree() {
+    this.sysAuthService.loadAuthTree().subscribe(data => {
       this.treeNodes = data;
     })
   }
@@ -49,16 +49,16 @@ export class SysRoleMenuComponent implements OnInit {
     const checkedNodeList = this.treeComponent.getCheckedNodeList();
     const halfCheckedNodeList = this.treeComponent.getHalfCheckedNodeList();
     const nodeList = [...checkedNodeList, ...halfCheckedNodeList];
-    const menuIds: string[] = [];
+    const authIds: string[] = [];
     nodeList.forEach(node => {
-      menuIds.push(node.key);
+      authIds.push(node.key);
     });
     const param = {
       roleId: this.record.roleId,
-      menus: menuIds.map(menuId => ({menuId})),
+      auths: authIds.map(authId => ({authId})),
     }
     this.saveLoading = true;
-    this.http.post('/api/role/saveRoleMenu', param).subscribe(res => {
+    this.http.post('/api/role/saveRoleAuth', param).subscribe(res => {
       this.saveLoading = false;
       this.nzMessageService.success(res.msg);
       this.nzDrawerRef.close();

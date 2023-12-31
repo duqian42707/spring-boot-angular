@@ -2,24 +2,21 @@ package com.dqv5.soccer.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.mapper.SysAuthMapper;
+import com.dqv5.soccer.mapper.SysMenuMapper;
 import com.dqv5.soccer.pojo.SysMenu;
+import com.dqv5.soccer.service.SysMenuService;
 import com.dqv5.soccer.table.SysAuthTable;
 import com.dqv5.soccer.table.SysMenuTable;
-import com.dqv5.soccer.mapper.SysMenuMapper;
-import com.dqv5.soccer.service.SysMenuService;
 import com.dqv5.soccer.utils.MenuTreeUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.dqv5.soccer.pojo.Pageable;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SysMenuServiceImpl implements SysMenuService {
@@ -29,10 +26,9 @@ public class SysMenuServiceImpl implements SysMenuService {
     private SysAuthMapper sysAuthMapper;
 
     @Override
-    public List<SysMenu> findAllTree() {
+    public List<TreeNode> findAllTree() {
         List<SysMenuTable> allMenus = sysMenuMapper.selectList(null);
-        List<SysAuthTable> allAuths = sysAuthMapper.selectList(null);
-        return MenuTreeUtils.buildTree(allMenus, allAuths);
+        return MenuTreeUtils.buildTree(allMenus).stream().map(SysMenu::toTreeNode).collect(Collectors.toList());
     }
 
     @Override
@@ -76,7 +72,6 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public List<SysMenu> queryByUserId(String userId) {
         List<SysMenuTable> menuTables = sysMenuMapper.queryByUserId(userId);
-        List<SysAuthTable> authTables = sysAuthMapper.queryByUserId(userId);
-        return MenuTreeUtils.buildTree(menuTables, authTables);
+        return MenuTreeUtils.buildTree(menuTables);
     }
 }

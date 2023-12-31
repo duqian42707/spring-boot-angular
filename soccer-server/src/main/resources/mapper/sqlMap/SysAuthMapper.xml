@@ -3,6 +3,8 @@
 <mapper namespace="com.dqv5.soccer.mapper.SysAuthMapper">
     <resultMap id="baseMap" type="com.dqv5.soccer.table.SysAuthTable">
     </resultMap>
+    <resultMap id="pojoMap" type="com.dqv5.soccer.pojo.SysAuth">
+    </resultMap>
     <select id="queryByRoleId" resultMap="baseMap">
         select t.*
         from sys_auth t
@@ -16,5 +18,10 @@
                        join sys_role_auth ra on ra.auth_id = t.auth_id
                        join sys_user_role ur on ur.role_id = ra.role_id
               where ur.user_id = #{userId}) a
+    </select>
+    <select id="queryList" resultMap="pojoMap">
+        select t.*, f.auth_folder_name
+        from sys_auth t
+                 left join sys_auth_folder f on f.auth_folder_id = t.auth_folder_id
     </select>
 </mapper>

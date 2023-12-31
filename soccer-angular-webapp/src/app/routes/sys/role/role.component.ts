@@ -5,6 +5,7 @@ import {ModalHelper, _HttpClient, DrawerHelper} from '@delon/theme';
 import {SysRoleEditComponent} from './edit/edit.component';
 import {formatUsername} from '../../../shared/utils/format-username';
 import {SysRoleMenuComponent} from "./menu/menu.component";
+import {SysRoleAuthComponent} from "./auth/auth.component";
 
 @Component({
   selector: 'app-sys-role',
@@ -38,9 +39,15 @@ export class SysRoleComponent implements OnInit {
         {text: '编辑', type: 'modal', modal: {component: SysRoleEditComponent}, click: 'reload'},
         {text: '删除', type: 'del', click: (item: any) => this.delete(item)},
         {
-          text: '配置权限',
+          text: '配置菜单',
           type: 'drawer',
           drawer: {component: SysRoleMenuComponent, drawerOptions: {nzClosable: false}},
+          click: 'reload'
+        },
+        {
+          text: '配置权限',
+          type: 'drawer',
+          drawer: {component: SysRoleAuthComponent, drawerOptions: {nzClosable: false}},
           click: 'reload'
         },
       ]

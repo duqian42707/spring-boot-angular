@@ -1,8 +1,6 @@
 package com.dqv5.soccer.utils;
 
-import com.dqv5.soccer.pojo.SysAuth;
 import com.dqv5.soccer.pojo.SysMenu;
-import com.dqv5.soccer.table.SysAuthTable;
 import com.dqv5.soccer.table.SysMenuTable;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,14 +14,14 @@ import java.util.stream.Collectors;
  * @date 2022/7/19
  */
 public class MenuTreeUtils {
-    public static List<SysMenu> buildTree(List<SysMenuTable> allMenus, List<SysAuthTable> allAuths) {
+    public static List<SysMenu> buildTree(List<SysMenuTable> allMenus) {
         if (allMenus == null || allMenus.isEmpty()) {
             return new ArrayList<>();
         }
-        return getChildren(allMenus, allAuths, null);
+        return getChildren(allMenus, null);
     }
 
-    public static List<SysMenu> getChildren(List<SysMenuTable> allMenus, List<SysAuthTable> allAuths, String parentId) {
+    public static List<SysMenu> getChildren(List<SysMenuTable> allMenus, String parentId) {
         if (allMenus == null || allMenus.isEmpty()) {
             return new ArrayList<>();
         }
@@ -31,19 +29,8 @@ public class MenuTreeUtils {
                 .filter(menu -> StringUtils.isBlank(parentId) ? StringUtils.isBlank(menu.getParentId()) : Objects.equals(parentId, menu.getParentId()))
                 .map(SysMenu::of)
                 .peek(sysMenu -> {
-                    sysMenu.setAuths(getAuths(allAuths, sysMenu.getMenuId()));
-                    sysMenu.setChildren(getChildren(allMenus, allAuths, sysMenu.getMenuId()));
+                    sysMenu.setChildren(getChildren(allMenus, sysMenu.getMenuId()));
                 })
-                .collect(Collectors.toList());
-    }
-
-    public static List<SysAuth> getAuths(List<SysAuthTable> allAuths, String menuId) {
-        if (allAuths == null || allAuths.isEmpty() || StringUtils.isBlank(menuId)) {
-            return new ArrayList<>();
-        }
-        return allAuths.stream()
-                .filter(auth -> Objects.equals(menuId, auth.getMenuId()))
-                .map(SysAuth::of)
                 .collect(Collectors.toList());
     }
 

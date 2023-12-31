@@ -27,6 +27,8 @@ public class AutoRunner implements CommandLineRunner {
     @Resource
     private SysMenuMapper sysMenuMapper;
     @Resource
+    private SysAuthFolderMapper sysAuthFolderMapper;
+    @Resource
     private SysAuthMapper sysAuthMapper;
     @Resource
     private SysRoleMapper sysRoleMapper;
@@ -39,10 +41,12 @@ public class AutoRunner implements CommandLineRunner {
     public void run(String... args) {
         log.info("------------系统初始化开始------------");
         initMenus();
+        initAuths();
         initRoles();
         initUsers();
         log.info("------------系统初始化结束------------");
     }
+
 
     private void initMenus() {
         long count = sysMenuMapper.selectCount(null);
@@ -65,10 +69,22 @@ public class AutoRunner implements CommandLineRunner {
         sysMenuMapper.insert(menu);
         sysMenuMapper.insert(log);
 
-        SysAuthTable addUser = SysAuthTable.builder().menuId(user.getMenuId()).authValue("sys_user_add").authName("新增用户").build();
-        sysAuthMapper.insert(addUser);
 
     }
+
+    private void initAuths() {
+        long count = sysAuthMapper.selectCount(null);
+        if (count > 0) {
+            return;
+        }
+        SysAuthFolderTable user = SysAuthFolderTable.builder().authFolderName("用户管理").build();
+        sysAuthFolderMapper.insert(user);
+        sysAuthMapper.insert(SysAuthTable.builder().authFolderId(user.getAuthFolderId()).authValue("sys_user_query").authName("查询用户").build());
+        sysAuthMapper.insert(SysAuthTable.builder().authFolderId(user.getAuthFolderId()).authValue("sys_user_insert").authName("新增用户").build());
+        sysAuthMapper.insert(SysAuthTable.builder().authFolderId(user.getAuthFolderId()).authValue("sys_user_update").authName("修改用户").build());
+        sysAuthMapper.insert(SysAuthTable.builder().authFolderId(user.getAuthFolderId()).authValue("sys_user_delete").authName("删除用户").build());
+    }
+
 
     private void initRoles() {
         long count = sysRoleMapper.selectCount(null);

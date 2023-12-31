@@ -1,4 +1,4 @@
-package com.dqv5.soccer.pojo;
+package com.dqv5.soccer.common;
 
 import lombok.Data;
 

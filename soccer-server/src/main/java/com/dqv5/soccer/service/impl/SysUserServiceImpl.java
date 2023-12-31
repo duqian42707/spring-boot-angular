@@ -7,7 +7,7 @@ import com.dqv5.soccer.mapper.SysUserMapper;
 import com.dqv5.soccer.service.SysUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.dqv5.soccer.pojo.Pageable;
+import com.dqv5.soccer.common.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

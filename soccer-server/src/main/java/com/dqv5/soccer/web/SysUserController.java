@@ -4,7 +4,7 @@ import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.service.SysUserService;
 import com.dqv5.soccer.table.SysUserTable;
-import com.dqv5.soccer.pojo.Pageable;
+import com.dqv5.soccer.common.Pageable;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

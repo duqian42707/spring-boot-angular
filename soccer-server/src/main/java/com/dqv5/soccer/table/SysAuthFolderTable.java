@@ -9,21 +9,17 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("sys_auth")
+@TableName("sys_auth_folder")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SysAuthTable extends AbstractBaseTable implements Serializable {
+public class SysAuthFolderTable extends AbstractBaseTable implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.ASSIGN_UUID)
-    private String authId;
-
-    private String authValue;
-
-    private String authName;
-
     private String authFolderId;
+
+    private String authFolderName;
 
     private Integer displayIndex;
 

@@ -8,14 +8,20 @@ import {SysMenuComponent} from './menu/menu.component';
 import {SysRoleEditComponent} from './role/edit/edit.component';
 import {SysMenuEditComponent} from './menu/edit/edit.component';
 import {SysUserEditComponent} from './user/edit/edit.component';
-import {SysMenuAuthComponent} from './menu/auth/auth.component';
 import {SysRoleMenuComponent} from "./role/menu/menu.component";
 import {SysMenuService} from "./menu/sys-menu.service";
+import {SysAuthComponent} from "./auth/auth.component";
+import {SysAuthEditComponent} from "./auth/edit/edit.component";
+import {SysRoleAuthComponent} from "./role/auth/auth.component";
+import {SysAuthService} from "./auth/sys-auth.service";
 
 const COMPONENTS: Type<void>[] = [
-  SysLogComponent, SysUserComponent, SysRoleComponent, SysMenuComponent,
-  SysRoleEditComponent, SysMenuEditComponent, SysUserEditComponent,
-  SysMenuAuthComponent, SysRoleMenuComponent];
+  SysUserComponent, SysUserEditComponent,
+  SysRoleComponent, SysRoleEditComponent, SysRoleMenuComponent, SysRoleAuthComponent,
+  SysMenuComponent, SysMenuEditComponent,
+  SysAuthComponent, SysAuthEditComponent,
+  SysLogComponent
+];
 
 @NgModule({
   imports: [
@@ -24,7 +30,8 @@ const COMPONENTS: Type<void>[] = [
   ],
   declarations: COMPONENTS,
   providers: [
-    SysMenuService
+    SysMenuService,
+    SysAuthService,
   ],
 })
 export class SysModule {

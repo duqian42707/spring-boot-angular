@@ -8,7 +8,7 @@ import com.dqv5.soccer.security.AuthUser;
 import com.dqv5.soccer.utils.SecurityUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.dqv5.soccer.pojo.Pageable;
+import com.dqv5.soccer.common.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

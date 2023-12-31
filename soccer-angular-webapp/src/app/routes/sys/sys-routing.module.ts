@@ -4,11 +4,13 @@ import {SysLogComponent} from './log/log.component';
 import {SysUserComponent} from './user/user.component';
 import {SysRoleComponent} from './role/role.component';
 import {SysMenuComponent} from './menu/menu.component';
+import {SysAuthComponent} from "./auth/auth.component";
 
 const routes: Routes = [
   {path: 'user', component: SysUserComponent},
   {path: 'role', component: SysRoleComponent},
   {path: 'menu', component: SysMenuComponent},
+  {path: 'auth', component: SysAuthComponent},
   {path: 'log', component: SysLogComponent}
 ];
 

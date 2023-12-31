@@ -1,6 +1,6 @@
 package com.dqv5.soccer.service;
 
-import com.dqv5.soccer.pojo.Pageable;
+import com.dqv5.soccer.common.Pageable;
 import com.dqv5.soccer.table.SysUserTable;
 import com.github.pagehelper.PageInfo;
 

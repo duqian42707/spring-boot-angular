@@ -2,6 +2,7 @@ package com.dqv5.soccer.web;
 
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
+import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.pojo.SysMenu;
 import com.dqv5.soccer.table.SysMenuTable;
 import com.dqv5.soccer.service.SysMenuService;
@@ -28,8 +29,8 @@ public class SysMenuController {
 
     @GetMapping("/tree")
     @ApiOperation("获取菜单树")
-    public ResponseEntity<RestReturnEntity<List<SysMenu>>> tree() {
-        List<SysMenu> tree = sysMenuService.findAllTree();
+    public ResponseEntity<RestReturnEntity<List<TreeNode>>> tree() {
+        List<TreeNode> tree = sysMenuService.findAllTree();
         return RestReturn.ok(tree);
     }
 
