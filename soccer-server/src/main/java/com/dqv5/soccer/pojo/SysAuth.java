@@ -17,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @ApiModel("系统权限")
-public class SysAuth extends AbstractBaseTable implements Serializable {
+public class SysAuth extends AbstractBaseVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("权限id")

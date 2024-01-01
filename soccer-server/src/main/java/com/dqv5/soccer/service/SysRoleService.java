@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface SysRoleService {
 
-    PageInfo<SysRoleTable> queryListForPage(Pageable pageable);
+    PageInfo<SysRole> queryListForPage(Pageable pageable);
 
     SysRole findOne(String id);
 

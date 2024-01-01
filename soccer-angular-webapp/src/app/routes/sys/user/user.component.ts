@@ -10,11 +10,16 @@ import {SysUserEditComponent} from './edit/edit.component';
 })
 export class SysUserComponent implements OnInit {
   url = `/api/user/list`;
+  loading: boolean | null = false;
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      account: {
         type: 'string',
-        title: '编号'
+        title: '账号'
+      },
+      nickName: {
+        type: 'string',
+        title: '昵称'
       }
     }
   };
@@ -24,11 +29,13 @@ export class SysUserComponent implements OnInit {
     {title: '账号', index: 'account'},
     {title: '昵称', index: 'nickName'},
     {title: '头像', type: 'img', width: '64px', index: 'avatarUrl'},
-    {title: '时间', type: 'date', index: 'updatedAt'},
+    {title: '更新人', index: 'lastModifiedNickName'},
+    {title: '更新时间', type: 'date', index: 'lastModifiedDate'},
     {
       title: '操作',
       buttons: [
         {text: '编辑', type: 'modal', modal: {component: SysUserEditComponent}, click: 'reload'},
+        {text: '删除', type: 'del', click: (item: any) => this.delete(item)},
       ]
     }
   ];
@@ -43,6 +50,15 @@ export class SysUserComponent implements OnInit {
     this.modal
       .createStatic(SysUserEditComponent, {i: {id: 0}})
       .subscribe(() => this.st.reload());
+  }
+
+
+  delete(item: any): void {
+    this.loading = true;
+    this.http.post(`/api/user/delete/${item.userId}`).subscribe((res: any) => {
+      this.loading = null;
+      this.st.reload();
+    });
   }
 
 }

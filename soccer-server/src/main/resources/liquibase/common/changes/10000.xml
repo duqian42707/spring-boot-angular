@@ -86,7 +86,7 @@
             <column name="icon" type="varchar(100)" remarks="图标"/>
             <column name="hide" type="integer" remarks="是否隐藏菜单" defaultValueNumeric="0"/>
             <column name="hide_children" type="integer" remarks="是否隐藏子菜单" defaultValueNumeric="0"/>
-            <column name="display_index" type="integer" remarks="显示顺序"/>
+            <column name="display_index" type="integer" remarks="显示顺序" defaultValueNumeric="0"/>
         </createTable>
     </changeSet>
     <changeSet id="10000-004" author="soccer">
@@ -107,7 +107,7 @@
             <column name="auth_folder_name" type="varchar(200)" remarks="权限目录名称">
                 <constraints unique="true"/>
             </column>
-            <column name="display_index" type="integer" remarks="显示顺序"/>
+            <column name="display_index" type="integer" remarks="显示顺序" defaultValueNumeric="0"/>
         </createTable>
     </changeSet>
     <changeSet id="10000-005" author="soccer">
@@ -130,7 +130,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="auth_name" type="varchar(200)" remarks="权限名称"/>
-            <column name="display_index" type="integer" remarks="显示顺序"/>
+            <column name="display_index" type="integer" remarks="显示顺序" defaultValueNumeric="0"/>
         </createTable>
     </changeSet>
     <changeSet id="10000-006" author="soccer">

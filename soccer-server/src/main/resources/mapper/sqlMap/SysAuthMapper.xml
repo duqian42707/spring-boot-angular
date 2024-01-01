@@ -20,8 +20,14 @@
               where ur.user_id = #{userId}) a
     </select>
     <select id="queryList" resultMap="pojoMap">
-        select t.*, f.auth_folder_name
+        select t.*,
+               f.auth_folder_name,
+               u1.nick_name as created_nick_name,
+               u2.nick_name as last_modified_nick_name
         from sys_auth t
                  left join sys_auth_folder f on f.auth_folder_id = t.auth_folder_id
+                 left join sys_user u1 on t.created_by = u1.user_id
+                 left join sys_user u2 on t.last_modified_by = u2.user_id
+        order by t.display_index
     </select>
 </mapper>

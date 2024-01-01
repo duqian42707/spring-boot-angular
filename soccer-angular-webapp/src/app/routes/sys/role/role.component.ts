@@ -31,7 +31,7 @@ export class SysRoleComponent implements OnInit {
     {title: '编号', type: 'no'},
     {title: '角色标识', index: 'roleValue'},
     {title: '角色名称', index: 'roleName'},
-    {title: '更新人', index: 'lastModifiedBy', format: (item) => formatUsername(item.lastModifiedBy)},
+    {title: '更新人', index: 'lastModifiedNickName'},
     {title: '更新时间', type: 'date', index: 'lastModifiedDate'},
     {
       title: '操作',

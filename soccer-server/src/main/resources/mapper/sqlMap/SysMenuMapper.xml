@@ -16,5 +16,6 @@
                        join sys_role_menu rm on rm.menu_id = t.menu_id
                        join sys_user_role ur on ur.role_id = rm.role_id
               where ur.user_id = #{userId}) a
+        order by a.display_index
     </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.dqv5.soccer.web;
 
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
+import com.dqv5.soccer.pojo.SysUser;
 import com.dqv5.soccer.service.SysUserService;
 import com.dqv5.soccer.table.SysUserTable;
 import com.dqv5.soccer.common.Pageable;
@@ -28,10 +29,10 @@ public class SysUserController {
 
     @GetMapping("/list")
     @ApiOperation("获取用户列表")
-    public ResponseEntity<RestReturnEntity<PageInfo<SysUserTable>>> list(@RequestParam(defaultValue = "1") int pageNum,
+    public ResponseEntity<RestReturnEntity<PageInfo<SysUser>>> list(@RequestParam(defaultValue = "1") int pageNum,
                                                                          @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = Pageable.of(pageNum, pageSize);
-        PageInfo<SysUserTable> pageInfo = sysUserService.queryListForPage(pageable);
+        PageInfo<SysUser> pageInfo = sysUserService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
     }
 

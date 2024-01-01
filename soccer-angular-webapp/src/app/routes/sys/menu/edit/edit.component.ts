@@ -15,6 +15,10 @@ export class SysMenuEditComponent implements OnInit {
     properties: {
       menuName: {type: 'string', title: '菜单名称', maxLength: 15},
       menuCode: {type: 'string', title: '菜单编码'},
+      link: {type: 'string', title: '链接'},
+      externalLink: {type: 'string', title: '外部链接'},
+      icon: {type: 'string', title: '图标'},
+      displayIndex: {type: 'number', title: '排序'},
     },
     required: ['menuName', 'menuCode'],
   };

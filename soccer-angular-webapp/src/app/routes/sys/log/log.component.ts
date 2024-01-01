@@ -11,9 +11,13 @@ export class SysLogComponent implements OnInit {
   url = `/api/log/list`;
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      username: {
         type: 'string',
-        title: '编号'
+        title: '账号'
+      },
+      nickName: {
+        type: 'string',
+        title: '昵称'
       }
     }
   };

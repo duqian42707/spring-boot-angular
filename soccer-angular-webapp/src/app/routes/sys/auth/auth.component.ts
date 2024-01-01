@@ -35,7 +35,7 @@ export class SysAuthComponent {
     {title: '权限名称', index: 'authName'},
     {title: '权限标识', index: 'authValue'},
     {title: '所属目录', index: 'authFolderName'},
-    {title: '更新人', index: 'lastModifiedBy', format: (item) => formatUsername(item.lastModifiedBy)},
+    {title: '更新人', index: 'lastModifiedNickName'},
     {title: '更新时间', type: 'date', index: 'lastModifiedDate'},
     {
       title: '操作',

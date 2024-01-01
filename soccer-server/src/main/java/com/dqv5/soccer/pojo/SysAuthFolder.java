@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @ApiModel("系统权限目录")
-public class SysAuthFolder extends AbstractBaseTable implements Serializable {
+public class SysAuthFolder extends AbstractBaseVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("权限目录id")

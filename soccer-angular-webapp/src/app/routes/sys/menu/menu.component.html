@@ -11,7 +11,9 @@
       <th>菜单名称</th>
       <th>菜单编码</th>
       <th>链接</th>
+      <th>外部链接</th>
       <th>图标</th>
+      <th>排序</th>
       <th>操作</th>
     </tr>
     </thead>
@@ -29,7 +31,9 @@
           </td>
           <td>{{ item.menuCode }}</td>
           <td>{{ item.link }}</td>
+          <td>{{ item.externalLink }}</td>
           <td>{{ item.icon }}</td>
+          <td>{{ item.displayIndex }}</td>
           <td>
             <a nz-button nzType="link" (click)="edit(item)">编辑</a>
             <a nz-button nzType="link" nzDanger (click)="delete(item)">删除</a>

@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ApiModel("系统角色")
-public class SysRole extends AbstractBaseTable implements Serializable {
+public class SysRole extends AbstractBaseVO implements Serializable {
     @ApiModelProperty("角色id")
     private String roleId;
     @ApiModelProperty("角色标识")

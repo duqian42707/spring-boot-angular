@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dqv5.soccer.mapper.SysRoleMapper">
-    <resultMap id="baseMap" type="com.dqv5.soccer.table.SysRoleTable">
+<mapper namespace="com.dqv5.soccer.mapper.SysUserMapper">
+    <resultMap id="baseMap" type="com.dqv5.soccer.table.SysUserTable">
     </resultMap>
-    <resultMap id="pojoMap" type="com.dqv5.soccer.pojo.SysRole">
+    <resultMap id="pojoMap" type="com.dqv5.soccer.pojo.SysUser">
     </resultMap>
     <select id="queryList" resultMap="pojoMap">
         select t.*,
                u1.nick_name as created_nick_name,
                u2.nick_name as last_modified_nick_name
-        from sys_role t
+        from sys_user t
                  left join sys_user u1 on t.created_by = u1.user_id
                  left join sys_user u2 on t.last_modified_by = u2.user_id
-    </select>
-    <select id="queryByUserId" resultMap="baseMap">
-        select t.*
-        from sys_role t
-                 join sys_user_role ur on ur.role_id = t.role_id
-        where ur.user_id = #{userId}
+        order by t.last_modified_date desc
     </select>
 </mapper>

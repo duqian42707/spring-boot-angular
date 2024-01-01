@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { SFSchema, SFUISchema } from '@delon/form';
-import { _HttpClient } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalRef } from 'ng-zorro-antd/modal';
+import {Component, OnInit} from '@angular/core';
+import {SFSchema, SFUISchema} from '@delon/form';
+import {_HttpClient} from '@delon/theme';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {NzModalRef} from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-sys-user-edit',
@@ -13,28 +13,16 @@ export class SysUserEditComponent implements OnInit {
   i: any;
   schema: SFSchema = {
     properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 },
+      account: {type: 'string', title: '账号'},
+      nickName: {type: 'string', title: '昵称', maxLength: 15},
+      avatarUrl: {type: 'number', title: '头像'},
     },
-    required: ['owner', 'callNo', 'href', 'description'],
+    required: ['account', 'nickName'],
   };
   ui: SFUISchema = {
     '*': {
       spanLabelFixed: 100,
-      grid: { span: 12 },
-    },
-    $no: {
-      widget: 'text'
-    },
-    $href: {
-      widget: 'string',
-    },
-    $description: {
-      widget: 'textarea',
-      grid: { span: 24 },
+      grid: {span: 12},
     },
   };
 
@@ -42,15 +30,19 @@ export class SysUserEditComponent implements OnInit {
     private modal: NzModalRef,
     private msgSrv: NzMessageService,
     public http: _HttpClient,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+    console.log(this.record);
+    if (this.record.userId) {
+      this.http.get(`/api/user/info/${this.record.userId}`).subscribe(res => this.i = res.data);
+    }
   }
 
   save(value: any): void {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
+    const api = this.record.userId ? '/api/user/update' : '/api/user/insert';
+    this.http.post(api, value).subscribe(res => {
       this.msgSrv.success('保存成功');
       this.modal.close(true);
     });

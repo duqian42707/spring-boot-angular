@@ -29,10 +29,10 @@ public class SysRoleController {
 
     @GetMapping("/list")
     @ApiOperation("获取角色列表")
-    public ResponseEntity<RestReturnEntity<PageInfo<SysRoleTable>>> list(@RequestParam(defaultValue = "1") int pageNum,
+    public ResponseEntity<RestReturnEntity<PageInfo<SysRole>>> list(@RequestParam(defaultValue = "1") int pageNum,
                                                                          @RequestParam(defaultValue = "10") int pageSize) {
         Pageable pageable = Pageable.of(pageNum, pageSize);
-        PageInfo<SysRoleTable> pageInfo = sysRoleService.queryListForPage(pageable);
+        PageInfo<SysRole> pageInfo = sysRoleService.queryListForPage(pageable);
         return RestReturn.ok(pageInfo);
     }
 

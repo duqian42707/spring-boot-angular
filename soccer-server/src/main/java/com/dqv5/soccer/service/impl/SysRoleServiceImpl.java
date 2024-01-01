@@ -38,8 +38,8 @@ public class SysRoleServiceImpl implements SysRoleService {
     private SysRoleAuthMapper sysRoleAuthMapper;
 
     @Override
-    public PageInfo<SysRoleTable> queryListForPage(Pageable pageable) {
-        List<SysRoleTable> list = sysRoleMapper.selectList(null);
+    public PageInfo<SysRole> queryListForPage(Pageable pageable) {
+        List<SysRole> list = sysRoleMapper.queryList();
         return new PageInfo<>(list);
     }
 

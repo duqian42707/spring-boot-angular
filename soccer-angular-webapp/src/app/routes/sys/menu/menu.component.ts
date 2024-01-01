@@ -8,6 +8,8 @@ export interface TreeNodeInterface {
   menuName: string;
   menuCode: string;
   link: string;
+  externalLink: string;
+  displayIndex: number;
   icon: string;
   children?: TreeNodeInterface[];
   level?: number;
@@ -22,9 +24,9 @@ export interface TreeNodeInterface {
 export class SysMenuComponent implements OnInit {
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      menuName: {
         type: 'string',
-        title: '编号'
+        title: '菜单名称'
       }
     }
   };

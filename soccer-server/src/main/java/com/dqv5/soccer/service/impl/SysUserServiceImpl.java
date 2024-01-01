@@ -2,6 +2,7 @@ package com.dqv5.soccer.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.exception.CommonRuntimeException;
+import com.dqv5.soccer.pojo.SysUser;
 import com.dqv5.soccer.table.SysUserTable;
 import com.dqv5.soccer.mapper.SysUserMapper;
 import com.dqv5.soccer.service.SysUserService;
@@ -29,9 +30,9 @@ public class SysUserServiceImpl implements SysUserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public PageInfo<SysUserTable> queryListForPage(Pageable pageable) {
+    public PageInfo<SysUser> queryListForPage(Pageable pageable) {
         PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
-        List<SysUserTable> list = sysUserMapper.selectList(null);
+        List<SysUser> list = sysUserMapper.queryList();
         return new PageInfo<>(list);
     }
 

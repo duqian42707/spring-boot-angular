@@ -7,6 +7,7 @@ import com.dqv5.soccer.table.SysMenuTable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @ApiModel("系统菜单")
-public class SysMenu extends AbstractBaseTable implements Serializable {
+public class SysMenu extends AbstractBaseVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("菜单id")
@@ -65,6 +66,7 @@ public class SysMenu extends AbstractBaseTable implements Serializable {
         BeanUtils.copyProperties(table, sysMenu);
         sysMenu.setHide(table.getHide() == null ? null : (table.getHide() == 1));
         sysMenu.setHideChildren(table.getHideChildren() == null ? null : (table.getHideChildren() == 1));
+        sysMenu.setIcon(StringUtils.isNotBlank(table.getIcon()) ? table.getIcon() : null);
         return sysMenu;
     }
 

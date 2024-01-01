@@ -4,16 +4,16 @@ import {
   HttpHandler,
   HttpHeaders,
   HttpInterceptor,
-  HttpRequest,
+  HttpRequest, HttpResponse,
   HttpResponseBase
 } from '@angular/common/http';
-import { Injectable, Injector } from '@angular/core';
-import { Router } from '@angular/router';
-import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
-import { environment } from '@env/environment';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { BehaviorSubject, Observable, of, throwError, catchError, filter, mergeMap, switchMap, take } from 'rxjs';
+import {Injectable, Injector} from '@angular/core';
+import {Router} from '@angular/router';
+import {DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
+import {ALAIN_I18N_TOKEN, _HttpClient} from '@delon/theme';
+import {environment} from '@env/environment';
+import {NzNotificationService} from 'ng-zorro-antd/notification';
+import {BehaviorSubject, Observable, of, throwError, catchError, filter, mergeMap, switchMap, take} from 'rxjs';
 
 const CODEMESSAGE: { [key: number]: string } = {
   200: '服务器成功返回请求的数据。',
@@ -70,6 +70,16 @@ export class DefaultInterceptor implements HttpInterceptor {
       return;
     }
 
+    if (ev instanceof HttpErrorResponse && ev.error.msg) {
+      this.notification.error(`发生了一些错误 `, ev.error.msg);
+      return;
+    }
+
+    if (ev instanceof HttpResponse && ev.body.msg) {
+      this.notification.error(`发生了一些错误 `, ev.body.msg);
+      return;
+    }
+
     const errortext = CODEMESSAGE[ev.status] || ev.statusText;
     this.notification.error(`请求错误 ${ev.status}: ${ev.url}`, errortext);
   }
@@ -79,7 +89,7 @@ export class DefaultInterceptor implements HttpInterceptor {
    */
   private refreshTokenRequest(): Observable<any> {
     const model = this.tokenSrv.get();
-    return this.http.post(`/api/auth/refresh`, null, null, { headers: { refresh_token: model?.['refresh_token'] || '' } });
+    return this.http.post(`/api/auth/refresh`, null, null, {headers: {refresh_token: model?.['refresh_token'] || ''}});
   }
 
   // #region 刷新Token方式一：使用 401 重新刷新 Token
@@ -240,11 +250,11 @@ export class DefaultInterceptor implements HttpInterceptor {
     // 统一加上服务端前缀
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      const { baseUrl } = environment.api;
+      const {baseUrl} = environment.api;
       url = baseUrl + (baseUrl.endsWith('/') && url.startsWith('/') ? url.substring(1) : url);
     }
 
-    const newReq = req.clone({ url, setHeaders: this.getAdditionalHeaders(req.headers) });
+    const newReq = req.clone({url, setHeaders: this.getAdditionalHeaders(req.headers)});
     return next.handle(newReq).pipe(
       mergeMap(ev => {
         // 允许统一对请求错误处理

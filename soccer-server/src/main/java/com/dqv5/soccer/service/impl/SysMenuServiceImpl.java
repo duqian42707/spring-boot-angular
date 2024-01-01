@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.exception.CommonRuntimeException;
-import com.dqv5.soccer.mapper.SysAuthMapper;
 import com.dqv5.soccer.mapper.SysMenuMapper;
 import com.dqv5.soccer.pojo.SysMenu;
 import com.dqv5.soccer.service.SysMenuService;
-import com.dqv5.soccer.table.SysAuthTable;
 import com.dqv5.soccer.table.SysMenuTable;
 import com.dqv5.soccer.utils.MenuTreeUtils;
 import org.springframework.stereotype.Service;
@@ -22,18 +20,18 @@ import java.util.stream.Collectors;
 public class SysMenuServiceImpl implements SysMenuService {
     @Resource
     private SysMenuMapper sysMenuMapper;
-    @Resource
-    private SysAuthMapper sysAuthMapper;
 
     @Override
     public List<SysMenu> findAll() {
-        List<SysMenuTable> allMenus = sysMenuMapper.selectList(null);
+        QueryWrapper<SysMenuTable> queryWrapper = Wrappers.query(SysMenuTable.class).orderByAsc("display_index");
+        List<SysMenuTable> allMenus = sysMenuMapper.selectList(queryWrapper);
         return MenuTreeUtils.buildTree(allMenus);
     }
 
     @Override
     public List<TreeNode> findAllTree() {
-        List<SysMenuTable> allMenus = sysMenuMapper.selectList(null);
+        QueryWrapper<SysMenuTable> queryWrapper = Wrappers.query(SysMenuTable.class).orderByAsc("display_index");
+        List<SysMenuTable> allMenus = sysMenuMapper.selectList(queryWrapper);
         return MenuTreeUtils.buildTree(allMenus).stream().map(SysMenu::toTreeNode).collect(Collectors.toList());
     }
 
@@ -66,6 +64,10 @@ public class SysMenuServiceImpl implements SysMenuService {
         // todo 拷贝属性
         dataInDB.setMenuCode(param.getMenuCode());
         dataInDB.setMenuName(param.getMenuName());
+        dataInDB.setLink(param.getLink());
+        dataInDB.setExternalLink(param.getExternalLink());
+        dataInDB.setIcon(param.getIcon());
+        dataInDB.setDisplayIndex(param.getDisplayIndex());
         sysMenuMapper.updateById(dataInDB);
     }
 
