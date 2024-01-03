@@ -1,5 +1,6 @@
 package com.dqv5.soccer.config;
 
+import com.dqv5.soccer.common.AuthValue;
 import com.dqv5.soccer.mapper.*;
 import com.dqv5.soccer.table.*;
 import lombok.extern.slf4j.Slf4j;
@@ -112,23 +113,23 @@ public class InitDataRunner implements CommandLineRunner {
         }
 
         String[][] auths = {
-                {"用户管理", "sys_user_query", "查询用户"},
-                {"用户管理", "sys_user_insert", "新增用户"},
-                {"用户管理", "sys_user_update", "修改用户"},
-                {"用户管理", "sys_user_delete", "删除用户"},
-                {"角色管理", "sys_role_query", "查询角色"},
-                {"角色管理", "sys_role_insert", "新增角色"},
-                {"角色管理", "sys_role_update", "修改角色"},
-                {"角色管理", "sys_role_delete", "删除角色"},
-                {"菜单管理", "sys_menu_query", "查询菜单"},
-                {"菜单管理", "sys_menu_insert", "新增菜单"},
-                {"菜单管理", "sys_menu_update", "修改菜单"},
-                {"菜单管理", "sys_menu_delete", "删除菜单"},
-                {"权限管理", "sys_auth_query", "查询权限"},
-                {"权限管理", "sys_auth_insert", "新增权限"},
-                {"权限管理", "sys_auth_update", "修改权限"},
-                {"权限管理", "sys_auth_delete", "删除权限"},
-                {"系统日志", "sys_log_query", "查询日志"},
+                {"用户管理", AuthValue.SYS_USER_QUERY, "查询用户"},
+                {"用户管理", AuthValue.SYS_USER_INSERT, "新增用户"},
+                {"用户管理", AuthValue.SYS_USER_UPDATE, "修改用户"},
+                {"用户管理", AuthValue.SYS_USER_DELETE, "删除用户"},
+                {"角色管理", AuthValue.SYS_ROLE_QUERY, "查询角色"},
+                {"角色管理", AuthValue.SYS_ROLE_INSERT, "新增角色"},
+                {"角色管理", AuthValue.SYS_ROLE_UPDATE, "修改角色"},
+                {"角色管理", AuthValue.SYS_ROLE_DELETE, "删除角色"},
+                {"菜单管理", AuthValue.SYS_MENU_QUERY, "查询菜单"},
+                {"菜单管理", AuthValue.SYS_MENU_INSERT, "新增菜单"},
+                {"菜单管理", AuthValue.SYS_MENU_UPDATE, "修改菜单"},
+                {"菜单管理", AuthValue.SYS_MENU_DELETE, "删除菜单"},
+                {"权限管理", AuthValue.SYS_AUTH_QUERY, "查询权限"},
+                {"权限管理", AuthValue.SYS_AUTH_INSERT, "新增权限"},
+                {"权限管理", AuthValue.SYS_AUTH_UPDATE, "修改权限"},
+                {"权限管理", AuthValue.SYS_AUTH_DELETE, "删除权限"},
+                {"系统日志", AuthValue.SYS_LOG_QUERY, "查询日志"},
         };
         for (int i = 0; i < auths.length; i++) {
             String[] datum = auths[i];

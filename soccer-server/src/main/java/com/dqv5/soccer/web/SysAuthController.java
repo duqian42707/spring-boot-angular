@@ -1,10 +1,7 @@
 package com.dqv5.soccer.web;
 
-import com.dqv5.soccer.common.RestReturn;
-import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.common.Pageable;
+import com.dqv5.soccer.common.*;
 import com.dqv5.soccer.pojo.SysAuth;
-import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.pojo.SysAuthFolder;
 import com.dqv5.soccer.service.SysAuthService;
 import com.dqv5.soccer.table.SysAuthTable;
@@ -13,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -62,6 +60,7 @@ public class SysAuthController {
 
     @PostMapping("/insert")
     @ApiOperation("新增权限")
+    @PreAuthorize("hasAuthority('" + AuthValue.SYS_AUTH_INSERT + "')")
     public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody SysAuthTable param) {
         sysAuthService.insert(param);
         return RestReturn.ok();
@@ -69,6 +68,7 @@ public class SysAuthController {
 
     @PostMapping("/update")
     @ApiOperation("更新权限信息")
+    @PreAuthorize("hasAuthority('" + AuthValue.SYS_AUTH_UPDATE + "')")
     public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody SysAuthTable param) {
         sysAuthService.update(param);
         return RestReturn.ok();
@@ -76,6 +76,7 @@ public class SysAuthController {
 
     @PostMapping("/delete/{id}")
     @ApiOperation("删除权限")
+    @PreAuthorize("hasAuthority('" + AuthValue.SYS_AUTH_DELETE + "')")
     public ResponseEntity<RestReturnEntity<Object>> delete(@PathVariable("id") String id) {
         sysAuthService.deleteById(id);
         return RestReturn.ok();
