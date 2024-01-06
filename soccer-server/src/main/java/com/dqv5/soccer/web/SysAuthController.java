@@ -1,5 +1,6 @@
 package com.dqv5.soccer.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dqv5.soccer.common.*;
 import com.dqv5.soccer.pojo.SysAuth;
 import com.dqv5.soccer.pojo.SysAuthFolder;
@@ -9,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -38,9 +40,20 @@ public class SysAuthController {
     @GetMapping("/list")
     @ApiOperation("获取权限列表")
     public ResponseEntity<RestReturnEntity<PageInfo<SysAuth>>> list(@RequestParam(defaultValue = "1") int pageNum,
-                                                                    @RequestParam(defaultValue = "10") int pageSize) {
+                                                                    @RequestParam(defaultValue = "10") int pageSize,
+                                                                    String authName, String authValue, String authFolderName) {
         Pageable pageable = Pageable.of(pageNum, pageSize);
-        PageInfo<SysAuth> pageInfo = sysAuthService.queryListForPage(pageable);
+        JSONObject param = new JSONObject();
+        if (StringUtils.isNotBlank(authName)) {
+            param.put("authName", authName);
+        }
+        if (StringUtils.isNotBlank(authValue)) {
+            param.put("authValue", authValue);
+        }
+        if (StringUtils.isNotBlank(authFolderName)) {
+            param.put("authFolderName", authFolderName);
+        }
+        PageInfo<SysAuth> pageInfo = sysAuthService.queryListForPage(param, pageable);
         return RestReturn.ok(pageInfo);
     }
 

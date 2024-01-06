@@ -1,5 +1,6 @@
 package com.dqv5.soccer.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dqv5.soccer.common.Pageable;
 import com.dqv5.soccer.pojo.SysAuth;
 import com.dqv5.soccer.common.TreeNode;
@@ -17,7 +18,7 @@ import java.util.List;
 public interface SysAuthService {
     List<TreeNode> findAuthTree();
 
-    PageInfo<SysAuth> queryListForPage(Pageable pageable);
+    PageInfo<SysAuth> queryListForPage(JSONObject param, Pageable pageable);
 
     List<SysAuthFolder> findFolders();
 

@@ -28,6 +28,11 @@
                  left join sys_auth_folder f on f.auth_folder_id = t.auth_folder_id
                  left join sys_user u1 on t.created_by = u1.user_id
                  left join sys_user u2 on t.last_modified_by = u2.user_id
+        <where>
+            <if test="param.authName!=null">and t.auth_name like '%'||#{param.authName}||'%' </if>
+            <if test="param.authValue!=null">and t.auth_value like '%'||#{param.authValue}||'%' </if>
+            <if test="param.authFolderName!=null">and f.auth_folder_name like '%'||#{param.authFolderName}||'%' </if>
+        </where>
         order by t.display_index
     </select>
 </mapper>

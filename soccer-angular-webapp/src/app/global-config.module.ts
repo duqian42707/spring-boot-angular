@@ -14,6 +14,7 @@ import {environment} from '@env/environment';
 const alainConfig: AlainConfig = {
   st: {
     modal: {size: 'lg'},
+    req: {reName: {pi: 'pageNum', ps: 'pageSize'}},
     page: {toTop: false}
   },
   sf: {autocomplete: 'off'},

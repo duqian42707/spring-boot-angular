@@ -1,5 +1,6 @@
 package com.dqv5.soccer.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.dqv5.soccer.exception.CommonRuntimeException;
@@ -58,9 +59,9 @@ public class SysAuthServiceImpl implements SysAuthService {
     }
 
     @Override
-    public PageInfo<SysAuth> queryListForPage(Pageable pageable) {
+    public PageInfo<SysAuth> queryListForPage(JSONObject param, Pageable pageable) {
         PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
-        List<SysAuth> list = sysAuthMapper.queryList();
+        List<SysAuth> list = sysAuthMapper.queryList(param);
         return new PageInfo<>(list);
     }
 
