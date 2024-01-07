@@ -30,6 +30,8 @@ spring:
         cachecontrol:
           cache-public: true
           max-age: 86400
+knife4j:
+  enable: true
 mybatis-plus:
   mapper-locations: classpath:/mapper/sqlMap/*.xml
   config-location: classpath:/mapper/mybatis-config.xml

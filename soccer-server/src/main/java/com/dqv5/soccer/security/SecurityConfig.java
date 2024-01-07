@@ -77,6 +77,8 @@ public class SecurityConfig {
                                 .antMatchers(HttpMethod.POST, AUTH_URL).permitAll()
                                 // swagger -允许
                                 .antMatchers(HttpMethod.GET, "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
+                                // knife4j -允许
+                                .antMatchers(HttpMethod.GET, "/doc.html", "/webjars/**", "/favicon.ico", "/v2/api-docs").permitAll()
                                 // 其他接口 - 需要验证
                                 .anyRequest().authenticated())
                 .addFilter(jwtAuthenticationFilter())

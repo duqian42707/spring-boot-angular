@@ -4,11 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import java.util.Collections;
 
@@ -17,14 +17,14 @@ import java.util.Collections;
  * @author admin
  */
 @Configuration
-@EnableOpenApi
+@EnableSwagger2WebMvc
 public class SwaggerConfig {
 
     private static final String AUTH_TOKEN_NAME = "token";
 
     @Bean
     public Docket createApi() {
-        return new Docket(DocumentationType.OAS_30)
+        return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .pathMapping("/")
                 .select()
@@ -49,7 +49,7 @@ public class SwaggerConfig {
     }
 
     private SecurityScheme securityScheme() {
-        return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name(AUTH_TOKEN_NAME).description("JWT Token").build();
+        return new ApiKey(AUTH_TOKEN_NAME, "Authorization", "header");
     }
 
     private ApiInfo apiInfo() {
