@@ -220,4 +220,25 @@
                     defaultValueComputed="current_timestamp"/>
         </createTable>
     </changeSet>
+    <changeSet id="10000-010" author="soccer">
+        <preConditions>
+            <not>
+                <tableExists tableName="sys_dept"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sys_dept" remarks="部门表">
+            <column name="dept_id" type="varchar(50)" remarks="部门id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_dept_pk"/>
+            </column>
+
+            <column name="dept_name" type="varchar(200)" remarks="部门名称"/>
+            <column name="dept_code" type="varchar(200)" remarks="部门编码"/>
+
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间" defaultValueComputed="current_timestamp"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"
+                    defaultValueComputed="current_timestamp"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
