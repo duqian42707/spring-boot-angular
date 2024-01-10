@@ -8,18 +8,19 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
+
 /**
  * @author duq
- * @date 2022/7/12
+ * @date 2024/1/10
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_role")
-public class SysRoleTable extends AbstractBaseTable implements Serializable {
+@TableName("sys_dept")
+public class SysDeptTable extends AbstractBaseTable implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(type = IdType.ASSIGN_UUID)
-    private String roleId;
-    private String roleValue;
-    private String roleName;
+    private String deptId;
+    private String deptName;
+    private String deptCode;
 }

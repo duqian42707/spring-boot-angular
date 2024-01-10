@@ -10,11 +10,6 @@ import java.io.Serializable;
  * @author duq
  * @date 2022/7/12
  */
-
-/**
- * @author duq
- * @date 2020/7/31
- */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_role_auth")
