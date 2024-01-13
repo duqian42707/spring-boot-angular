@@ -233,6 +233,7 @@
 
             <column name="dept_name" type="varchar(200)" remarks="部门名称"/>
             <column name="dept_code" type="varchar(200)" remarks="部门编码"/>
+            <column name="parent_id" type="varchar(50)" remarks="上级部门id"/>
 
             <column name="created_by" type="varchar(255)" remarks="创建人"/>
             <column name="created_date" type="timestamp" remarks="创建时间" defaultValueComputed="current_timestamp"/>

@@ -81,6 +81,7 @@ public class InitDataRunner implements CommandLineRunner {
                 {"系统管理", "角色管理", "/sys/role"},
                 {"系统管理", "菜单管理", "/sys/menu"},
                 {"系统管理", "权限管理", "/sys/auth"},
+                {"系统管理", "部门管理", "/sys/dept"},
                 {"系统管理", "系统日志", "/sys/log"},
         };
 
@@ -102,7 +103,7 @@ public class InitDataRunner implements CommandLineRunner {
             return;
         }
 
-        String[] folders = {"用户管理", "角色管理", "菜单管理", "权限管理", "系统日志"};
+        String[] folders = {"用户管理", "角色管理", "菜单管理", "权限管理", "部门管理", "系统日志"};
         // 目录名称 -> 目录id
         Map<String, String> folderIdMap = new HashMap<>();
         for (int i = 0; i < folders.length; i++) {
@@ -129,6 +130,10 @@ public class InitDataRunner implements CommandLineRunner {
                 {"权限管理", AuthValue.SYS_AUTH_INSERT, "新增权限"},
                 {"权限管理", AuthValue.SYS_AUTH_UPDATE, "修改权限"},
                 {"权限管理", AuthValue.SYS_AUTH_DELETE, "删除权限"},
+                {"部门管理", AuthValue.SYS_DEPT_QUERY, "查询部门"},
+                {"部门管理", AuthValue.SYS_DEPT_INSERT, "新增部门"},
+                {"部门管理", AuthValue.SYS_DEPT_UPDATE, "修改部门"},
+                {"部门管理", AuthValue.SYS_DEPT_DELETE, "删除部门"},
                 {"系统日志", AuthValue.SYS_LOG_QUERY, "查询日志"},
         };
         for (int i = 0; i < auths.length; i++) {

@@ -31,5 +31,10 @@ public class AuthValue {
     public static final String SYS_AUTH_UPDATE = "sys_auth_update";
     public static final String SYS_AUTH_DELETE = "sys_auth_delete";
 
+    public static final String SYS_DEPT_QUERY = "sys_dept_query";
+    public static final String SYS_DEPT_INSERT = "sys_dept_insert";
+    public static final String SYS_DEPT_UPDATE = "sys_dept_update";
+    public static final String SYS_DEPT_DELETE = "sys_dept_delete";
+
     public static final String SYS_LOG_QUERY = "sys_log_query";
 }

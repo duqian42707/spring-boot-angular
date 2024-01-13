@@ -63,7 +63,7 @@ export class StartupService {
           "text": "主导航",
           "group": false,
           "hideInBreadcrumb": true,
-          "children": this.handleMenus(res.menus)
+          "children": this.handleMenus(res.menus || [])
         }]
         // const menus = this.handleMenus(res.menus);
         this.menuService.add(menus);

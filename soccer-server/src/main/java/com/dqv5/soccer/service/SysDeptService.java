@@ -1,15 +1,22 @@
 package com.dqv5.soccer.service;
 
-import com.dqv5.soccer.common.Pageable;
+import com.dqv5.soccer.pojo.SysDept;
 import com.dqv5.soccer.table.SysDeptTable;
-import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 /**
  * @author admin
  * @date 2022/7/17
  */
 public interface SysDeptService {
-    PageInfo<SysDeptTable> queryListForPage(Pageable pageable);
+    List<SysDept> queryAll();
+
+    SysDept findOne(String id);
 
     void insert(SysDeptTable param);
+
+    void update(SysDeptTable param);
+
+    void deleteById(String id);
 }

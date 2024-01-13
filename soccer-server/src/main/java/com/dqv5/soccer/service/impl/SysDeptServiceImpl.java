@@ -1,13 +1,13 @@
 package com.dqv5.soccer.service.impl;
 
-import com.dqv5.soccer.common.Pageable;
 import com.dqv5.soccer.mapper.SysDeptMapper;
+import com.dqv5.soccer.pojo.SysDept;
 import com.dqv5.soccer.service.SysDeptService;
 import com.dqv5.soccer.table.SysDeptTable;
-import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author duq
@@ -18,13 +18,29 @@ public class SysDeptServiceImpl implements SysDeptService {
     @Resource
     private SysDeptMapper sysDeptMapper;
 
+
     @Override
-    public PageInfo<SysDeptTable> queryListForPage(Pageable pageable) {
+    public List<SysDept> queryAll() {
+        return null;
+    }
+
+    @Override
+    public SysDept findOne(String id) {
         return null;
     }
 
     @Override
     public void insert(SysDeptTable param) {
+
+    }
+
+    @Override
+    public void update(SysDeptTable param) {
+
+    }
+
+    @Override
+    public void deleteById(String id) {
 
     }
 }
