@@ -32,6 +32,8 @@ public class InitDataRunner implements CommandLineRunner {
     @Resource
     private SysRoleAuthMapper sysRoleAuthMapper;
     @Resource
+    private SysDeptMapper sysDeptMapper;
+    @Resource
     private SysUserMapper sysUserMapper;
     @Resource
     private SysUserRoleMapper sysUserRoleMapper;
@@ -46,6 +48,7 @@ public class InitDataRunner implements CommandLineRunner {
         initMenus();
         initAuths();
         initRoles();
+        initDepts();
         initUsers();
         log.info("------------系统初始化结束------------");
     }
@@ -181,6 +184,24 @@ public class InitDataRunner implements CommandLineRunner {
             roleAuthTable.setRoleId(roleMap.get("ROLE_ADMIN"));
             roleAuthTable.setAuthId(auth.getAuthId());
             sysRoleAuthMapper.insert(roleAuthTable);
+        }
+    }
+
+    private void initDepts() {
+        long count = sysDeptMapper.selectCount(null);
+        if (count > 0) {
+            return;
+        }
+        String[][] depts = {
+                {"root", "根部门"}
+        };
+        for (String[] dept : depts) {
+            String deptCode = dept[0];
+            String deptName = dept[1];
+            SysDeptTable sysDeptTable = new SysDeptTable();
+            sysDeptTable.setDeptCode(deptCode);
+            sysDeptTable.setDeptName(deptName);
+            sysDeptMapper.insert(sysDeptTable);
         }
     }
 
