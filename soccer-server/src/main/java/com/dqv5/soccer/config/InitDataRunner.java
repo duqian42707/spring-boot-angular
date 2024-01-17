@@ -1,6 +1,7 @@
 package com.dqv5.soccer.config;
 
 import com.dqv5.soccer.common.AuthValue;
+import com.dqv5.soccer.common.ConfigValue;
 import com.dqv5.soccer.mapper.*;
 import com.dqv5.soccer.table.*;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,8 @@ public class InitDataRunner implements CommandLineRunner {
     private SysUserMapper sysUserMapper;
     @Resource
     private SysUserRoleMapper sysUserRoleMapper;
+    @Resource
+    private SysConfigMapper sysConfigMapper;
 
 
     // 角色标识 -> 角色id
@@ -45,6 +48,7 @@ public class InitDataRunner implements CommandLineRunner {
     @Override
     public void run(String... args) {
         log.info("------------系统初始化开始------------");
+        initConfig();
         initMenus();
         initAuths();
         initRoles();
@@ -53,6 +57,20 @@ public class InitDataRunner implements CommandLineRunner {
         log.info("------------系统初始化结束------------");
     }
 
+    private void initConfig() {
+        long count = sysConfigMapper.selectCount(null);
+        if (count > 0) {
+            return;
+        }
+        for (ConfigValue value : ConfigValue.values()) {
+            SysConfigTable sysConfigTable = SysConfigTable.builder()
+                    .configKey(value.getConfigKey())
+                    .configName(value.getConfigName())
+                    .configValue(value.getDefaultValue())
+                    .build();
+            sysConfigMapper.insert(sysConfigTable);
+        }
+    }
 
     private void initMenus() {
         long count = sysMenuMapper.selectCount(null);
@@ -106,7 +124,7 @@ public class InitDataRunner implements CommandLineRunner {
             return;
         }
 
-        String[] folders = {"用户管理", "角色管理", "菜单管理", "权限管理", "部门管理", "系统日志"};
+        String[] folders = {"用户管理", "角色管理", "菜单管理", "权限管理", "部门管理", "系统配置", "系统日志"};
         // 目录名称 -> 目录id
         Map<String, String> folderIdMap = new HashMap<>();
         for (int i = 0; i < folders.length; i++) {
@@ -137,6 +155,8 @@ public class InitDataRunner implements CommandLineRunner {
                 {"部门管理", AuthValue.SYS_DEPT_INSERT, "新增部门"},
                 {"部门管理", AuthValue.SYS_DEPT_UPDATE, "修改部门"},
                 {"部门管理", AuthValue.SYS_DEPT_DELETE, "删除部门"},
+                {"系统配置", AuthValue.SYS_CONFIG_QUERY, "查询配置"},
+                {"系统配置", AuthValue.SYS_CONFIG_SET, "保存配置"},
                 {"系统日志", AuthValue.SYS_LOG_QUERY, "查询日志"},
         };
         for (int i = 0; i < auths.length; i++) {

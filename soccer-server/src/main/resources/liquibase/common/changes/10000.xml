@@ -10,11 +10,6 @@
                    http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
     <changeSet id="10000-001" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_user"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_user" remarks="用户表">
             <column name="user_id" type="varchar(50)" remarks="用户id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_user_pk"/>
@@ -40,11 +35,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-002" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_role"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_role" remarks="角色表">
             <column name="role_id" type="varchar(50)" remarks="角色id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_role_pk"/>
@@ -61,11 +51,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-003" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_menu"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_menu" remarks="菜单表">
             <column name="menu_id" type="varchar(50)" remarks="菜单id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_menu_pk"/>
@@ -90,11 +75,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-004" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_auth_folder"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_auth_folder" remarks="权限目录表">
             <column name="auth_folder_id" type="varchar(50)" remarks="权限id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_auth_folder_pk"/>
@@ -111,11 +91,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-005" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_auth"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_auth" remarks="权限表">
             <column name="auth_id" type="varchar(50)" remarks="权限id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_auth_pk"/>
@@ -134,11 +109,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-006" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_log"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_log" remarks="系统日志表">
             <column name="log_id" type="varchar(50)" remarks="日志id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_log_pk"/>
@@ -161,11 +131,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-007" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_user_role"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_user_role" remarks="用户-角色关联表">
             <column name="user_id" type="varchar(50)" remarks="用户id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_user_role_pk"/>
@@ -181,11 +146,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-008" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_role_menu"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_role_menu" remarks="角色-菜单关联表">
             <column name="role_id" type="varchar(50)" remarks="角色id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_role_menu_pk"/>
@@ -201,11 +161,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-009" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_role_auth"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_role_auth" remarks="角色-权限关联表">
             <column name="role_id" type="varchar(50)" remarks="角色id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_role_auth_pk"/>
@@ -221,11 +176,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-010" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_dept"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_dept" remarks="部门表">
             <column name="dept_id" type="varchar(50)" remarks="部门id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_dept_pk"/>
@@ -245,11 +195,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-011" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_user_dept"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_user_dept" remarks="用户部门关系表">
             <column name="user_id" type="varchar(50)" remarks="用户id">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_user_dept_pk"/>
@@ -265,11 +210,6 @@
         </createTable>
     </changeSet>
     <changeSet id="10000-012" author="soccer">
-        <preConditions>
-            <not>
-                <tableExists tableName="sys_config"/>
-            </not>
-        </preConditions>
         <createTable tableName="sys_config" remarks="系统配置表">
             <column name="config_key" type="varchar(50)" remarks="配置键">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="sys_config_pk"/>

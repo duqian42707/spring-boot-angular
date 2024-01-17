@@ -1,14 +1,9 @@
 package com.dqv5.soccer.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * @author duq
  * @date 2024/1/3
  */
-@AllArgsConstructor
-@Getter
 public class AuthValue {
 
     public static final String SYS_USER_QUERY = "sys_user_query";
@@ -35,6 +30,9 @@ public class AuthValue {
     public static final String SYS_DEPT_INSERT = "sys_dept_insert";
     public static final String SYS_DEPT_UPDATE = "sys_dept_update";
     public static final String SYS_DEPT_DELETE = "sys_dept_delete";
+
+    public static final String SYS_CONFIG_QUERY = "sys_config_query";
+    public static final String SYS_CONFIG_SET = "sys_config_set";
 
     public static final String SYS_LOG_QUERY = "sys_log_query";
 }
