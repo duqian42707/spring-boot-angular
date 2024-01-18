@@ -5,13 +5,17 @@ import {SysUserComponent} from './user/user.component';
 import {SysRoleComponent} from './role/role.component';
 import {SysMenuComponent} from './menu/menu.component';
 import {SysAuthComponent} from "./auth/auth.component";
+import {SysConfigComponent} from "./config/config.component";
+import {SysDeptComponent} from "./dept/dept.component";
 
 const routes: Routes = [
   {path: 'user', component: SysUserComponent},
   {path: 'role', component: SysRoleComponent},
   {path: 'menu', component: SysMenuComponent},
   {path: 'auth', component: SysAuthComponent},
-  {path: 'log', component: SysLogComponent}
+  {path: 'dept', component: SysDeptComponent},
+  {path: 'config', component: SysConfigComponent},
+  {path: 'log', component: SysLogComponent},
 ];
 
 @NgModule({

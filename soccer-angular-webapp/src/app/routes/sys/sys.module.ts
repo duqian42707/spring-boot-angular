@@ -14,13 +14,15 @@ import {SysAuthComponent} from "./auth/auth.component";
 import {SysAuthEditComponent} from "./auth/edit/edit.component";
 import {SysRoleAuthComponent} from "./role/auth/auth.component";
 import {SysAuthService} from "./auth/sys-auth.service";
+import {SysConfigComponent} from "./config/config.component";
+import {SysDeptComponent} from "./dept/dept.component";
 
 const COMPONENTS: Type<void>[] = [
   SysUserComponent, SysUserEditComponent,
   SysRoleComponent, SysRoleEditComponent, SysRoleMenuComponent, SysRoleAuthComponent,
   SysMenuComponent, SysMenuEditComponent,
   SysAuthComponent, SysAuthEditComponent,
-  SysLogComponent
+  SysDeptComponent, SysConfigComponent, SysLogComponent
 ];
 
 @NgModule({

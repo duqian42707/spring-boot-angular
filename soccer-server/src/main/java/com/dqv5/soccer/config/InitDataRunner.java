@@ -103,6 +103,7 @@ public class InitDataRunner implements CommandLineRunner {
                 {"系统管理", "菜单管理", "/sys/menu"},
                 {"系统管理", "权限管理", "/sys/auth"},
                 {"系统管理", "部门管理", "/sys/dept"},
+                {"系统管理", "系统配置", "/sys/config"},
                 {"系统管理", "系统日志", "/sys/log"},
         };
 
