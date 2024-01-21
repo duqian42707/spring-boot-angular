@@ -1,4 +1,12 @@
 <page-header></page-header>
 <nz-card>
-  <p>config works!</p>
+  <nz-tabset nzTabPosition="left">
+    <nz-tab nzTitle="基本配置">
+      <sf #basicForm mode="edit" [schema]="basicSchema" [ui]="basicUi" [formData]="basicData" button="none">
+        <button nz-button type="submit" nzType="primary" (click)="saveBasic(basicForm.value)"
+                [disabled]="!basicForm.valid" [nzLoading]="http.loading">保存
+        </button>
+      </sf>
+    </nz-tab>
+  </nz-tabset>
 </nz-card>
