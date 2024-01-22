@@ -36,7 +36,7 @@ export class StartupService {
   }
 
   loadHttp(): Observable<void> {
-    return this.httpClient.get('/api/user').pipe(
+    return this.httpClient.get('/api/profile/userInfo').pipe(
       catchError((res: NzSafeAny) => {
         console.warn(`StartupService.load: Network request failed`, res);
         setTimeout(() => this.router.navigateByUrl(`/exception/500`));
@@ -50,10 +50,11 @@ export class StartupService {
         };
         this.settingService.setApp(app);
         // User information: including name, avatar, email address
+        const data = res.data;
         const user = {
-          name: res.nickName,
-          avatar: res.avatarUrl,
-          email: res.email
+          name: data.nickName,
+          avatar: data.avatarUrl,
+          email: data.email
         }
         this.settingService.setUser(user);
         // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
@@ -63,7 +64,7 @@ export class StartupService {
           "text": "主导航",
           "group": false,
           "hideInBreadcrumb": true,
-          "children": this.handleMenus(res.menus || [])
+          "children": this.handleMenus(data.menus || [])
         }]
         // const menus = this.handleMenus(res.menus);
         this.menuService.add(menus);

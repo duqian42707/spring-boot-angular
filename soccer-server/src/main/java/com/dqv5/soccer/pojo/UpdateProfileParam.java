@@ -7,9 +7,8 @@ import lombok.Data;
  * @date 2022/7/5
  */
 @Data
-public class UserInfo {
-    private String username;
-    private String password;
-    private String role;
+public class UpdateProfileParam {
     private String nickName;
+    private String avatarUrl;
+    private String gender;
 }
