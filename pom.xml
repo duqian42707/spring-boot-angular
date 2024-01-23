@@ -26,6 +26,7 @@
         <pagehelper.version>1.4.7</pagehelper.version>
         <swagger.version>3.0.0</swagger.version>
         <knife4j.version>4.4.0</knife4j.version>
+        <amazons3.version>1.12.641</amazons3.version>
     </properties>
 
     <dependencyManagement>
@@ -76,6 +77,11 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${amazons3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
