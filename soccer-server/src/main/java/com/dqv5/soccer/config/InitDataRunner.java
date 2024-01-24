@@ -81,6 +81,7 @@ public class InitDataRunner implements CommandLineRunner {
         String[][] parentMenus = {
                 {"仪表盘", "anticon-dashboard"},
                 {"系统管理", "anticon-setting"},
+                {"个人中心", "anticon-user"},
         };
         // 菜单名称 -> 菜单id
         Map<String, String> parentMenuMap = new HashMap<>();
@@ -105,6 +106,7 @@ public class InitDataRunner implements CommandLineRunner {
                 {"系统管理", "部门管理", "/sys/dept"},
                 {"系统管理", "系统配置", "/sys/config"},
                 {"系统管理", "系统日志", "/sys/log"},
+                {"个人中心", "个人信息", "/sys/profile"},
         };
 
         for (int i = 0; i < subMenus.length; i++) {
