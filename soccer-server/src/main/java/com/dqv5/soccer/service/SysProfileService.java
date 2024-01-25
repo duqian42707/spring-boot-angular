@@ -1,5 +1,6 @@
 package com.dqv5.soccer.service;
 
+import com.dqv5.soccer.pojo.ChangePasswordParam;
 import com.dqv5.soccer.pojo.UpdateProfileParam;
 
 /**
@@ -9,4 +10,6 @@ import com.dqv5.soccer.pojo.UpdateProfileParam;
 public interface SysProfileService {
 
     void updateProfile(UpdateProfileParam param);
+
+    void changePassword(ChangePasswordParam param);
 }
