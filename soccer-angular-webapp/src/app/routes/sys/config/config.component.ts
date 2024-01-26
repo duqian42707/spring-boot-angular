@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {_HttpClient} from "@delon/theme";
 import {SFSchema, SFSelectWidgetSchema, SFUISchema} from "@delon/form";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {DA_SERVICE_TOKEN, TokenService} from "@delon/auth";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sys-config',
@@ -9,7 +11,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
   styles: []
 })
 export class SysConfigComponent implements OnInit {
-
+  loading = false;
   basicSchema: SFSchema = {
     properties: {
       sys_name: {type: 'string', title: '系统名称', maxLength: 15},
@@ -26,7 +28,8 @@ export class SysConfigComponent implements OnInit {
 
   basicData = {};
 
-  constructor(public http: _HttpClient, private messageService: NzMessageService) {
+  constructor(public http: _HttpClient, private messageService: NzMessageService,
+              @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -49,5 +52,24 @@ export class SysConfigComponent implements OnInit {
       this.messageService.success(res.msg);
       this.loadConfig();
     })
+  }
+
+  reInitData() {
+    this.loading = true;
+    this.http.post('/api/sys/reInitData').subscribe({
+      next: res => {
+        const nzMessageRef = this.messageService.success(res.msg + "  系统即将退出登录");
+        this.loading = false;
+        nzMessageRef.onClose.subscribe(res => {
+          this.tokenService.clear();
+          this.router.navigateByUrl(this.tokenService.login_url!);
+        })
+
+      },
+      error: (err) => {
+        this.loading = false;
+      }
+    })
+
   }
 }

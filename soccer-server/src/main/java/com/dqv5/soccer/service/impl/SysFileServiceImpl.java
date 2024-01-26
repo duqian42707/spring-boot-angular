@@ -7,6 +7,7 @@ import com.dqv5.soccer.config.AmazonS3Properties;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.pojo.FileUploadDto;
 import com.dqv5.soccer.service.SysFileService;
+import com.dqv5.soccer.utils.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,14 +27,13 @@ import java.util.UUID;
 @Slf4j
 public class SysFileServiceImpl implements SysFileService {
     @Resource
-    private AmazonS3 amazonS3;
-    @Resource
     private AmazonS3Properties properties;
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMM");
 
     @Override
     public FileUploadDto uploadFile(MultipartFile file) {
+        AmazonS3 amazonS3 = SpringUtils.getBean(AmazonS3.class);
         if (amazonS3 == null) {
             throw new CommonRuntimeException("未配置s3！");
         }
