@@ -1,13 +1,12 @@
 package com.dqv5.soccer.web;
 
-import com.alibaba.fastjson.JSONObject;
+import com.dqv5.soccer.common.ConfigValue;
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.security.AuthUser;
+import com.dqv5.soccer.pojo.SysInfo;
 import com.dqv5.soccer.service.InitDataService;
 import com.dqv5.soccer.service.SysConfigService;
 import com.dqv5.soccer.table.SysConfigTable;
-import com.dqv5.soccer.utils.SecurityUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -35,18 +34,10 @@ public class SysController {
     private SysConfigService sysConfigService;
 
     @GetMapping("/info")
-    @ApiOperation("获取系统配置信息及用户信息")
-    public ResponseEntity<RestReturnEntity<Object>> info() {
-        JSONObject result = new JSONObject();
-        List<SysConfigTable> list = sysConfigService.queryAll();
-        JSONObject configMap = new JSONObject();
-        for (SysConfigTable sysConfigTable : list) {
-            configMap.put(sysConfigTable.getConfigKey(), sysConfigTable.getConfigValue());
-        }
-        result.put("config", configMap);
-        AuthUser authUser = SecurityUtils.getCurrentUserDetail();
-        result.put("user", authUser);
-        return RestReturn.ok(result);
+    @ApiOperation("获取系统基本信息")
+    public ResponseEntity<RestReturnEntity<SysInfo>> info() {
+        SysInfo sysInfo = sysConfigService.getSysInfo();
+        return RestReturn.ok(sysInfo);
     }
 
     @PostMapping("/reInitData")

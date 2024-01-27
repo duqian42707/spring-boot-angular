@@ -1,12 +1,12 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpContext} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ACLService} from '@delon/acl';
-import {DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
+import {ALLOW_ANONYMOUS, DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
 import {Menu, MenuService, SettingsService, TitleService} from '@delon/theme';
 import type {NzSafeAny} from 'ng-zorro-antd/core/types';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {catchError, map, Observable, of} from 'rxjs';
+import {catchError, forkJoin, map, Observable, of} from 'rxjs';
 
 import {ICONS} from '../../../style-icons';
 import {ICONS_AUTO} from '../../../style-icons-auto';
@@ -36,40 +36,65 @@ export class StartupService {
   }
 
   loadHttp(): Observable<void> {
-    return this.httpClient.get('/api/profile/userInfo').pipe(
+    return forkJoin([this.loadSysInfo(), this.loadUserInfo()]).pipe(
+      map((res: NzSafeAny) => {
+
+      })
+    );
+  }
+
+  loadSysInfo(): Observable<void> {
+    return this.httpClient.get('/api/sys/info', {context: new HttpContext().set(ALLOW_ANONYMOUS, true)}).pipe(
       catchError((res: NzSafeAny) => {
-        console.warn(`StartupService.load: Network request failed`, res);
+        console.warn(`StartupService.loadSysInfo: Network request failed`, res);
         setTimeout(() => this.router.navigateByUrl(`/exception/500`));
         return of({});
       }),
       map((res: NzSafeAny) => {
         // Application information: including site name, description, year
+        const data = res.data;
         const app = {
           name: "Soccer",
           description: "Springboot + Angular 开发框架"
-        };
-        this.settingService.setApp(app);
-        // User information: including name, avatar, email address
-        const data = res.data;
-        const user = {
-          name: data.nickName,
-          avatar: data.avatarUrl,
-          email: data.email
         }
-        this.settingService.setUser(user);
-        // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
-        this.aclService.setFull(true);
-        // Menu data, https://ng-alain.com/theme/menu
-        const menus = [{
-          "text": "主导航",
-          "group": false,
-          "hideInBreadcrumb": true,
-          "children": this.handleMenus(data.menus || [])
-        }]
-        // const menus = this.handleMenus(res.menus);
-        this.menuService.add(menus);
+        if (data) {
+          app.name = data.sysName;
+          app.description = data.sysDesc;
+        }
+        this.settingService.setApp(app);
         // Can be set page suffix title, https://ng-alain.com/theme/title
         this.titleService.suffix = app.name;
+      })
+    );
+  }
+
+  loadUserInfo(): Observable<void> {
+    return this.httpClient.get('/api/profile/userInfo').pipe(
+      catchError((res: NzSafeAny) => {
+        console.warn(`StartupService.loadUserInfo: Network request failed`, res);
+        return of({});
+      }),
+      map((res: NzSafeAny) => {
+        // User information: including name, avatar, email address
+        const data = res.data;
+        if (data) {
+          const user = {
+            name: data.nickName,
+            avatar: data.avatarUrl,
+            email: data.email
+          }
+          this.settingService.setUser(user);
+          // Menu data, https://ng-alain.com/theme/menu
+          const menus = [{
+            "text": "主导航",
+            "group": false,
+            "hideInBreadcrumb": true,
+            "children": this.handleMenus(data.menus || [])
+          }]
+          this.menuService.add(menus);
+        }
+        // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
+        this.aclService.setFull(true);
       })
     );
   }

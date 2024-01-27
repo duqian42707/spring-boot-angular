@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dqv5.soccer.common.ConfigValue;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.mapper.SysConfigMapper;
+import com.dqv5.soccer.pojo.SysInfo;
 import com.dqv5.soccer.service.SysConfigService;
 import com.dqv5.soccer.table.SysConfigTable;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,6 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author duq
@@ -51,5 +51,26 @@ public class SysConfigServiceImpl implements SysConfigService {
             }
         }
     }
+
+    @Override
+    public SysInfo getSysInfo() {
+        SysInfo sysInfo = new SysInfo();
+        List<SysConfigTable> list = sysConfigMapper.selectList(null);
+        for (SysConfigTable sysConfigTable : list) {
+            String configKey = sysConfigTable.getConfigKey();
+            String configValue = sysConfigTable.getConfigValue();
+            if (ConfigValue.SYS_NAME.getConfigKey().equals(configKey)) {
+                sysInfo.setSysName(configValue);
+            }
+            if (ConfigValue.SYS_DESC.getConfigKey().equals(configKey)) {
+                sysInfo.setSysDesc(configValue);
+            }
+            if (ConfigValue.SYS_LOGO.getConfigKey().equals(configKey)) {
+                sysInfo.setSysLogo(configValue);
+            }
+        }
+        return sysInfo;
+    }
+
 
 }

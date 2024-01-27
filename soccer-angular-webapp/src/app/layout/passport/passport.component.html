@@ -3,9 +3,9 @@
     <div class="top">
       <div class="head">
         <img class="logo" src="./assets/logo-color.svg">
-        <span class="title">Soccer</span>
+        <span class="title">{{ app.name }}</span>
       </div>
-      <div class="desc">基于Spring boot + angular 的前后端分离框架</div>
+      <div class="desc">{{ app.description }}</div>
     </div>
     <router-outlet></router-outlet>
     <global-footer [links]="links">

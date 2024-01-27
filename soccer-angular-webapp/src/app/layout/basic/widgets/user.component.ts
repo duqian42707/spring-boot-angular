@@ -12,13 +12,9 @@ import { SettingsService, User } from '@delon/theme';
     </div>
     <nz-dropdown-menu #userMenu="nzDropdownMenu">
       <div nz-menu class="width-sm">
-        <div nz-menu-item routerLink="/pro/account/center">
+        <div nz-menu-item routerLink="/sys/profile">
           <i nz-icon nzType="user" class="mr-sm"></i>
           个人中心
-        </div>
-        <div nz-menu-item routerLink="/pro/account/settings">
-          <i nz-icon nzType="setting" class="mr-sm"></i>
-          个人设置
         </div>
         <div nz-menu-item routerLink="/exception/trigger">
           <i nz-icon nzType="close-circle" class="mr-sm"></i>
