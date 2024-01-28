@@ -27,7 +27,7 @@ public class SysUser extends AbstractBaseVO implements Serializable {
     private String password;
     private String nickName;
     private String avatarUrl;
-    private String gender;
+    private Integer gender;
     private String phone;
     private String email;
     private Integer status;

@@ -25,7 +25,7 @@ public class AuthUser implements UserDetails, Serializable {
     private String password;
     private String nickName;
     private String avatarUrl;
-    private String gender;
+    private Integer gender;
     private List<SysMenu> menus;
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -35,7 +35,7 @@ public class AuthUser implements UserDetails, Serializable {
         this.authorities = authorities;
     }
 
-    public AuthUser(String userId, String account, String password, String nickName, String avatarUrl, String gender, List<SysMenu> menus, Collection<? extends GrantedAuthority> authorities) {
+    public AuthUser(String userId, String account, String password, String nickName, String avatarUrl, Integer gender, List<SysMenu> menus, Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
         this.account = account;
         this.password = password;

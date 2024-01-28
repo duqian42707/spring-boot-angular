@@ -25,7 +25,7 @@
             <column name="password" type="varchar(200)" remarks="用户密码"/>
             <column name="nick_name" type="varchar(200)" remarks="昵称"/>
             <column name="avatar_url" type="varchar(1000)" remarks="头像图片url"/>
-            <column name="gender" type="varchar(1)" remarks="性别"/>
+            <column name="gender" type="integer" remarks="性别"/>
             <column name="phone" type="varchar(100)" remarks="手机号"/>
             <column name="email" type="varchar(200)" remarks="邮箱"/>
             <column name="status" type="integer" remarks="状态" defaultValueNumeric="1"/>

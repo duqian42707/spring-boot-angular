@@ -1,0 +1,5 @@
+<sf #safetyForm mode="edit" [schema]="safetySchema" [ui]="safetyUi" [formData]="safetyData" button="none">
+  <button nz-button type="submit" nzType="primary" (click)="saveSafety(safetyForm.value)"
+          [disabled]="!safetyForm.valid" [nzLoading]="http.loading">保存
+  </button>
+</sf>

@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-sys-profile',
   templateUrl: './profile.component.html',
-  styles: [
-  ]
+  styles: []
 })
-export class SysProfileComponent {
+export class SysProfileComponent implements OnInit {
+
+  constructor() {
+  }
+
+  ngOnInit(): void {
+  }
+
 
 }

@@ -17,6 +17,8 @@ import {SysAuthService} from "./auth/sys-auth.service";
 import {SysConfigComponent} from "./config/config.component";
 import {SysDeptComponent} from "./dept/dept.component";
 import {SysProfileComponent} from "./profile/profile.component";
+import {ProfileBasicComponent} from "./profile/profile-basic/profile-basic.component";
+import {ProfileSafetyComponent} from "./profile/profile-safety/profile-safety.component";
 
 const COMPONENTS: Type<void>[] = [
   SysUserComponent, SysUserEditComponent,
@@ -24,7 +26,7 @@ const COMPONENTS: Type<void>[] = [
   SysMenuComponent, SysMenuEditComponent,
   SysAuthComponent, SysAuthEditComponent,
   SysDeptComponent, SysConfigComponent, SysLogComponent,
-  SysProfileComponent
+  SysProfileComponent, ProfileBasicComponent, ProfileSafetyComponent
 ];
 
 @NgModule({

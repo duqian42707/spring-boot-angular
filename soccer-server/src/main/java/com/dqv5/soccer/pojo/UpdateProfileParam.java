@@ -10,5 +10,5 @@ import lombok.Data;
 public class UpdateProfileParam {
     private String nickName;
     private String avatarUrl;
-    private String gender;
+    private Integer gender;
 }

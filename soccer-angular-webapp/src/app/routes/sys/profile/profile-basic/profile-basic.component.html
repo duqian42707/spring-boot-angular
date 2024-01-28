@@ -1,0 +1,5 @@
+<sf #basicForm mode="edit" [schema]="basicSchema" [ui]="basicUi" [formData]="basicData" button="none">
+  <button nz-button type="submit" nzType="primary" (click)="saveBasic(basicForm.value)"
+          [disabled]="!basicForm.valid" [nzLoading]="http.loading">保存
+  </button>
+</sf>
