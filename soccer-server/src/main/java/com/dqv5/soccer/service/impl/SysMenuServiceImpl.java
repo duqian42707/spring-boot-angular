@@ -8,7 +8,7 @@ import com.dqv5.soccer.mapper.SysMenuMapper;
 import com.dqv5.soccer.pojo.SysMenu;
 import com.dqv5.soccer.service.SysMenuService;
 import com.dqv5.soccer.table.SysMenuTable;
-import com.dqv5.soccer.utils.MenuTreeUtils;
+import com.dqv5.soccer.utils.TreeUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +25,14 @@ public class SysMenuServiceImpl implements SysMenuService {
     public List<SysMenu> findAll() {
         QueryWrapper<SysMenuTable> queryWrapper = Wrappers.query(SysMenuTable.class).orderByAsc("display_index");
         List<SysMenuTable> allMenus = sysMenuMapper.selectList(queryWrapper);
-        return MenuTreeUtils.buildTree(allMenus);
+        return TreeUtils.buildMenuTree(allMenus);
     }
 
     @Override
     public List<TreeNode> findAllTree() {
         QueryWrapper<SysMenuTable> queryWrapper = Wrappers.query(SysMenuTable.class).orderByAsc("display_index");
         List<SysMenuTable> allMenus = sysMenuMapper.selectList(queryWrapper);
-        return MenuTreeUtils.buildTree(allMenus).stream().map(SysMenu::toTreeNode).collect(Collectors.toList());
+        return TreeUtils.buildMenuTree(allMenus).stream().map(SysMenu::toTreeNode).collect(Collectors.toList());
     }
 
     @Override
@@ -80,6 +80,6 @@ public class SysMenuServiceImpl implements SysMenuService {
     @Override
     public List<SysMenu> queryByUserId(String userId) {
         List<SysMenuTable> menuTables = sysMenuMapper.queryByUserId(userId);
-        return MenuTreeUtils.buildTree(menuTables);
+        return TreeUtils.buildMenuTree(menuTables);
     }
 }

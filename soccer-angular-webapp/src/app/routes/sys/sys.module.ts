@@ -19,13 +19,15 @@ import {SysDeptComponent} from "./dept/dept.component";
 import {SysProfileComponent} from "./profile/profile.component";
 import {ProfileBasicComponent} from "./profile/profile-basic/profile-basic.component";
 import {ProfileSafetyComponent} from "./profile/profile-safety/profile-safety.component";
+import {SysDeptEditComponent} from "./dept/edit/edit.component";
 
 const COMPONENTS: Type<void>[] = [
   SysUserComponent, SysUserEditComponent,
   SysRoleComponent, SysRoleEditComponent, SysRoleMenuComponent, SysRoleAuthComponent,
   SysMenuComponent, SysMenuEditComponent,
   SysAuthComponent, SysAuthEditComponent,
-  SysDeptComponent, SysConfigComponent, SysLogComponent,
+  SysDeptComponent, SysDeptEditComponent,
+  SysConfigComponent, SysLogComponent,
   SysProfileComponent, ProfileBasicComponent, ProfileSafetyComponent
 ];
 

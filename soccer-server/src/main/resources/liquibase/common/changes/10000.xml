@@ -186,6 +186,7 @@
                 <constraints unique="true"/>
             </column>
             <column name="parent_id" type="varchar(50)" remarks="上级部门id"/>
+            <column name="display_index" type="integer" remarks="显示顺序" defaultValueNumeric="0"/>
 
             <column name="created_by" type="varchar(255)" remarks="创建人"/>
             <column name="created_date" type="timestamp" remarks="创建时间" defaultValueComputed="current_timestamp"/>

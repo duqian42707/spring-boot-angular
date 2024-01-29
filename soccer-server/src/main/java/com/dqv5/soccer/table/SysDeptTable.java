@@ -24,4 +24,5 @@ public class SysDeptTable extends AbstractBaseTable implements Serializable {
     private String deptName;
     private String deptCode;
     private String parentId;
+    private Integer displayIndex;
 }

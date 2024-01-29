@@ -3,6 +3,7 @@ package com.dqv5.soccer.web;
 import com.dqv5.soccer.common.AuthValue;
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
+import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.pojo.SysDept;
 import com.dqv5.soccer.service.SysDeptService;
 import com.dqv5.soccer.table.SysDeptTable;
@@ -31,8 +32,15 @@ public class SysDeptController {
     @GetMapping("/all")
     @ApiOperation("获取所有部门")
     public ResponseEntity<RestReturnEntity<List<SysDept>>> all() {
-        List<SysDept> pageInfo = sysDeptService.queryAll();
-        return RestReturn.ok(pageInfo);
+        List<SysDept> list = sysDeptService.queryAll();
+        return RestReturn.ok(list);
+    }
+
+    @GetMapping("/tree")
+    @ApiOperation("获取所有部门")
+    public ResponseEntity<RestReturnEntity<List<TreeNode>>> tree() {
+        List<TreeNode> list = sysDeptService.queryAllTree();
+        return RestReturn.ok(list);
     }
 
     @GetMapping("/info/{id}")

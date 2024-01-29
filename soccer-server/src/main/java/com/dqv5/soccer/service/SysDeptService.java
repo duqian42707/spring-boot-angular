@@ -1,5 +1,6 @@
 package com.dqv5.soccer.service;
 
+import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.pojo.SysDept;
 import com.dqv5.soccer.table.SysDeptTable;
 
@@ -12,6 +13,8 @@ import java.util.List;
 public interface SysDeptService {
     List<SysDept> queryAll();
 
+    List<TreeNode> queryAllTree();
+
     SysDept findOne(String id);
 
     void insert(SysDeptTable param);
@@ -19,4 +22,5 @@ public interface SysDeptService {
     void update(SysDeptTable param);
 
     void deleteById(String id);
+
 }

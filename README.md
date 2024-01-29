@@ -20,8 +20,7 @@
 - [x] 权限管理
 - [x] 日志管理
 - [x] 系统配置管理
-- [ ] 个人信息、修改密码
-
+- [x] 个人信息、修改密码
 
 ## 依赖
 
@@ -57,6 +56,7 @@
 ## 相关链接
 
 * [Spring Boot](https://spring.io/projects/spring-boot):   spring的全新框架，简化新Spring应用的初始搭建以及开发过程。
+* [Liquibase](https://liquibase.org/):   一个开源数据库架构更改管理解决方案，使您能够轻松管理数据库更改的修订
 * [Angular](https://angular.cn/):           一套前端单页面应用开发框架。
 * [Ant design](https://ant.design/):      一个服务于企业级产品的设计体系。
 * [ng-zorro](https://ng.ant.design/):      Ant Design 的 Angular 实现

@@ -242,15 +242,24 @@ public class InitDataServiceImpl implements InitDataService {
             return;
         }
         String[][] depts = {
-                {"root", "根部门"}
+                {"root", "根部门", null},
+                {"1001", "部门一", "root"},
+                {"1002", "部门二", "root"},
+                {"1003", "部门三", "root"},
+                {"admin", "管理员", "root"},
         };
+        // 部门编码 -> 部门id
+        Map<String, String> deptIdMap = new HashMap<>();
         for (String[] dept : depts) {
             String deptCode = dept[0];
             String deptName = dept[1];
+            String parentCode = dept[2];
             SysDeptTable sysDeptTable = new SysDeptTable();
             sysDeptTable.setDeptCode(deptCode);
             sysDeptTable.setDeptName(deptName);
+            sysDeptTable.setParentId(deptIdMap.get(parentCode));
             sysDeptMapper.insert(sysDeptTable);
+            deptIdMap.put(deptCode, sysDeptTable.getDeptId());
         }
     }
 

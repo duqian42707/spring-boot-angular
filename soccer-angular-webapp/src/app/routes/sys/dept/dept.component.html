@@ -1,4 +1,36 @@
 <page-header></page-header>
 <nz-card>
-  <p>dept works!</p>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="search($event)" (formReset)="reset($event)"></sf>
+  <nz-table #expandTable [nzLoading]="loading" [nzData]="listOfMapData" nzTableLayout="fixed">
+    <thead>
+    <tr>
+      <th>部门名称</th>
+      <th>部门编码</th>
+      <th>排序</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let data of expandTable.data">
+      <ng-container *ngFor="let item of mapOfExpandedData[data.deptId]">
+        <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+          <td
+              [nzIndentSize]="item.level! * 20"
+              [nzShowExpand]="!!item.children && item.children.length>0"
+              [(nzExpand)]="item.expand"
+              (nzExpandChange)="collapse(mapOfExpandedData[data.deptId], item, $event)"
+          >
+            {{ item.deptName }}
+          </td>
+          <td>{{ item.deptCode }}</td>
+          <td>{{ item.displayIndex }}</td>
+          <td>
+            <a nz-button nzType="link" (click)="edit(item)">编辑</a>
+            <a nz-button nzType="link" nzDanger (click)="delete(item)">删除</a>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </nz-table>
 </nz-card>
