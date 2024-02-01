@@ -77,6 +77,7 @@ public class ControllerAspect {
         String nickName = currentUserDetail.getNickName();
         String ip = AspectUtil.getIP(request);
         String address = IpIpFreeUtils.getAddressFromIp(ip);
+        String userAgent = request.getHeader("user-agent");
         SysLogTable sl = SysLogTable.builder()
                 .ip(ip)
                 .address(address)
@@ -86,6 +87,7 @@ public class ControllerAspect {
                 .className(signature.getDeclaringTypeName())
                 .methodName(signature.getName())
                 .args(AspectUtil.getArgs(request, joinPoint))
+                .ua(userAgent)
                 .requestUrl(AspectUtil.getRequestUrl(request))
                 .methodDesc(AspectUtil.getMethodDesc(joinPoint))
                 .status(1)
@@ -123,6 +125,7 @@ public class ControllerAspect {
         String nickName = currentUserDetail.getNickName();
         String ip = AspectUtil.getIP(request);
         String address = IpIpFreeUtils.getAddressFromIp(ip);
+        String userAgent = request.getHeader("user-agent");
         SysLogTable sl = SysLogTable.builder()
                 .ip(ip)
                 .address(address)
@@ -132,6 +135,7 @@ public class ControllerAspect {
                 .className(signature.getDeclaringTypeName())
                 .methodName(signature.getName())
                 .args(AspectUtil.getArgs(request, joinPoint))
+                .ua(userAgent)
                 .requestUrl(AspectUtil.getRequestUrl(request))
                 .methodDesc(AspectUtil.getMethodDesc(joinPoint))
                 .status(0)

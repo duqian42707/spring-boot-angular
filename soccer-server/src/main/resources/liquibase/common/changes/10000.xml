@@ -123,6 +123,7 @@
             <column name="method_name" type="varchar(200)" remarks="方法名"/>
             <column name="method_desc" type="varchar(200)" remarks="方法描述"/>
             <column name="args" type="text" remarks="参数"/>
+            <column name="ua" type="text" remarks="用户userAgent"/>
             <column name="request_url" type="varchar(1000)" remarks="请求url"/>
             <column name="request_type" type="varchar(100)" remarks="请求方法"/>
             <column name="status" type="integer" remarks="状态"/>

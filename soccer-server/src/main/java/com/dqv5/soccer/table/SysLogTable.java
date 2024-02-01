@@ -35,6 +35,7 @@ public class SysLogTable implements Serializable {
     private String methodName;
     private String methodDesc;
     private String args;
+    private String ua;
     private String requestUrl;
     private String requestType;
     private Integer status;
