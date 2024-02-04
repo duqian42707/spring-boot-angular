@@ -6,6 +6,7 @@ import {SysRoleEditComponent} from './edit/edit.component';
 import {formatUsername} from '../../../shared/utils/format-username';
 import {SysRoleMenuComponent} from "./menu/menu.component";
 import {SysRoleAuthComponent} from "./auth/auth.component";
+import {ACLService} from "@delon/acl";
 
 @Component({
   selector: 'app-sys-role',
@@ -36,25 +37,38 @@ export class SysRoleComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        {text: '编辑', type: 'modal', modal: {component: SysRoleEditComponent}, click: 'reload'},
-        {text: '删除', type: 'del', click: (item: any) => this.delete(item)},
+        {
+          text: '编辑',
+          type: 'modal',
+          modal: {component: SysRoleEditComponent},
+          click: 'reload',
+          iif: () => this.aclService.can('sys_role_update')
+        },
+        {
+          text: '删除',
+          type: 'del',
+          click: (item: any) => this.delete(item),
+          iif: () => this.aclService.can('sys_role_delete')
+        },
         {
           text: '配置菜单',
           type: 'drawer',
           drawer: {component: SysRoleMenuComponent, drawerOptions: {nzClosable: false}},
-          click: 'reload'
+          click: 'reload',
+          iif: () => this.aclService.can('sys_role_update')
         },
         {
           text: '配置权限',
           type: 'drawer',
           drawer: {component: SysRoleAuthComponent, drawerOptions: {nzClosable: false}},
-          click: 'reload'
+          click: 'reload',
+          iif: () => this.aclService.can('sys_role_update')
         },
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, private drawerHelper: DrawerHelper) {
+  constructor(private http: _HttpClient, private modal: ModalHelper, private aclService: ACLService) {
   }
 
   ngOnInit(): void {

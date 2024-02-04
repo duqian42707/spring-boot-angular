@@ -92,9 +92,13 @@ export class StartupService {
             "children": this.handleMenus(data.menus || [])
           }]
           this.menuService.add(menus);
+          const authorities: string[] = data.authorities.map((x: any) => x.authority);
+          const roles = authorities.filter((x: string) => x.startsWith('ROLE_'));
+          const abilities = authorities.filter((x: string) => !x.startsWith('ROLE_'));
+          // ACL: https://ng-alain.com/acl/getting-started
+          this.aclService.setRole(roles);
+          this.aclService.setAbility(abilities);
         }
-        // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
-        this.aclService.setFull(true);
       })
     );
   }
