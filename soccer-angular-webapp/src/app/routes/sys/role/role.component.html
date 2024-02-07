@@ -1,6 +1,6 @@
 <page-header [action]="phActionTpl">
   <ng-template #phActionTpl>
-    <button *aclIf="'sys_role_insert'" (click)="add()" nz-button nzType="primary">新建</button>
+    <button *aclIf="AuthValue.SYS_ROLE_INSERT" (click)="add()" nz-button nzType="primary">新建</button>
   </ng-template>
 </page-header>
 <nz-card>

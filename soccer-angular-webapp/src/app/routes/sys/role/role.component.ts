@@ -3,16 +3,18 @@ import {STColumn, STComponent} from '@delon/abc/st';
 import {SFSchema} from '@delon/form';
 import {ModalHelper, _HttpClient, DrawerHelper} from '@delon/theme';
 import {SysRoleEditComponent} from './edit/edit.component';
-import {formatUsername} from '../../../shared/utils/format-username';
 import {SysRoleMenuComponent} from "./menu/menu.component";
 import {SysRoleAuthComponent} from "./auth/auth.component";
 import {ACLService} from "@delon/acl";
+import {AuthValue} from "../../../common/auth-value";
+
 
 @Component({
   selector: 'app-sys-role',
   templateUrl: './role.component.html',
 })
 export class SysRoleComponent implements OnInit {
+  protected readonly AuthValue = AuthValue;
   loading: boolean | null = null;
   url = `/api/role/list`;
   searchSchema: SFSchema = {
@@ -48,21 +50,21 @@ export class SysRoleComponent implements OnInit {
           text: '删除',
           type: 'del',
           click: (item: any) => this.delete(item),
-          iif: () => this.aclService.can('sys_role_delete')
+          iif: () => this.aclService.can(AuthValue.SYS_ROLE_DELETE)
         },
         {
           text: '配置菜单',
           type: 'drawer',
           drawer: {component: SysRoleMenuComponent, drawerOptions: {nzClosable: false}},
           click: 'reload',
-          iif: () => this.aclService.can('sys_role_update')
+          iif: () => this.aclService.can(AuthValue.SYS_ROLE_UPDATE)
         },
         {
           text: '配置权限',
           type: 'drawer',
           drawer: {component: SysRoleAuthComponent, drawerOptions: {nzClosable: false}},
           click: 'reload',
-          iif: () => this.aclService.can('sys_role_update')
+          iif: () => this.aclService.can(AuthValue.SYS_ROLE_UPDATE)
         },
       ]
     }
@@ -87,4 +89,6 @@ export class SysRoleComponent implements OnInit {
       this.st.reload();
     });
   }
+
+
 }
