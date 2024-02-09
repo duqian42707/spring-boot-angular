@@ -3,6 +3,8 @@ import {STColumn, STComponent} from '@delon/abc/st';
 import {SFSchema} from '@delon/form';
 import {ModalHelper, _HttpClient} from '@delon/theme';
 import {SysUserEditComponent} from './edit/edit.component';
+import {AuthValue} from "../../../common/auth-value";
+import {ACLService} from "@delon/acl";
 
 @Component({
   selector: 'app-sys-user',
@@ -34,13 +36,24 @@ export class SysUserComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        {text: '编辑', type: 'modal', modal: {component: SysUserEditComponent}, click: 'reload'},
-        {text: '删除', type: 'del', click: (item: any) => this.delete(item)},
+        {
+          text: '编辑',
+          type: 'modal',
+          modal: {component: SysUserEditComponent},
+          click: 'reload',
+          iif: () => this.aclService.can(AuthValue.SYS_USER_UPDATE)
+        },
+        {
+          text: '删除',
+          type: 'del',
+          click: (item: any) => this.delete(item),
+          iif: () => this.aclService.can(AuthValue.SYS_USER_DELETE)
+        },
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) {
+  constructor(private http: _HttpClient, private modal: ModalHelper, private aclService: ACLService) {
   }
 
   ngOnInit(): void {
@@ -61,4 +74,5 @@ export class SysUserComponent implements OnInit {
     });
   }
 
+  protected readonly AuthValue = AuthValue;
 }
