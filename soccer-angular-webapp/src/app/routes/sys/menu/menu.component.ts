@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SFSchema} from '@delon/form';
 import {_HttpClient, ModalHelper} from '@delon/theme';
 import {SysMenuEditComponent} from './edit/edit.component';
+import {AuthValue} from "../../../common/auth-value";
 
 export interface TreeNodeInterface {
   menuId: string;
@@ -119,4 +120,5 @@ export class SysMenuComponent implements OnInit {
 
   }
 
+  protected readonly AuthValue = AuthValue;
 }

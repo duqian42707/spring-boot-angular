@@ -1,6 +1,6 @@
 <page-header [action]="phActionTpl">
   <ng-template #phActionTpl>
-    <button (click)="add()" nz-button nzType="primary">新建</button>
+    <button *aclIf="AuthValue.SYS_MENU_INSERT" (click)="add()" nz-button nzType="primary">新建</button>
   </ng-template>
 </page-header>
 <nz-card>
@@ -35,8 +35,8 @@
           <td>{{ item.icon }}</td>
           <td>{{ item.displayIndex }}</td>
           <td>
-            <a nz-button nzType="link" (click)="edit(item)">编辑</a>
-            <a nz-button nzType="link" nzDanger (click)="delete(item)">删除</a>
+            <a nz-button nzType="link" (click)="edit(item)" *aclIf="AuthValue.SYS_MENU_UPDATE">编辑</a>
+            <a nz-button nzType="link" nzDanger (click)="delete(item)" *aclIf="AuthValue.SYS_MENU_DELETE">删除</a>
           </td>
         </tr>
       </ng-container>
