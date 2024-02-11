@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SFSchema} from "@delon/form";
 import {_HttpClient, ModalHelper} from "@delon/theme";
 import {SysDeptEditComponent} from "./edit/edit.component";
+import {AuthValue} from "../../../common/auth-value";
 
 export interface TreeNodeInterface {
   deptId: string;
@@ -116,4 +117,6 @@ export class SysDeptComponent implements OnInit {
   delete(item: any) {
 
   }
+
+  protected readonly AuthValue = AuthValue;
 }
