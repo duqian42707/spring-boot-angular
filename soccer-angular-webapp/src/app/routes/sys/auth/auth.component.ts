@@ -4,6 +4,8 @@ import {STColumn, STComponent} from "@delon/abc/st";
 import {formatUsername} from "../../../shared/utils/format-username";
 import {_HttpClient, DrawerHelper, ModalHelper} from "@delon/theme";
 import {SysAuthEditComponent} from "./edit/edit.component";
+import {AuthValue} from "../../../common/auth-value";
+import {ACLService} from "@delon/acl";
 
 @Component({
   selector: 'app-sys-auth',
@@ -40,13 +42,24 @@ export class SysAuthComponent {
     {
       title: '操作',
       buttons: [
-        {text: '编辑', type: 'modal', modal: {component: SysAuthEditComponent}, click: 'reload'},
-        {text: '删除', type: 'del', click: (item: any) => this.delete(item)},
+        {
+          text: '编辑',
+          type: 'modal',
+          modal: {component: SysAuthEditComponent},
+          click: 'reload',
+          iif: () => this.aclService.can(AuthValue.SYS_AUTH_UPDATE)
+        },
+        {
+          text: '删除',
+          type: 'del',
+          click: (item: any) => this.delete(item),
+          iif: () => this.aclService.can(AuthValue.SYS_AUTH_DELETE)
+        },
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, private drawerHelper: DrawerHelper) {
+  constructor(private http: _HttpClient, private modal: ModalHelper, private drawerHelper: DrawerHelper, private aclService: ACLService) {
   }
 
   ngOnInit(): void {
@@ -65,4 +78,6 @@ export class SysAuthComponent {
       this.st.reload();
     });
   }
+
+  protected readonly AuthValue = AuthValue;
 }
