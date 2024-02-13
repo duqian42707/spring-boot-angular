@@ -10,5 +10,6 @@ import lombok.Data;
 public class SysInfo {
     private String sysName;
     private String sysDesc;
-    private String sysLogo;
+    private String sysLogoBig;
+    private String sysLogoSmall;
 }

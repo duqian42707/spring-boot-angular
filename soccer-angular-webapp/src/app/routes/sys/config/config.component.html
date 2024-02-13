@@ -9,7 +9,8 @@
       </sf>
     </nz-tab>
     <nz-tab nzTitle="系统管理">
-      <button nz-button nzDanger nz-popconfirm nzPopconfirmTitle="将清空当前系统所有数据并重新初始化，确定吗？"
+      <button nz-button nzDanger nz-popconfirm [disabled]="!canReInitData"
+              nzPopconfirmTitle="将清空当前系统所有数据并重新初始化，确定吗？"
               nzType="primary" [nzLoading]="loading" (nzOnConfirm)="reInitData()">重置数据
       </button>
     </nz-tab>

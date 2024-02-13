@@ -4,6 +4,8 @@ import {SFSchema, SFSelectWidgetSchema, SFUISchema} from "@delon/form";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {DA_SERVICE_TOKEN, TokenService} from "@delon/auth";
 import {Router} from "@angular/router";
+import {ACLService} from "@delon/acl";
+import {AuthValue} from "../../../common/auth-value";
 
 @Component({
   selector: 'app-sys-config',
@@ -27,14 +29,16 @@ export class SysConfigComponent implements OnInit {
   };
 
   basicData = {};
+  canReInitData = false;
 
   constructor(public http: _HttpClient, private messageService: NzMessageService,
-              @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService, private router: Router) {
+              @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService, private router: Router,
+              private aclService: ACLService) {
   }
 
   ngOnInit(): void {
     this.loadConfig();
-
+    this.canReInitData = this.aclService.can(AuthValue.SYS_RE_INIT_DATA);
   }
 
 

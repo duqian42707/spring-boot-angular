@@ -35,4 +35,6 @@ public class AuthValue {
     public static final String SYS_CONFIG_SET = "sys_config_set";
 
     public static final String SYS_LOG_QUERY = "sys_log_query";
+
+    public static final String SYS_RE_INIT_DATA = "sys_re_init_data";
 }

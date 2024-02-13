@@ -65,8 +65,11 @@ public class SysConfigServiceImpl implements SysConfigService {
             if (ConfigValue.SYS_DESC.getConfigKey().equals(configKey)) {
                 sysInfo.setSysDesc(configValue);
             }
-            if (ConfigValue.SYS_LOGO.getConfigKey().equals(configKey)) {
-                sysInfo.setSysLogo(configValue);
+            if (ConfigValue.SYS_LOGO_BIG.getConfigKey().equals(configKey)) {
+                sysInfo.setSysLogoBig(configValue);
+            }
+            if (ConfigValue.SYS_LOGO_SMALL.getConfigKey().equals(configKey)) {
+                sysInfo.setSysLogoSmall(configValue);
             }
         }
         return sysInfo;

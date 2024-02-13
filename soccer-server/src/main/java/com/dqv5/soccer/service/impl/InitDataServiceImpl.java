@@ -186,6 +186,7 @@ public class InitDataServiceImpl implements InitDataService {
                 {"部门管理", AuthValue.SYS_DEPT_DELETE, "删除部门"},
                 {"系统配置", AuthValue.SYS_CONFIG_QUERY, "查询配置"},
                 {"系统配置", AuthValue.SYS_CONFIG_SET, "保存配置"},
+                {"系统配置", AuthValue.SYS_RE_INIT_DATA, "重置数据"},
                 {"系统日志", AuthValue.SYS_LOG_QUERY, "查询日志"},
         };
         for (int i = 0; i < auths.length; i++) {

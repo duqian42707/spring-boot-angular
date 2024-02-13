@@ -1,5 +1,6 @@
 package com.dqv5.soccer.web;
 
+import com.dqv5.soccer.common.AuthValue;
 import com.dqv5.soccer.common.ConfigValue;
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
@@ -11,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,7 @@ public class SysController {
 
     @PostMapping("/reInitData")
     @ApiOperation("重新初始化系统数据")
+    @PreAuthorize("hasAuthority('" + AuthValue.SYS_RE_INIT_DATA + "')")
     public ResponseEntity<RestReturnEntity<Object>> reInitData() {
         initDataService.initData(true);
         return RestReturn.ok();

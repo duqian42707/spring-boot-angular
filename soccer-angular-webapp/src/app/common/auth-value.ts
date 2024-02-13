@@ -28,4 +28,6 @@ export class AuthValue {
   static SYS_CONFIG_SET = "sys_config_set";
 
   static SYS_LOG_QUERY = "sys_log_query";
+
+  static SYS_RE_INIT_DATA = "sys_re_init_data";
 }
