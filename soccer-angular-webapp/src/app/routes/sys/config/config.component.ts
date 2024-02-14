@@ -29,6 +29,7 @@ export class SysConfigComponent implements OnInit {
   };
 
   basicData = {};
+  canSaveConfig = false;
   canReInitData = false;
 
   constructor(public http: _HttpClient, private messageService: NzMessageService,
@@ -38,6 +39,7 @@ export class SysConfigComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadConfig();
+    this.canSaveConfig = this.aclService.can(AuthValue.SYS_CONFIG_SET);
     this.canReInitData = this.aclService.can(AuthValue.SYS_RE_INIT_DATA);
   }
 
