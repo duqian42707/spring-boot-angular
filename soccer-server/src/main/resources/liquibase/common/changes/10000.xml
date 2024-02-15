@@ -225,4 +225,25 @@
                     defaultValueComputed="current_timestamp"/>
         </createTable>
     </changeSet>
+    <changeSet id="10000-013" author="soccer">
+        <createTable tableName="sys_file" remarks="文件信息表">
+            <column name="file_id" type="varchar(50)" remarks="文件id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sys_file_pk"/>
+            </column>
+            <column name="file_name" type="varchar(500)" remarks="文件名"/>
+            <column name="file_type" type="varchar(255)" remarks="文件类型（扩展名）"/>
+            <column name="file_size" type="long" remarks="文件大小（字节）"/>
+            <column name="duration" type="integer" remarks="音频/视频时长（秒）"/>
+            <column name="sha256" type="varchar(255)" remarks="文件sha256值"/>
+            <column name="store_type" type="integer" remarks="存储类型，1-disk 2-minio"/>
+            <column name="store_info" type="varchar(255)" remarks="存储信息，格式由存储类型确定"/>
+            <column name="remark" type="varchar(255)" remarks="备注信息"/>
+
+            <column name="created_by" type="varchar(255)" remarks="创建人"/>
+            <column name="created_date" type="timestamp" remarks="创建时间" defaultValueComputed="current_timestamp"/>
+            <column name="last_modified_by" type="varchar(255)" remarks="最后修改人"/>
+            <column name="last_modified_date" type="timestamp" remarks="最后修改时间"
+                    defaultValueComputed="current_timestamp"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
