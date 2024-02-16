@@ -1,6 +1,6 @@
 package com.dqv5.soccer.service;
 
-import com.dqv5.soccer.pojo.FileUploadDto;
+import com.dqv5.soccer.pojo.SysFile;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface SysFileService {
 
-    FileUploadDto uploadFile(MultipartFile file);
+    SysFile uploadFile(MultipartFile file);
+
+    SysFile getFileInfo(String id);
 
     void deleteFile(String url);
+
 }
