@@ -1,4 +1,4 @@
-package com.dqv5.soccer.config;
+package com.dqv5.soccer.file;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "soccer.amazon-s3")
+@ConfigurationProperties(prefix = "soccer.file-store.s3")
 public class AmazonS3Properties {
     private boolean enable;
     private String endpoint;

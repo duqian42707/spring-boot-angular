@@ -1,14 +1,9 @@
 package com.dqv5.soccer.web;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
-import com.dqv5.soccer.common.TreeNode;
-import com.dqv5.soccer.pojo.FileUploadDto;
-import com.dqv5.soccer.pojo.SysAuth;
 import com.dqv5.soccer.pojo.SysFile;
 import com.dqv5.soccer.service.SysFileService;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author duqian

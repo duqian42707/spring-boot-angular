@@ -45,10 +45,15 @@ logging:
 soccer:
   system:
     log: true
-  amazon-s3:
-    enable: false
-    endpoint: http://127.0.0.1:9000
-    bucketName: soccer
-    accessKey: minioadmin
-    secretKey: minioadmin
+  file-store:
+    default: disk
+    disk:
+      enable: true
+      root: /opt/soccer/file
+    s3:
+      enable: true
+      endpoint: http://127.0.0.1:9000
+      bucketName: soccer
+      accessKey: minioadmin
+      secretKey: minioadmin
 

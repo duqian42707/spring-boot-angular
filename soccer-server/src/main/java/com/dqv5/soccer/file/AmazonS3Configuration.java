@@ -1,4 +1,4 @@
-package com.dqv5.soccer.config;
+package com.dqv5.soccer.file;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  * @date 2021/05/28
  */
 @Configuration
-@ConditionalOnProperty(name = "soccer.amazons3.enable", havingValue = "true")
+@ConditionalOnProperty(name = "soccer.file-store.s3.enable", havingValue = "true")
 public class AmazonS3Configuration {
     @Resource
     private AmazonS3Properties properties;

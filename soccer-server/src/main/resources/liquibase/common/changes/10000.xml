@@ -232,7 +232,7 @@
             </column>
             <column name="file_name" type="varchar(500)" remarks="文件名"/>
             <column name="file_type" type="varchar(255)" remarks="文件类型（扩展名）"/>
-            <column name="file_size" type="long" remarks="文件大小（字节）"/>
+            <column name="file_size" type="bigint" remarks="文件大小（字节）"/>
             <column name="duration" type="integer" remarks="音频/视频时长（秒）"/>
             <column name="sha256" type="varchar(255)" remarks="文件sha256值"/>
             <column name="store_type" type="integer" remarks="存储类型，1-disk 2-minio"/>
