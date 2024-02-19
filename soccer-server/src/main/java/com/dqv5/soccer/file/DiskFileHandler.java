@@ -45,7 +45,13 @@ public class DiskFileHandler implements IntegrationFileHandler {
 
     @Override
     public InputStream getInputStream(String storeInfo) {
-        return null;
+        String rootDir = diskProperties.getRoot();
+        File file = new File(rootDir + "/" + storeInfo);
+        try {
+            return new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new CommonRuntimeException(e);
+        }
     }
 
     @Override

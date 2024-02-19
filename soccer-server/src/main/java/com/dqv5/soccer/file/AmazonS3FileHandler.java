@@ -2,6 +2,8 @@ package com.dqv5.soccer.file;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -43,7 +45,10 @@ public class AmazonS3FileHandler implements IntegrationFileHandler {
 
     @Override
     public InputStream getInputStream(String storeInfo) {
-        return null;
+        String bucketName = properties.getBucketName();
+        S3Object s3object = amazonS3.getObject(bucketName, storeInfo);
+        S3ObjectInputStream inputStream = s3object.getObjectContent();
+        return inputStream;
     }
 
     @Override
