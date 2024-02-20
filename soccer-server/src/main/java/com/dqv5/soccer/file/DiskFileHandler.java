@@ -2,6 +2,7 @@ package com.dqv5.soccer.file;
 
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 
@@ -56,7 +57,9 @@ public class DiskFileHandler implements IntegrationFileHandler {
 
     @Override
     public void delete(String storeInfo) {
-
+        String rootDir = diskProperties.getRoot();
+        File file = new File(rootDir + "/" + storeInfo);
+        FileUtils.deleteQuietly(file);
     }
 
     @Override

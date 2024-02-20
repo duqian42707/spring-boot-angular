@@ -53,7 +53,8 @@ public class AmazonS3FileHandler implements IntegrationFileHandler {
 
     @Override
     public void delete(String storeInfo) {
-
+        String bucketName = properties.getBucketName();
+        amazonS3.deleteObject(bucketName, storeInfo);
     }
 
     @Override
