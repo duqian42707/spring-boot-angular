@@ -12,16 +12,24 @@ import com.dqv5.soccer.service.SysFileService;
 import com.dqv5.soccer.table.SysFileTable;
 import com.dqv5.soccer.utils.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -65,8 +73,37 @@ public class SysFileServiceImpl implements SysFileService {
     }
 
     @Override
-    public void deleteFile(String url) {
+    public void downloadFile(String id, String dl, HttpServletResponse response) {
+        SysFileTable sysFileTable = sysFileMapper.selectById(id);
+        String fileName = sysFileTable.getFileName();
+        IntegrationFileHandler fileHandler = getFileHandler(sysFileTable.getStoreType());
 
+        try (InputStream inputStream = fileHandler.getInputStream(sysFileTable.getStoreInfo());
+             ServletOutputStream outputStream = response.getOutputStream();) {
+            String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+            String dispositionType = StringUtils.isBlank(dl) ? "inline" : "attachment";
+            ContentDisposition disposition = ContentDisposition.builder(dispositionType).filename(encodedFileName).build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDisposition(disposition);
+            for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
+                String key = entry.getKey();
+                List<String> value = entry.getValue();
+                if (value != null && !value.isEmpty()) {
+                    response.setHeader(key, value.get(0));
+                }
+            }
+            IOUtils.copy(inputStream, outputStream);
+        } catch (IOException e) {
+            log.error("", e);
+        }
+    }
+
+    @Override
+    public void deleteFile(String id) {
+        SysFileTable sysFileTable = sysFileMapper.selectById(id);
+        IntegrationFileHandler fileHandler = getFileHandler(sysFileTable.getStoreType());
+        fileHandler.delete(sysFileTable.getStoreInfo());
+        sysFileMapper.deleteById(id);
     }
 
 

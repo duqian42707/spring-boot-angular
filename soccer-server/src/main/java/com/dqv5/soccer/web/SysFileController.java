@@ -42,9 +42,8 @@ public class SysFileController {
 
     @GetMapping("/file/{id}")
     @ApiOperation("获取文件")
-    public void getFile(@PathVariable String id, String dl, HttpServletResponse response) {
-        SysFile sysFile = sysFileService.getFileInfo(id);
-        // todo download file
+    public void downloadFile(@PathVariable String id, String dl, HttpServletResponse response) {
+        sysFileService.downloadFile(id, dl, response);
     }
 
     @PostMapping("/delete/{id}")
