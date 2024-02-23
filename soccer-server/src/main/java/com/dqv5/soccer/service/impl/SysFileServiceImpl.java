@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +45,6 @@ public class SysFileServiceImpl implements SysFileService {
     public SysFile uploadFile(MultipartFile file) {
         SysFileTable sysFileTable = new SysFileTable();
         String fileName = file.getOriginalFilename();
-        int storeTypeValue = FileStoreType.fromName(defaultStoreType).getValue();
-        IntegrationFileHandler fileHandler = this.getFileHandler(storeTypeValue);
 
         String sha256;
         try (InputStream inputStream = file.getInputStream()) {
@@ -54,15 +53,38 @@ public class SysFileServiceImpl implements SysFileService {
             throw new CommonRuntimeException(e);
         }
 
-        String storeInfo;
-        try (InputStream inputStream = file.getInputStream()) {
-            storeInfo = fileHandler.upload(inputStream, fileName);
-        } catch (Exception e) {
-            throw new CommonRuntimeException(e);
+        int storeType = 0;
+        String storeInfo = null;
+        boolean exist = false;
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("sha256", sha256);
+        List<SysFileTable> existFiles = sysFileMapper.selectByMap(param);
+        for (SysFileTable existFile : existFiles) {
+            Integer existStoreType = existFile.getStoreType();
+            String existStoreInfo = existFile.getStoreInfo();
+            IntegrationFileHandler existFileHandler = this.getFileHandler(existStoreType);
+
+            if (existFileHandler.checkFile(existStoreInfo, sha256)) {
+                storeType = existStoreType;
+                storeInfo = existStoreInfo;
+                exist = true;
+                break;
+            }
+        }
+
+        if (!exist) {
+            storeType = FileStoreType.fromName(defaultStoreType).getValue();
+            IntegrationFileHandler fileHandler = this.getFileHandler(storeType);
+            try (InputStream inputStream = file.getInputStream()) {
+                storeInfo = fileHandler.upload(inputStream, fileName);
+            } catch (Exception e) {
+                throw new CommonRuntimeException(e);
+            }
         }
 
         sysFileTable.setFileName(fileName);
-        sysFileTable.setStoreType(storeTypeValue);
+        sysFileTable.setStoreType(storeType);
         sysFileTable.setStoreInfo(storeInfo);
         sysFileTable.setFileSize(file.getSize());
         sysFileTable.setSha256(sha256);
