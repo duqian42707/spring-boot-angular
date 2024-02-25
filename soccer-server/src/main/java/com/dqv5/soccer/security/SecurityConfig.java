@@ -72,7 +72,7 @@ public class SecurityConfig {
                 .sessionManagement(a -> a.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(a ->
                         // todo 配置方式需要优化
-                        a.antMatchers(HttpMethod.GET, "/", "/web/**", "/api/sys/info").permitAll()
+                        a.antMatchers(HttpMethod.GET, "/", "/web/**", "/api/sys/info", "/api/file/file/**").permitAll()
                                 // 鉴权接口 - 允许
                                 .antMatchers(HttpMethod.POST, AUTH_URL).permitAll()
                                 // swagger -允许

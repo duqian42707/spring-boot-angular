@@ -11,9 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +42,7 @@ public class SysFileServiceImpl implements SysFileService {
     private List<IntegrationFileHandler> fileHandlers;
     @Value("${soccer.file-store.default:disk}")
     private String defaultStoreType;
+    private final Tika tika = new Tika();
 
     @Override
     public SysFile uploadFile(MultipartFile file) {
@@ -104,6 +107,7 @@ public class SysFileServiceImpl implements SysFileService {
         SysFileTable sysFileTable = sysFileMapper.selectById(id);
         String fileName = sysFileTable.getFileName();
         IntegrationFileHandler fileHandler = getFileHandler(sysFileTable.getStoreType());
+        String mimeType = tika.detect(fileName);
 
         try (InputStream inputStream = fileHandler.getInputStream(sysFileTable.getStoreInfo());
              ServletOutputStream outputStream = response.getOutputStream();) {
@@ -112,6 +116,7 @@ public class SysFileServiceImpl implements SysFileService {
             ContentDisposition disposition = ContentDisposition.builder(dispositionType).filename(encodedFileName).build();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentDisposition(disposition);
+            headers.setContentType(MediaType.parseMediaType(mimeType));
             for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
                 String key = entry.getKey();
                 List<String> value = entry.getValue();

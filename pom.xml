@@ -28,6 +28,7 @@
         <knife4j.version>4.4.0</knife4j.version>
         <amazons3.version>1.12.641</amazons3.version>
         <hutool.version>5.8.26</hutool.version>
+        <tika.version>2.9.1</tika.version>
     </properties>
 
     <dependencyManagement>
@@ -88,6 +89,11 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

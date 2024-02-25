@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {SFRadioWidgetSchema, SFSchema, SFUISchema} from "@delon/form";
+import {SFRadioWidgetSchema, SFSchema, SFUISchema, SFUploadWidgetSchema} from "@delon/form";
 import {_HttpClient} from "@delon/theme";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {DA_SERVICE_TOKEN, TokenService} from "@delon/auth";
@@ -15,7 +15,15 @@ export class ProfileBasicComponent implements OnInit {
   basicSchema: SFSchema = {
     properties: {
       nickName: {type: 'string', title: '昵称', maxLength: 50},
-      avatarUrl: {type: 'string', title: '头像', maxLength: 500},
+      avatarUrl: {
+        type: 'string', title: '头像', maxLength: 500, ui: {
+          widget: 'upload',
+          action: '/api/file/upload',
+          resReName: 'data.url',
+          urlReName: 'data.url',
+          listType: 'picture-card'
+        } as SFUploadWidgetSchema
+      },
       gender: {
         type: 'string',
         title: '性别',
@@ -43,7 +51,18 @@ export class ProfileBasicComponent implements OnInit {
 
   loadBasic() {
     this.http.get('/api/profile/userInfo').subscribe(res => {
-      this.basicData = res.data;
+      this.basicData = {
+        ...res.data,
+        avatarUrl: [{
+          uid: -1,
+          name: 'xxx.png',
+          status: 'done',
+          url: res.data.avatarUrl,
+          response: {
+            fileId: 1
+          }
+        }]
+      };
     })
   }
 
