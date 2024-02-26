@@ -1,5 +1,6 @@
 package com.dqv5.soccer.service.impl;
 
+import cn.hutool.core.io.FileUtil;
 import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.file.FileStoreType;
 import com.dqv5.soccer.file.IntegrationFileHandler;
@@ -9,6 +10,7 @@ import com.dqv5.soccer.service.SysFileService;
 import com.dqv5.soccer.table.SysFileTable;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,8 +88,9 @@ public class SysFileServiceImpl implements SysFileService {
                 throw new CommonRuntimeException(e);
             }
         }
-
+        String extName = FileUtil.extName(fileName);
         sysFileTable.setFileName(fileName);
+        sysFileTable.setFileType(extName);
         sysFileTable.setStoreType(storeType);
         sysFileTable.setStoreInfo(storeInfo);
         sysFileTable.setFileSize(file.getSize());
