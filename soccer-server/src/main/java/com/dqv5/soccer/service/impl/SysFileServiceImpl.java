@@ -8,6 +8,7 @@ import com.dqv5.soccer.mapper.SysFileMapper;
 import com.dqv5.soccer.pojo.SysFile;
 import com.dqv5.soccer.service.SysFileService;
 import com.dqv5.soccer.table.SysFileTable;
+import com.dqv5.soccer.utils.MediaFileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -61,6 +62,7 @@ public class SysFileServiceImpl implements SysFileService {
 
         int storeType = 0;
         String storeInfo = null;
+        Integer duration = null;
         boolean exist = false;
 
         Map<String, Object> param = new HashMap<>();
@@ -74,6 +76,7 @@ public class SysFileServiceImpl implements SysFileService {
             if (existFileHandler.checkFile(existStoreInfo, sha256)) {
                 storeType = existStoreType;
                 storeInfo = existStoreInfo;
+                duration = existFile.getDuration();
                 exist = true;
                 break;
             }
@@ -87,6 +90,11 @@ public class SysFileServiceImpl implements SysFileService {
             } catch (Exception e) {
                 throw new CommonRuntimeException(e);
             }
+            try (InputStream inputStream = file.getInputStream()) {
+                duration = MediaFileUtils.getDuration(inputStream, fileName);
+            } catch (IOException e) {
+                throw new CommonRuntimeException(e);
+            }
         }
         String extName = FileUtil.extName(fileName);
         sysFileTable.setFileName(fileName);
@@ -95,6 +103,7 @@ public class SysFileServiceImpl implements SysFileService {
         sysFileTable.setStoreInfo(storeInfo);
         sysFileTable.setFileSize(file.getSize());
         sysFileTable.setSha256(sha256);
+        sysFileTable.setDuration(duration);
         sysFileMapper.insert(sysFileTable);
         return SysFile.of(sysFileTable);
     }

@@ -97,7 +97,11 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
+        <!-- 获取音视频长度 jave-1.0.2在macos平台上有坑，用这个：https://github.com/a-schild/jave2 -->
+        <dependency>
+            <groupId>ws.schild</groupId>
+            <artifactId>jave-all-deps</artifactId>
+        </dependency>
         <!--  lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -29,6 +29,7 @@
         <amazons3.version>1.12.641</amazons3.version>
         <hutool.version>5.8.26</hutool.version>
         <tika.version>2.9.1</tika.version>
+        <jave.version>3.5.0</jave.version>
     </properties>
 
     <dependencyManagement>
@@ -94,6 +95,11 @@
                 <groupId>org.apache.tika</groupId>
                 <artifactId>tika-core</artifactId>
                 <version>${tika.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ws.schild</groupId>
+                <artifactId>jave-all-deps</artifactId>
+                <version>${jave.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
