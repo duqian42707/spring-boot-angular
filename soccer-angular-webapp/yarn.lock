@@ -3231,6 +3231,13 @@ amdefine@>=0.0.4:
   resolved "https://registry.npmmirror.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha512-S2Hw0TtNkMJhIabBwIojKL9YHO5T0n5eNqWJ7Lrlel/zDbftQpxpapi8tZs3X1HWa+u+QeydGmzzNU0m09+Rcg==
 
+angular-split@16:
+  version "16.2.1"
+  resolved "https://registry.npmmirror.com/angular-split/-/angular-split-16.2.1.tgz#fcd1e5af04a16f4b460f30897979e012e5887339"
+  integrity sha512-Yqf9sit9qDELM95EottO7cgY++AzD8XH7e6c1fTnC+s39TRY/LUOVT0k9ysEp1yH5wz7GHwcm+uZMSDBAjuODA==
+  dependencies:
+    tslib "^2.0.0"
+
 ansi-colors@4.1.3, ansi-colors@^4.1.1:
   version "4.1.3"
   resolved "https://registry.npmmirror.com/ansi-colors/-/ansi-colors-4.1.3.tgz#37611340eb2243e70cc604cad35d63270d48781b"

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dqv5.soccer.mapper.SysDeptMapper">
+    <resultMap id="baseMap" type="com.dqv5.soccer.table.SysDeptTable">
+    </resultMap>
+    <resultMap id="pojoMap" type="com.dqv5.soccer.pojo.SysDept">
+    </resultMap>
+    <select id="queryByUserId" resultMap="pojoMap">
+        select t.*
+        from sys_dept t
+                 join sys_user_dept ud on ud.dept_id = t.dept_id
+        where ud.user_id = #{userId}
+    </select>
+</mapper>

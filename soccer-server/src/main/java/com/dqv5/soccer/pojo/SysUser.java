@@ -7,7 +7,9 @@ import lombok.*;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author duqian
@@ -35,10 +37,18 @@ public class SysUser extends AbstractBaseVO implements Serializable {
     private Date lastLoginTime;
     private Date lastPasswordResetTime;
 
+    private List<SysDept> depts = new ArrayList<>();
+
     public static SysUser of(SysUserTable table) {
         SysUser sysUser = new SysUser();
         BeanUtils.copyProperties(table, sysUser);
         return sysUser;
+    }
+
+    public SysUserTable toTable() {
+        SysUserTable table = new SysUserTable();
+        BeanUtils.copyProperties(this, table);
+        return table;
     }
 
 

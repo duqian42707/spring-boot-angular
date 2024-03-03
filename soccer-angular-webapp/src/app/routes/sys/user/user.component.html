@@ -4,6 +4,18 @@
   </ng-template>
 </page-header>
 <nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="url" [res]="{reName:{total:'data.total',list:'data.list'}}" [columns]="columns"></st>
+  <as-split direction="horizontal">
+    <as-split-area [size]="25">
+      <div>
+        <nz-tree nzExpandAll [nzData]="deptTreeNodes" (nzClick)="onDeptClick($event)"></nz-tree>
+      </div>
+    </as-split-area>
+    <as-split-area [size]="75">
+      <div>
+        <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+        <st #st [data]="url" [res]="{reName:{total:'data.total',list:'data.list'}}" [columns]="columns"></st>
+      </div>
+    </as-split-area>
+  </as-split>
+
 </nz-card>

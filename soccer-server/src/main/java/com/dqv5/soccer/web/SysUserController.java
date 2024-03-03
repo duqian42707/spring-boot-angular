@@ -4,6 +4,7 @@ import com.dqv5.soccer.common.AuthValue;
 import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.pojo.SysUser;
+import com.dqv5.soccer.pojo.UserQueryParam;
 import com.dqv5.soccer.service.SysUserService;
 import com.dqv5.soccer.table.SysUserTable;
 import com.dqv5.soccer.common.Pageable;
@@ -31,33 +32,31 @@ public class SysUserController {
 
     @GetMapping("/list")
     @ApiOperation("获取用户列表")
-    public ResponseEntity<RestReturnEntity<PageInfo<SysUser>>> list(@RequestParam(defaultValue = "1") int pageNum,
-                                                                    @RequestParam(defaultValue = "10") int pageSize) {
-        Pageable pageable = Pageable.of(pageNum, pageSize);
-        PageInfo<SysUser> pageInfo = sysUserService.queryListForPage(pageable);
+    public ResponseEntity<RestReturnEntity<PageInfo<SysUser>>> list(UserQueryParam param) {
+        PageInfo<SysUser> pageInfo = sysUserService.queryListForPage(param);
         return RestReturn.ok(pageInfo);
     }
 
     @GetMapping("/info/{id}")
     @ApiOperation("获取单个用户")
-    public ResponseEntity<RestReturnEntity<SysUserTable>> info(@PathVariable("id") String id) {
-        SysUserTable sysUserTable = sysUserService.findOne(id);
-        return RestReturn.ok(sysUserTable);
+    public ResponseEntity<RestReturnEntity<SysUser>> info(@PathVariable("id") String id) {
+        SysUser sysUser = sysUserService.findOne(id);
+        return RestReturn.ok(sysUser);
     }
 
     @PostMapping("/insert")
     @ApiOperation("新增用户")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_USER_INSERT + "')")
-    public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody SysUserTable sysUserTable) {
-        sysUserService.insert(sysUserTable);
+    public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody SysUser sysUser) {
+        sysUserService.insert(sysUser);
         return RestReturn.ok();
     }
 
     @PostMapping("/update")
     @ApiOperation("更新用户信息")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_USER_UPDATE + "')")
-    public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody SysUserTable sysUserTable) {
-        sysUserService.update(sysUserTable);
+    public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody SysUser sysUser) {
+        sysUserService.update(sysUser);
         return RestReturn.ok();
     }
 

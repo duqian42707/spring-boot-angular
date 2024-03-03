@@ -8,10 +8,13 @@ import { DelonFormModule } from '@delon/form';
 
 import { SHARED_DELON_MODULES } from './shared-delon.module';
 import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
+import { AngularSplitModule } from 'angular-split';
 
 // #region third libs
 
-const THIRDMODULES: Array<Type<void>> = [];
+const THIRDMODULES: Array<Type<void>> = [
+  AngularSplitModule
+];
 
 // #endregion
 

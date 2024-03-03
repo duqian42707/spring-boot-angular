@@ -5,6 +5,8 @@ import {ModalHelper, _HttpClient} from '@delon/theme';
 import {SysUserEditComponent} from './edit/edit.component';
 import {AuthValue} from "../../../common/auth-value";
 import {ACLService} from "@delon/acl";
+import {SysDeptService} from "../dept/sys-dept.service";
+import {NzFormatEmitEvent} from "ng-zorro-antd/core/tree/nz-tree-base.definitions";
 
 @Component({
   selector: 'app-sys-user',
@@ -30,6 +32,7 @@ export class SysUserComponent implements OnInit {
     {title: '编号', type: 'no'},
     {title: '账号', index: 'account'},
     {title: '昵称', index: 'nickName'},
+    {title: '部门', index: 'depts', format: (item) => item.depts.map((d: any) => d.deptName).join(', ')},
     {title: '头像', type: 'img', width: '64px', index: 'avatarUrl'},
     {title: '更新人', index: 'lastModifiedNickName'},
     {title: '更新时间', type: 'date', index: 'lastModifiedDate'},
@@ -53,10 +56,21 @@ export class SysUserComponent implements OnInit {
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, private aclService: ACLService) {
+  deptTreeNodes = [];
+
+  protected readonly AuthValue = AuthValue;
+
+  constructor(private http: _HttpClient, private modal: ModalHelper, private aclService: ACLService, private sysDeptService: SysDeptService) {
   }
 
   ngOnInit(): void {
+    this.loadDeptTree();
+  }
+
+  loadDeptTree() {
+    this.sysDeptService.loadDeptTree().subscribe(data => {
+      this.deptTreeNodes = data;
+    })
   }
 
   add(): void {
@@ -74,5 +88,13 @@ export class SysUserComponent implements OnInit {
     });
   }
 
-  protected readonly AuthValue = AuthValue;
+  onDeptClick(evt: NzFormatEmitEvent) {
+    console.log(evt);
+    if (evt.keys && evt.keys.length > 0) {
+      this.st.reload({deptId: evt.keys![0]})
+    } else {
+      this.st.reload({})
+    }
+  }
+
 }

@@ -1,8 +1,7 @@
 package com.dqv5.soccer.service;
 
-import com.dqv5.soccer.common.Pageable;
 import com.dqv5.soccer.pojo.SysUser;
-import com.dqv5.soccer.table.SysUserTable;
+import com.dqv5.soccer.pojo.UserQueryParam;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -10,13 +9,13 @@ import com.github.pagehelper.PageInfo;
  * @date 2022/7/10
  */
 public interface SysUserService  {
-    PageInfo<SysUser> queryListForPage(Pageable pageable);
+    PageInfo<SysUser> queryListForPage(UserQueryParam pageable);
 
-    SysUserTable findOne(String id);
+    SysUser findOne(String id);
 
-    void insert(SysUserTable sysUserTable);
+    void insert(SysUser sysUser);
 
-    void update(SysUserTable sysUserTable);
+    void update(SysUser sysUser);
 
     void deleteById(String id);
 }

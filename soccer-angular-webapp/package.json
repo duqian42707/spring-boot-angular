@@ -40,6 +40,7 @@
     "@delon/util": "^16.4.3",
     "ajv": "^8.10.0",
     "ajv-formats": "^2.1.1",
+    "angular-split": "16",
     "ng-alain": "^16.4.3",
     "ng-zorro-antd": "^16.2.2",
     "rxjs": "~7.8.0",
