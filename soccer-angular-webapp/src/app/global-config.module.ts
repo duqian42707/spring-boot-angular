@@ -1,7 +1,7 @@
 /* eslint-disable import/order */
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {DelonACLModule} from '@delon/acl';
-import {AlainThemeModule} from '@delon/theme';
+import {provideAlain} from '@delon/theme';
 import {AlainConfig, ALAIN_CONFIG} from '@delon/util/config';
 
 import {throwIfAlreadyLoaded} from '@core';
@@ -32,7 +32,7 @@ const alainConfig: AlainConfig = {
   }
 };
 
-const alainModules: any[] = [AlainThemeModule.forRoot(), DelonACLModule.forRoot()];
+const alainModules: any[] = [];
 const alainProvides = [{provide: ALAIN_CONFIG, useValue: alainConfig}];
 
 // #region reuse-tab
@@ -49,7 +49,7 @@ const alainProvides = [{provide: ALAIN_CONFIG, useValue: alainConfig}];
  *  ```
  */
 import {RouteReuseStrategy} from '@angular/router';
-import {ReuseTabService, ReuseTabStrategy} from '@delon/abc/reuse-tab';
+import {provideReuseTabConfig, ReuseTabService, ReuseTabStrategy} from '@delon/abc/reuse-tab';
 
 alainProvides.push({
   provide: RouteReuseStrategy,
@@ -65,6 +65,8 @@ alainProvides.push({
 // #region NG-ZORRO Config
 
 import {NzConfig, NZ_CONFIG} from 'ng-zorro-antd/core/config';
+import {provideHttpClient, withInterceptors, withInterceptorsFromDi} from "@angular/common/http";
+import {authJWTInterceptor} from "@delon/auth";
 
 const ngZorroConfig: NzConfig = {};
 
@@ -83,7 +85,10 @@ export class GlobalConfigModule {
   static forRoot(): ModuleWithProviders<GlobalConfigModule> {
     return {
       ngModule: GlobalConfigModule,
-      providers: [...alainProvides, ...zorroProvides]
+      providers: [...alainProvides, ...zorroProvides, ...(environment.providers || []),
+        provideHttpClient(withInterceptors([...(environment.interceptorFns || []), authJWTInterceptor]), withInterceptorsFromDi()),
+        provideReuseTabConfig()
+      ]
     };
   }
 }

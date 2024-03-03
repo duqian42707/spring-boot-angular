@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {SFRadioWidgetSchema, SFSchema, SFUISchema, SFUploadWidgetSchema} from "@delon/form";
+import {SFRadioWidgetSchema, SFSchema, SFUISchema} from "@delon/form";
 import {_HttpClient} from "@delon/theme";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {DA_SERVICE_TOKEN, TokenService} from "@delon/auth";
 import {Router} from "@angular/router";
+import {SFUploadWidgetSchema} from '@delon/form/widgets/upload';
 
 @Component({
   selector: 'app-profile-basic',

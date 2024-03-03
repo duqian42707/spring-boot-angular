@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {SFSchema, SFTreeSelectWidgetSchema, SFUISchema} from '@delon/form';
+import {SFSchema, SFUISchema} from '@delon/form';
 import {_HttpClient} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import {SysDeptService} from "../sys-dept.service";
+import {SFTreeSelectWidgetSchema} from '@delon/form/widgets/tree-select';
 
 @Component({
   selector: 'app-sys-dept-edit',
