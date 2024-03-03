@@ -36,7 +36,8 @@
           <td>{{ item.displayIndex }}</td>
           <td>
             <a nz-button nzType="link" (click)="edit(item)" *aclIf="AuthValue.SYS_MENU_UPDATE">编辑</a>
-            <a nz-button nzType="link" nzDanger (click)="delete(item)" *aclIf="AuthValue.SYS_MENU_DELETE">删除</a>
+            <a nz-button nzType="link" nzDanger nz-popconfirm nzPopconfirmTitle="确定要删除吗？"
+               (nzOnConfirm)="delete(item)" *aclIf="AuthValue.SYS_MENU_DELETE">删除</a>
           </td>
         </tr>
       </ng-container>

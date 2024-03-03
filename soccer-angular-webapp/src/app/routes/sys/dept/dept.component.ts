@@ -3,6 +3,7 @@ import {SFSchema} from "@delon/form";
 import {_HttpClient, ModalHelper} from "@delon/theme";
 import {SysDeptEditComponent} from "./edit/edit.component";
 import {AuthValue} from "../../../common/auth-value";
+import {SysDeptService} from "./sys-dept.service";
 
 export interface TreeNodeInterface {
   deptId: string;
@@ -110,12 +111,16 @@ export class SysDeptComponent implements OnInit {
 
   edit(item: any) {
     this.modal
-      .createStatic(SysDeptEditComponent, {i: item})
+      .createStatic(SysDeptEditComponent, {record: item})
       .subscribe(() => this.queryTree());
   }
 
   delete(item: any) {
-
+    this.loading = true;
+    this.http.post(`/api/dept/delete/${item.deptId}`).subscribe((res: any) => {
+      this.loading = false;
+      this.queryTree();
+    });
   }
 
   protected readonly AuthValue = AuthValue;

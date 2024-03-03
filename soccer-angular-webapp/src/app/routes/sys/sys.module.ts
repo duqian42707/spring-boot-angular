@@ -20,6 +20,7 @@ import {SysProfileComponent} from "./profile/profile.component";
 import {ProfileBasicComponent} from "./profile/profile-basic/profile-basic.component";
 import {ProfileSafetyComponent} from "./profile/profile-safety/profile-safety.component";
 import {SysDeptEditComponent} from "./dept/edit/edit.component";
+import {SysDeptService} from "./dept/sys-dept.service";
 
 const COMPONENTS: Type<void>[] = [
   SysUserComponent, SysUserEditComponent,
@@ -40,6 +41,7 @@ const COMPONENTS: Type<void>[] = [
   providers: [
     SysMenuService,
     SysAuthService,
+    SysDeptService
   ],
 })
 export class SysModule {

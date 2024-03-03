@@ -40,10 +40,15 @@ export class SysMenuEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.record);
+    if (this.record.menuId) {
+      this.http.get(`/api/menu/info/${this.record.menuId}`).subscribe(res => this.i = res.data);
+    }
   }
 
   save(value: any): void {
-    this.http.post(`/api/menu/update`, value).subscribe(res => {
+    const api = this.record.menuId ? '/api/menu/update' : '/api/menu/insert';
+    this.http.post(api, value).subscribe(res => {
       this.msgSrv.success(res.msg);
       this.modal.close(true);
     });

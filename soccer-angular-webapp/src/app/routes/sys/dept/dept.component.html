@@ -1,4 +1,8 @@
-<page-header></page-header>
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button *aclIf="AuthValue.SYS_DEPT_INSERT" (click)="add()" nz-button nzType="primary">新建</button>
+  </ng-template>
+</page-header>
 <nz-card>
   <sf mode="search" [schema]="searchSchema" (formSubmit)="search($event)" (formReset)="reset($event)"></sf>
   <nz-table #expandTable [nzLoading]="loading" [nzData]="listOfMapData" nzTableLayout="fixed">
@@ -26,7 +30,7 @@
           <td>{{ item.displayIndex }}</td>
           <td>
             <a nz-button nzType="link" *aclIf="AuthValue.SYS_DEPT_UPDATE" (click)="edit(item)">编辑</a>
-            <a nz-button nzType="link" *aclIf="AuthValue.SYS_DEPT_DELETE" nzDanger (click)="delete(item)">删除</a>
+            <a nz-button nzType="link" *aclIf="AuthValue.SYS_DEPT_DELETE" nzDanger nz-popconfirm nzPopconfirmTitle="确定要删除吗？" (nzOnConfirm)="delete(item)">删除</a>
           </td>
         </tr>
       </ng-container>

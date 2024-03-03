@@ -112,12 +112,16 @@ export class SysMenuComponent implements OnInit {
 
   edit(item: any) {
     this.modal
-      .createStatic(SysMenuEditComponent, {i: item})
+      .createStatic(SysMenuEditComponent, {record: item})
       .subscribe(() => this.queryTree());
   }
 
   delete(item: any) {
-
+    this.loading = true;
+    this.http.post(`/api/menu/delete/${item.menuId}`).subscribe((res: any) => {
+      this.loading = false;
+      this.queryTree();
+    });
   }
 
   protected readonly AuthValue = AuthValue;
