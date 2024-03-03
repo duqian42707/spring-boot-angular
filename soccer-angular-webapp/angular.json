@@ -62,7 +62,9 @@
           "options": {
             "outputPath": "../soccer-server/src/main/resources/static/web",
             "index": "src/index.html",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "less",
             "assets": [

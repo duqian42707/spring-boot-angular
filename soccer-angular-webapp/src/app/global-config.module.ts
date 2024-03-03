@@ -49,7 +49,7 @@ const alainProvides = [{provide: ALAIN_CONFIG, useValue: alainConfig}];
  *  ```
  */
 import {RouteReuseStrategy} from '@angular/router';
-import {ReuseTabService, ReuseTabStrategy} from '@delon/abc/reuse-tab';
+import {provideReuseTabConfig, ReuseTabService, ReuseTabStrategy} from '@delon/abc/reuse-tab';
 
 alainProvides.push({
   provide: RouteReuseStrategy,
@@ -86,7 +86,9 @@ export class GlobalConfigModule {
     return {
       ngModule: GlobalConfigModule,
       providers: [...alainProvides, ...zorroProvides, ...(environment.providers || []),
-        provideHttpClient(withInterceptors([...(environment.interceptorFns || []), authJWTInterceptor]), withInterceptorsFromDi())]
+        provideHttpClient(withInterceptors([...(environment.interceptorFns || []), authJWTInterceptor]), withInterceptorsFromDi()),
+        provideReuseTabConfig()
+      ]
     };
   }
 }

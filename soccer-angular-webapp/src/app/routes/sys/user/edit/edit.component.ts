@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {SFSchema, SFTreeSelectWidgetSchema, SFUISchema, SFUploadWidgetSchema} from '@delon/form';
+import {SFSchema, SFUISchema} from '@delon/form';
 import {_HttpClient} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalRef} from 'ng-zorro-antd/modal';
 import {SysDeptService} from "../../dept/sys-dept.service";
+import {SFTreeSelectWidgetSchema} from '@delon/form/widgets/tree-select';
+import {SFUploadWidgetSchema} from '@delon/form/widgets/upload';
 
 @Component({
   selector: 'app-sys-user-edit',
