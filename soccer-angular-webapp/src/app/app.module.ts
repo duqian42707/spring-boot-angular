@@ -1,7 +1,7 @@
 /* eslint-disable import/order */
 /* eslint-disable import/no-duplicates */
 // #region Http Interceptors
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS,  } from '@angular/common/http';
 import { APP_INITIALIZER, LOCALE_ID, NgModule, Type } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +21,7 @@ import { registerLocaleData } from '@angular/common';
 import { JsonSchemaModule } from '@shared';
 // #region Startup Service
 import { DefaultInterceptor, StartupService } from '@core';
-import { JWTInterceptor } from '@delon/auth';
+// import { JWTInterceptor } from '@delon/auth';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { GlobalConfigModule } from './global-config.module';
@@ -48,7 +48,7 @@ const LANG_PROVIDES = [
 const FORM_MODULES = [JsonSchemaModule];
 // #endregion
 const INTERCEPTOR_PROVIDES = [
-  { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
+  // { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true }
 ];
 // #endregion
@@ -78,7 +78,7 @@ const APPINIT_PROVIDES = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
+    
     GlobalConfigModule.forRoot(),
     CoreModule,
     SharedModule,
