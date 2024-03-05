@@ -26,8 +26,11 @@ const alainConfig: AlainConfig = {
   auth: {login_url: '/passport/login'},
   acl: {
     preCan: (roleOrAbility) => {
-      const str = roleOrAbility.toString();
-      return str.startsWith('ROLE_') ? {role: [str]} : {ability: [str]};
+      if(roleOrAbility){
+        const str = roleOrAbility.toString();
+        return str.startsWith('ROLE_') ? {role: [str]} : {ability: [str]};
+      }
+      return null;
     }
   }
 };
