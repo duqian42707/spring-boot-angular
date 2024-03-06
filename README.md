@@ -13,7 +13,7 @@
 ### 电脑端
 
 - [x] 登录、退出登录
-- [ ] 部门管理
+- [x] 部门管理
 - [x] 用户管理
 - [x] 菜单管理
 - [x] 角色管理
@@ -35,9 +35,9 @@
 
 * Node.js
 * npm & yarn
-* Angular 16
-* ng-zorro-antd 16
-* ng-alain 16
+* Angular 17
+* ng-zorro-antd 17
+* ng-alain 17
 
 ## 工程说明
 
