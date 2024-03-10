@@ -3,11 +3,11 @@ import {AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators} from 
 import {Router} from '@angular/router';
 import {StartupService} from '@core';
 import {ReuseTabService} from '@delon/abc/reuse-tab';
-import {DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService} from '@delon/auth';
-import {SettingsService, _HttpClient} from '@delon/theme';
+import {ALLOW_ANONYMOUS, DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService} from '@delon/auth';
+import {_HttpClient, SettingsService} from '@delon/theme';
 import {environment} from '@env/environment';
-import {NzTabChangeEvent} from 'ng-zorro-antd/tabs';
 import {finalize} from 'rxjs';
+import {HttpContext} from "@angular/common/http";
 
 @Component({
   selector: 'passport-login',
@@ -74,7 +74,7 @@ export class UserLoginComponent implements OnDestroy {
     const formData = new FormData();
     formData.set('username', this.userName.value);
     formData.set('password', this.password.value);
-    this.http.post('/api/login?_allow_anonymous=true', formData).pipe(
+    this.http.post('/api/login', formData, null, {context: new HttpContext().set(ALLOW_ANONYMOUS, true)}).pipe(
       finalize(() => {
         this.loading = false;
         this.cdr.detectChanges();

@@ -6,7 +6,7 @@ import {ALLOW_ANONYMOUS, DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
 import {Menu, MenuService, SettingsService, TitleService} from '@delon/theme';
 import type {NzSafeAny} from 'ng-zorro-antd/core/types';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {catchError, forkJoin, map, Observable, of} from 'rxjs';
+import {catchError, concat, forkJoin, map, Observable, of} from 'rxjs';
 
 import {ICONS} from '../../../style-icons';
 import {ICONS_AUTO} from '../../../style-icons-auto';
@@ -36,11 +36,7 @@ export class StartupService {
   }
 
   loadHttp(): Observable<void> {
-    return forkJoin([this.loadSysInfo(), this.loadUserInfo()]).pipe(
-      map((res: NzSafeAny) => {
-
-      })
-    );
+    return concat(this.loadSysInfo(), this.loadUserInfo());
   }
 
   loadSysInfo(): Observable<void> {
