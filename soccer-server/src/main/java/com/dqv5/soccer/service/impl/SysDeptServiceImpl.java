@@ -7,6 +7,7 @@ import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.mapper.SysDeptMapper;
 import com.dqv5.soccer.pojo.SysDept;
 import com.dqv5.soccer.service.SysDeptService;
+import com.dqv5.soccer.structmapper.SysDeptStructMapper;
 import com.dqv5.soccer.table.SysDeptTable;
 import com.dqv5.soccer.utils.TreeUtils;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class SysDeptServiceImpl implements SysDeptService {
     @Override
     public SysDept findOne(String id) {
         SysDeptTable table = sysDeptMapper.selectById(id);
-        return SysDept.of(table);
+        return SysDeptStructMapper.INSTANCE.entityToPojo(table);
     }
 
     @Override

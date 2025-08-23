@@ -7,6 +7,7 @@ import com.dqv5.soccer.file.IntegrationFileHandler;
 import com.dqv5.soccer.mapper.SysFileMapper;
 import com.dqv5.soccer.pojo.SysFile;
 import com.dqv5.soccer.service.SysFileService;
+import com.dqv5.soccer.structmapper.SysFileStructMapper;
 import com.dqv5.soccer.table.SysFileTable;
 import com.dqv5.soccer.utils.MediaFileUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -105,14 +106,14 @@ public class SysFileServiceImpl implements SysFileService {
         sysFileTable.setSha256(sha256);
         sysFileTable.setDuration(duration);
         sysFileMapper.insert(sysFileTable);
-        return SysFile.of(sysFileTable);
+        return SysFileStructMapper.INSTANCE.entityToPojo(sysFileTable);
     }
 
 
     @Override
     public SysFile getFileInfo(String id) {
         SysFileTable sysFileTable = sysFileMapper.selectById(id);
-        return SysFile.of(sysFileTable);
+        return SysFileStructMapper.INSTANCE.entityToPojo(sysFileTable);
     }
 
     @Override

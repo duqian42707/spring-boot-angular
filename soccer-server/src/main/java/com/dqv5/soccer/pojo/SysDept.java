@@ -38,17 +38,6 @@ public class SysDept extends AbstractBaseVO implements Serializable {
     @ApiModelProperty("下级部门")
     private List<SysDept> children = new ArrayList<>();
 
-    public static SysDept of(SysDeptTable table) {
-        SysDept sysDept = new SysDept();
-        BeanUtils.copyProperties(table, sysDept);
-        return sysDept;
-    }
-
-    public SysDeptTable toTable() {
-        SysDeptTable table = new SysDeptTable();
-        BeanUtils.copyProperties(this, table);
-        return table;
-    }
 
     public TreeNode toTreeNode() {
         TreeNode treeNode = new TreeNode();

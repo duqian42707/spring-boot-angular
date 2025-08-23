@@ -9,6 +9,9 @@ import com.dqv5.soccer.pojo.SysAuth;
 import com.dqv5.soccer.pojo.SysMenu;
 import com.dqv5.soccer.pojo.SysRole;
 import com.dqv5.soccer.service.SysRoleService;
+import com.dqv5.soccer.structmapper.SysAuthStructMapper;
+import com.dqv5.soccer.structmapper.SysMenuStructMapper;
+import com.dqv5.soccer.structmapper.SysRoleStructMapper;
 import com.dqv5.soccer.table.*;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -46,7 +49,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public SysRole findOne(String roleId) {
         SysRoleTable sysRoleTable = sysRoleMapper.selectById(roleId);
-        SysRole sysRole = SysRole.of(sysRoleTable);
+        SysRole sysRole = SysRoleStructMapper.INSTANCE.entityToPojo(sysRoleTable);
         setMenuAndAuth(sysRole);
         return sysRole;
     }
@@ -126,7 +129,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     public List<SysRole> queryByUserId(String userId) {
         List<SysRoleTable> sysRoleTables = sysRoleMapper.queryByUserId(userId);
         return sysRoleTables.stream()
-                .map(SysRole::of)
+                .map(SysRoleStructMapper.INSTANCE::entityToPojo)
                 .peek(this::setMenuAndAuth)
                 .collect(Collectors.toList());
     }
@@ -135,9 +138,9 @@ public class SysRoleServiceImpl implements SysRoleService {
     private void setMenuAndAuth(SysRole sysRole) {
         String roleId = sysRole.getRoleId();
         List<SysMenuTable> menuTables = sysMenuMapper.queryByRoleId(roleId);
-        List<SysMenu> menus = menuTables.stream().map(SysMenu::of).collect(Collectors.toList());
+        List<SysMenu> menus = menuTables.stream().map(SysMenuStructMapper.INSTANCE::entityToPojo).collect(Collectors.toList());
         List<SysAuthTable> authTables = sysAuthMapper.queryByRoleId(roleId);
-        List<SysAuth> auths = authTables.stream().map(SysAuth::of).collect(Collectors.toList());
+        List<SysAuth> auths = authTables.stream().map(SysAuthStructMapper.INSTANCE::entityToPojo).collect(Collectors.toList());
         sysRole.setMenus(menus);
         sysRole.setAuths(auths);
     }

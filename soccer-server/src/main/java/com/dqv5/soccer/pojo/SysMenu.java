@@ -61,22 +61,6 @@ public class SysMenu extends AbstractBaseVO implements Serializable {
     @ApiModelProperty("下级菜单")
     private List<SysMenu> children = new ArrayList<>();
 
-    public static SysMenu of(SysMenuTable table) {
-        SysMenu sysMenu = new SysMenu();
-        BeanUtils.copyProperties(table, sysMenu);
-        sysMenu.setHide(table.getHide() == null ? null : (table.getHide() == 1));
-        sysMenu.setHideChildren(table.getHideChildren() == null ? null : (table.getHideChildren() == 1));
-        sysMenu.setIcon(StringUtils.isNotBlank(table.getIcon()) ? table.getIcon() : null);
-        return sysMenu;
-    }
-
-    public SysMenuTable toTable() {
-        SysMenuTable table = new SysMenuTable();
-        BeanUtils.copyProperties(this, table);
-        table.setHide(hide == null ? null : (hide ? 1 : 0));
-        table.setHideChildren(hideChildren == null ? null : (hideChildren ? 1 : 0));
-        return table;
-    }
 
     public TreeNode toTreeNode() {
         TreeNode treeNode = new TreeNode();

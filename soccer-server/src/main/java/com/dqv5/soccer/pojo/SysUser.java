@@ -39,17 +39,6 @@ public class SysUser extends AbstractBaseVO implements Serializable {
 
     private List<SysDept> depts = new ArrayList<>();
 
-    public static SysUser of(SysUserTable table) {
-        SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(table, sysUser);
-        return sysUser;
-    }
-
-    public SysUserTable toTable() {
-        SysUserTable table = new SysUserTable();
-        BeanUtils.copyProperties(this, table);
-        return table;
-    }
 
 
 }

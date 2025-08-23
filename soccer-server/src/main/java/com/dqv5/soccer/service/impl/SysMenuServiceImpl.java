@@ -7,6 +7,7 @@ import com.dqv5.soccer.exception.CommonRuntimeException;
 import com.dqv5.soccer.mapper.SysMenuMapper;
 import com.dqv5.soccer.pojo.SysMenu;
 import com.dqv5.soccer.service.SysMenuService;
+import com.dqv5.soccer.structmapper.SysMenuStructMapper;
 import com.dqv5.soccer.table.SysMenuTable;
 import com.dqv5.soccer.utils.TreeUtils;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Override
     public void insert(SysMenu param) {
-        SysMenuTable table = param.toTable();
+        SysMenuTable table = SysMenuStructMapper.INSTANCE.pojoToEntity(param);
         table.setMenuId(null);
         String menuCode = table.getMenuCode();
         QueryWrapper<SysMenuTable> queryWrapper = Wrappers.query(SysMenuTable.class).eq("menu_code", menuCode);

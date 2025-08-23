@@ -39,17 +39,6 @@ public class SysAuth extends AbstractBaseVO implements Serializable {
     private String authFolderName;
 
 
-    public static SysAuth of(SysAuthTable table) {
-        SysAuth sysAuth = new SysAuth();
-        BeanUtils.copyProperties(table, sysAuth);
-        return sysAuth;
-    }
-
-    public SysAuthTable toTable() {
-        SysAuthTable table = new SysAuthTable();
-        BeanUtils.copyProperties(this, table);
-        return table;
-    }
 
     public TreeNode toTreeNode() {
         TreeNode treeNode = new TreeNode();

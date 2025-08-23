@@ -2,6 +2,8 @@ package com.dqv5.soccer.utils;
 
 import com.dqv5.soccer.pojo.SysDept;
 import com.dqv5.soccer.pojo.SysMenu;
+import com.dqv5.soccer.structmapper.SysDeptStructMapper;
+import com.dqv5.soccer.structmapper.SysMenuStructMapper;
 import com.dqv5.soccer.table.SysDeptTable;
 import com.dqv5.soccer.table.SysMenuTable;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +38,7 @@ public class TreeUtils {
         }
         return allMenus.stream()
                 .filter(menu -> StringUtils.isBlank(parentId) ? StringUtils.isBlank(menu.getParentId()) : Objects.equals(parentId, menu.getParentId()))
-                .map(SysMenu::of)
+                .map(SysMenuStructMapper.INSTANCE::entityToPojo)
                 .peek(sysMenu -> {
                     sysMenu.setChildren(getMenuChildren(allMenus, sysMenu.getMenuId()));
                 })
@@ -49,7 +51,7 @@ public class TreeUtils {
         }
         return allDepts.stream()
                 .filter(dept -> StringUtils.isBlank(parentId) ? StringUtils.isBlank(dept.getParentId()) : Objects.equals(parentId, dept.getParentId()))
-                .map(SysDept::of)
+                .map(SysDeptStructMapper.INSTANCE::entityToPojo)
                 .peek(sysDept -> {
                     sysDept.setChildren(getDeptChildren(allDepts, sysDept.getDeptId()));
                 })

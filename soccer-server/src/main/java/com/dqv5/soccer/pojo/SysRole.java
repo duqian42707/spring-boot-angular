@@ -33,17 +33,6 @@ public class SysRole extends AbstractBaseVO implements Serializable {
     @ApiModelProperty("关联的权限")
     private List<SysAuth> auths = new ArrayList<>();
 
-    public static SysRole of(SysRoleTable table) {
-        SysRole sysAuth = new SysRole();
-        BeanUtils.copyProperties(table, sysAuth);
-        return sysAuth;
-    }
-
-    public SysRoleTable toTable() {
-        SysRoleTable table = new SysRoleTable();
-        BeanUtils.copyProperties(this, table);
-        return table;
-    }
 
 
 }

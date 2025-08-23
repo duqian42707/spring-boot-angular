@@ -27,17 +27,5 @@ public class SysFile extends AbstractBaseVO implements Serializable {
     private String remark;
     private String url;
 
-    public static SysFile of(SysFileTable table) {
-        SysFile sysFile = new SysFile();
-        BeanUtils.copyProperties(table, sysFile);
-        sysFile.setUrl("/api/file/file/" + table.getFileId());
-        return sysFile;
-    }
-
-    public SysFileTable toTable() {
-        SysFileTable table = new SysFileTable();
-        BeanUtils.copyProperties(this, table);
-        return table;
-    }
 
 }

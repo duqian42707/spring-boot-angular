@@ -7,6 +7,7 @@ import com.dqv5.soccer.mapper.SysUserDeptMapper;
 import com.dqv5.soccer.pojo.SysDept;
 import com.dqv5.soccer.pojo.SysUser;
 import com.dqv5.soccer.pojo.UserQueryParam;
+import com.dqv5.soccer.structmapper.SysUserStructMapper;
 import com.dqv5.soccer.table.SysUserDeptTable;
 import com.dqv5.soccer.table.SysUserTable;
 import com.dqv5.soccer.mapper.SysUserMapper;
@@ -53,7 +54,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public SysUser findOne(String id) {
         SysUserTable table = sysUserMapper.selectById(id);
-        SysUser sysUser = SysUser.of(table);
+        SysUser sysUser = SysUserStructMapper.INSTANCE.entityToPojo(table);
         List<SysDept> depts = sysDeptMapper.queryByUserId(sysUser.getUserId());
         sysUser.setDepts(depts);
         return sysUser;
@@ -66,7 +67,7 @@ public class SysUserServiceImpl implements SysUserService {
         if (exist) {
             throw new CommonRuntimeException("账号已存在：" + sysUser.getAccount());
         }
-        SysUserTable table = sysUser.toTable();
+        SysUserTable table = SysUserStructMapper.INSTANCE.pojoToEntity(sysUser);
         table.setPassword(passwordEncoder.encode(sysUser.getPassword()));
         sysUserMapper.insert(table);
         sysUser.getDepts().forEach(dept -> {

@@ -11,6 +11,8 @@ import com.dqv5.soccer.pojo.SysAuth;
 import com.dqv5.soccer.pojo.SysAuthFolder;
 import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.service.SysAuthService;
+import com.dqv5.soccer.structmapper.SysAuthFolderStructMapper;
+import com.dqv5.soccer.structmapper.SysAuthStructMapper;
 import com.dqv5.soccer.table.SysAuthFolderTable;
 import com.dqv5.soccer.table.SysAuthTable;
 import com.github.pagehelper.PageHelper;
@@ -42,14 +44,14 @@ public class SysAuthServiceImpl implements SysAuthService {
         List<SysAuthTable> auths = sysAuthMapper.selectList(authQuery);
 
         folders.add(SysAuthFolderTable.builder().authFolderId(DEFAULT_FOLDER_ID).authFolderName("未分类").displayIndex(999999).build());
-        return folders.stream().map(SysAuthFolder::of)
+        return folders.stream().map(SysAuthFolderStructMapper.INSTANCE::entityToPojo)
                 .peek(x -> {
                     List<SysAuth> filteredAuths = auths.stream()
                             .filter(auth -> {
                                 String folderId = StringUtils.isNotBlank(auth.getAuthFolderId()) ? auth.getAuthFolderId() : DEFAULT_FOLDER_ID;
                                 return Objects.equals(x.getAuthFolderId(), folderId);
                             })
-                            .map(SysAuth::of)
+                            .map(SysAuthStructMapper.INSTANCE::entityToPojo)
                             .collect(Collectors.toList());
                     x.setAuths(filteredAuths);
                 })
@@ -68,7 +70,7 @@ public class SysAuthServiceImpl implements SysAuthService {
     @Override
     public List<SysAuthFolder> findFolders() {
         List<SysAuthFolderTable> list = sysAuthFolderMapper.selectList(null);
-        return list.stream().map(SysAuthFolder::of).collect(Collectors.toList());
+        return list.stream().map(SysAuthFolderStructMapper.INSTANCE::entityToPojo).collect(Collectors.toList());
     }
 
     @Override
