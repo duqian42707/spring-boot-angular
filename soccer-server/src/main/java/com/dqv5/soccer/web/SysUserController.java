@@ -6,17 +6,14 @@ import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.pojo.SysUser;
 import com.dqv5.soccer.pojo.UserQueryParam;
 import com.dqv5.soccer.service.SysUserService;
-import com.dqv5.soccer.table.SysUserTable;
-import com.dqv5.soccer.common.Pageable;
 import com.github.pagehelper.PageInfo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.annotation.Resource;
 
 /**
  * @author duqian
@@ -25,27 +22,27 @@ import jakarta.annotation.Resource;
 @RestController
 @RequestMapping("/api/user")
 @Slf4j
-@Api(tags = "用户管理")
+@Tag(name = "用户管理")
 public class SysUserController {
     @Resource
     private SysUserService sysUserService;
 
     @GetMapping("/list")
-    @ApiOperation("获取用户列表")
+    @Operation(summary = "获取用户列表")
     public ResponseEntity<RestReturnEntity<PageInfo<SysUser>>> list(UserQueryParam param) {
         PageInfo<SysUser> pageInfo = sysUserService.queryListForPage(param);
         return RestReturn.ok(pageInfo);
     }
 
     @GetMapping("/info/{id}")
-    @ApiOperation("获取单个用户")
+    @Operation(summary = "获取单个用户")
     public ResponseEntity<RestReturnEntity<SysUser>> info(@PathVariable("id") String id) {
         SysUser sysUser = sysUserService.findOne(id);
         return RestReturn.ok(sysUser);
     }
 
     @PostMapping("/insert")
-    @ApiOperation("新增用户")
+    @Operation(summary = "新增用户")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_USER_INSERT + "')")
     public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody SysUser sysUser) {
         sysUserService.insert(sysUser);
@@ -53,7 +50,7 @@ public class SysUserController {
     }
 
     @PostMapping("/update")
-    @ApiOperation("更新用户信息")
+    @Operation(summary = "更新用户信息")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_USER_UPDATE + "')")
     public ResponseEntity<RestReturnEntity<Object>> update(@RequestBody SysUser sysUser) {
         sysUserService.update(sysUser);
@@ -61,7 +58,7 @@ public class SysUserController {
     }
 
     @PostMapping("/delete/{id}")
-    @ApiOperation("删除用户")
+    @Operation(summary = "删除用户")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_USER_DELETE + "')")
     public ResponseEntity<RestReturnEntity<Object>> delete(@PathVariable("id") String id) {
         sysUserService.deleteById(id);

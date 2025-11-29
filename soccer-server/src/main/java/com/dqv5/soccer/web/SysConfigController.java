@@ -6,14 +6,14 @@ import com.dqv5.soccer.common.RestReturn;
 import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.service.SysConfigService;
 import com.dqv5.soccer.table.SysConfigTable;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ import java.util.List;
  * @date 2024/1/16
  */
 @RestController
-@Api(tags = "系统配置")
+@Tag(name = "系统配置")
 @RequestMapping("/api/config")
 @Slf4j
 public class SysConfigController {
@@ -29,7 +29,7 @@ public class SysConfigController {
     private SysConfigService sysConfigService;
 
     @GetMapping("/allList")
-    @ApiOperation("获取所有配置")
+    @Operation(summary = "获取所有配置")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_CONFIG_QUERY + "')")
     public ResponseEntity<RestReturnEntity<List<SysConfigTable>>> allList() {
         List<SysConfigTable> list = sysConfigService.queryAll();
@@ -37,7 +37,7 @@ public class SysConfigController {
     }
 
     @GetMapping("/allMap")
-    @ApiOperation("获取所有配置")
+    @Operation(summary = "获取所有配置")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_CONFIG_QUERY + "')")
     public ResponseEntity<RestReturnEntity<JSONObject>> allMap() {
         List<SysConfigTable> list = sysConfigService.queryAll();
@@ -49,7 +49,7 @@ public class SysConfigController {
     }
 
     @PostMapping("/set")
-    @ApiOperation("保存配置")
+    @Operation(summary = "保存配置")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_CONFIG_SET + "')")
     public ResponseEntity<RestReturnEntity<Object>> insert(@RequestBody JSONObject param) {
         sysConfigService.setConfig(param);

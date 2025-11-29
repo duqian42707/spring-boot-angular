@@ -2,12 +2,9 @@ package com.dqv5.soccer.pojo;
 
 import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.common.TreeNodeType;
-import com.dqv5.soccer.table.AbstractBaseTable;
-import com.dqv5.soccer.table.SysAuthTable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 
@@ -16,28 +13,27 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ApiModel("系统权限")
+@Schema(name = "系统权限")
 public class SysAuth extends AbstractBaseVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("权限id")
+    @SchemaProperty(name = "权限id")
     private String authId;
 
-    @ApiModelProperty("权限标识")
+    @SchemaProperty(name = "权限标识")
     private String authValue;
 
-    @ApiModelProperty("权限名称")
+    @SchemaProperty(name = "权限名称")
     private String authName;
 
-    @ApiModelProperty("权限目录id")
+    @SchemaProperty(name = "权限目录id")
     private String authFolderId;
 
-    @ApiModelProperty("排序")
+    @SchemaProperty(name = "排序")
     private Integer displayIndex;
 
-    @ApiModelProperty("权限分组名称")
+    @SchemaProperty(name = "权限分组名称")
     private String authFolderName;
-
 
 
     public TreeNode toTreeNode() {

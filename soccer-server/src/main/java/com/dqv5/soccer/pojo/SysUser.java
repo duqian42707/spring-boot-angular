@@ -1,10 +1,8 @@
 package com.dqv5.soccer.pojo;
 
-import com.dqv5.soccer.table.SysUserTable;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ApiModel("系统用户")
+@Schema(name = "系统用户")
 public class SysUser extends AbstractBaseVO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String userId;
@@ -38,7 +36,6 @@ public class SysUser extends AbstractBaseVO implements Serializable {
     private Date lastPasswordResetTime;
 
     private List<SysDept> depts = new ArrayList<>();
-
 
 
 }

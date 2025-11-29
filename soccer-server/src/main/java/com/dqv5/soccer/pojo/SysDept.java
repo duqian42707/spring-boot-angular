@@ -2,11 +2,9 @@ package com.dqv5.soccer.pojo;
 
 import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.common.TreeNodeType;
-import com.dqv5.soccer.table.SysDeptTable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,23 +17,23 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ApiModel("部门")
+@Schema(name = "部门")
 public class SysDept extends AbstractBaseVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("部门id")
+    @SchemaProperty(name = "部门id")
     private String deptId;
 
-    @ApiModelProperty("部门名称")
+    @SchemaProperty(name = "部门名称")
     private String deptName;
 
-    @ApiModelProperty("部门编码")
+    @SchemaProperty(name = "部门编码")
     private String deptCode;
 
-    @ApiModelProperty("上级部门id")
+    @SchemaProperty(name = "上级部门id")
     private String parentId;
 
-    @ApiModelProperty("下级部门")
+    @SchemaProperty(name = "下级部门")
     private List<SysDept> children = new ArrayList<>();
 
 

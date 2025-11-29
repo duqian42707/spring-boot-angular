@@ -6,8 +6,8 @@ import com.dqv5.soccer.common.RestReturnEntity;
 import com.dqv5.soccer.table.SysLogTable;
 import com.dqv5.soccer.service.SysLogService;
 import com.github.pagehelper.PageInfo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import com.dqv5.soccer.common.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +25,14 @@ import jakarta.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api/log")
-@Api(tags = "系统日志")
+@Tag(name = "系统日志")
 @Slf4j
 public class SysLogController {
     @Resource
     private SysLogService sysLogService;
 
     @GetMapping("/list")
-    @ApiOperation("获取日志列表")
+    @Operation(summary = "获取日志列表")
     @PreAuthorize("hasAuthority('" + AuthValue.SYS_LOG_QUERY + "')")
     public ResponseEntity<RestReturnEntity<PageInfo<SysLogTable>>> list(@RequestParam(defaultValue = "1") int pageNum,
                                                                         @RequestParam(defaultValue = "10") int pageSize) {

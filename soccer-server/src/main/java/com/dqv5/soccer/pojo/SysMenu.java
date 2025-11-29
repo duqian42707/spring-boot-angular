@@ -2,13 +2,9 @@ package com.dqv5.soccer.pojo;
 
 import com.dqv5.soccer.common.TreeNode;
 import com.dqv5.soccer.common.TreeNodeType;
-import com.dqv5.soccer.table.AbstractBaseTable;
-import com.dqv5.soccer.table.SysMenuTable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.*;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,44 +17,44 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ApiModel("系统菜单")
+@Schema(name = "系统菜单")
 public class SysMenu extends AbstractBaseVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("菜单id")
+    @SchemaProperty(name = "菜单id")
     private String menuId;
 
-    @ApiModelProperty("菜单名称")
+    @SchemaProperty(name = "菜单名称")
     private String menuName;
 
-    @ApiModelProperty("唯一标识")
+    @SchemaProperty(name = "唯一标识")
     private String menuCode;
 
-    @ApiModelProperty("路由链接")
+    @SchemaProperty(name = "路由链接")
     private String link;
 
-    @ApiModelProperty("外部链接")
+    @SchemaProperty(name = "外部链接")
     private String externalLink;
 
-    @ApiModelProperty("介绍")
+    @SchemaProperty(name = "介绍")
     private String intro;
 
-    @ApiModelProperty("图标")
+    @SchemaProperty(name = "图标")
     private String icon;
 
-    @ApiModelProperty("是否隐藏菜单")
+    @SchemaProperty(name = "是否隐藏菜单")
     private Boolean hide;
 
-    @ApiModelProperty("是否隐藏菜单")
+    @SchemaProperty(name = "是否隐藏菜单")
     private Boolean hideChildren;
 
-    @ApiModelProperty("显示顺序")
+    @SchemaProperty(name = "显示顺序")
     private Integer displayIndex;
 
-    @ApiModelProperty("父级菜单id")
+    @SchemaProperty(name = "父级菜单id")
     private String parentId;
 
-    @ApiModelProperty("下级菜单")
+    @SchemaProperty(name = "下级菜单")
     private List<SysMenu> children = new ArrayList<>();
 
 

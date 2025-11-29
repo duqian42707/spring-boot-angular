@@ -1,11 +1,8 @@
 package com.dqv5.soccer.pojo;
 
-import com.dqv5.soccer.table.AbstractBaseTable;
-import com.dqv5.soccer.table.SysRoleTable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,19 +17,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ApiModel("系统角色")
+@Schema(name = "系统角色")
 public class SysRole extends AbstractBaseVO implements Serializable {
-    @ApiModelProperty("角色id")
+    @SchemaProperty(name = "角色id")
     private String roleId;
-    @ApiModelProperty("角色标识")
+    @SchemaProperty(name = "角色标识")
     private String roleValue;
-    @ApiModelProperty("角色名称")
+    @SchemaProperty(name = "角色名称")
     private String roleName;
-    @ApiModelProperty("关联的菜单")
+    @SchemaProperty(name = "关联的菜单")
     private List<SysMenu> menus = new ArrayList<>();
-    @ApiModelProperty("关联的权限")
+    @SchemaProperty(name = "关联的权限")
     private List<SysAuth> auths = new ArrayList<>();
-
 
 
 }
