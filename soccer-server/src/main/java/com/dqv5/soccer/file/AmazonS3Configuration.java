@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * 使用<code>@ConditionalOnProperty</code>注解，满足一定条件时才加载配置类或bean，

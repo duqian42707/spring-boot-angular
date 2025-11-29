@@ -3,7 +3,7 @@ package com.dqv5.soccer.service;
 import com.dqv5.soccer.pojo.SysFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @author duqian

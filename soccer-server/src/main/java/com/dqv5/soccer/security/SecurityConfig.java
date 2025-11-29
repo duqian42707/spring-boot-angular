@@ -66,21 +66,22 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .headers(a -> a.frameOptions().sameOrigin())
+                .headers(a -> a.frameOptions(f -> f.sameOrigin()))
                 .exceptionHandling(a -> a.authenticationEntryPoint(new JWTAuthenticationEntryPoint()))
                 // don't create session
                 .sessionManagement(a -> a.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests(a ->
-                        // todo 配置方式需要优化
-                        a.antMatchers(HttpMethod.GET, "/", "/web/**", "/api/sys/info", "/api/file/file/**").permitAll()
-                                // 鉴权接口 - 允许
-                                .antMatchers(HttpMethod.POST, AUTH_URL).permitAll()
-                                // swagger -允许
-                                .antMatchers(HttpMethod.GET, "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll()
-                                // knife4j -允许
-                                .antMatchers(HttpMethod.GET, "/doc.html", "/webjars/**", "/favicon.ico", "/v2/api-docs").permitAll()
-                                // 其他接口 - 需要验证
-                                .anyRequest().authenticated())
+                .authorizeHttpRequests(a -> {
+                    // todo 配置方式需要优化
+                    a.requestMatchers(HttpMethod.GET, "/", "/web/**", "/api/sys/info", "/api/file/file/**").permitAll();
+                    // 鉴权接口 - 允许
+                    a.requestMatchers(HttpMethod.POST, AUTH_URL).permitAll();
+                    // swagger -允许
+                    a.requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs").permitAll();
+                    // knife4j -允许
+                    a.requestMatchers(HttpMethod.GET, "/doc.html", "/webjars/**", "/favicon.ico", "/v2/api-docs").permitAll();
+                    // 其他接口 - 需要验证
+                    a.anyRequest().authenticated();
+                })
                 .addFilter(jwtAuthenticationFilter())
                 .addFilter(jwtAuthorizationTokenFilter())
         ;

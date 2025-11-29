@@ -51,7 +51,7 @@ soccer:
       enable: true
       root: /opt/soccer/file
     s3:
-      enable: true
+      enable: false
       endpoint: http://127.0.0.1:9000
       bucketName: soccer
       accessKey: minioadmin

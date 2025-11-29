@@ -12,7 +12,7 @@ import com.dqv5.soccer.table.SysDeptTable;
 import com.dqv5.soccer.utils.TreeUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
